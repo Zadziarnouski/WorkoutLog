@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title th:if="${measurement.id==null}?'Add measurement':'Update measurement'">Add/Update measurement</title>
+</head>
+<body>
+<form th:action="@{/measurement-log/create-update}" th:object="${measurement}"
+      method="post">
+    <p><input type="hidden" th:field="*{id}"></p>
+    <p><input type="hidden" th:field="*{user}"></p>
+    <p><label for="weight">Weight:</label>
+        <input type="number" id="weight" th:field="*{weight}"></p>
+    <p><label for="height">Height</label>
+        <input type="number" id="height" th:field="*{height}"></p>
+    <p><label for="neck">Neck</label>
+        <input type="number" id="neck" th:field="*{neck}"></p>
+    <p><label for="arms">Arms:</label>
+        <input type="number" id="arms" th:field="*{arms}"></p>
+    <p><label for="forearms">Forearms:</label>
+        <input type="number" id="forearms" th:field="*{forearms}"></p>
+    <p><label for="chest">Chest:</label>
+        <input type="number" id="chest" th:field="*{chest}"></p>
+    <p><label for="waist">Waist:</label>
+        <input type="number" id="waist" th:field="*{waist}"></p>
+    <p><label for="buttocks">Buttocks:</label>
+        <input type="number" id="buttocks" th:field="*{buttocks}"></p>
+    <p><label for="thighs">Thighs:</label>
+        <input type="number" id="thighs" th:field="*{thighs}"></p>
+    <p><label for="calves">Calves:</label>
+        <input type="number" id="calves" th:field="*{calves}"></p>
+    <p>
+        <button type="submit" th:text="${measurement.weight==0.0}?'Add measurement':'Update measurement'">Add/Update
+        </button>
+    </p>
+    <p><a href="/measurement-log">Back</a></p>
+</form>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Result</h2>
+<p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
+<p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+<p><strong>Password:</strong> <span th:text="${user.password}"></span></p>
+<p><strong>First name:</strong> <span th:text="${user.firstName}"></span></p>
+<p><strong>Last name:</strong> <span th:text="${user.lastName}"></span></p>
+
+<p><a th:href="@{/user-log/update/{id}(id=${user.id})}">Back</a></p>
+<p><a href="/user-log">Confirm</a>
+</body>
+</html>

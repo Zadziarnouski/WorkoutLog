@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise editor</title>
+</head>
+<body>
+<h1>Exercise editor</h1>
+
+
+<table th:if="${!basicExercises.isEmpty()}">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Muscle group</th>
+        <th>Type</th>
+        <th>Necessary equipment</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr th:each="basicExercise : ${basicExercises}">
+        <td th:text="${basicExercise.id}"></td>
+        <td th:text="${basicExercise.name.toLowerCase()}"></td>
+        <td th:text="${basicExercise.muscleGroup.toString().toLowerCase()}"></td>
+        <td th:text="${basicExercise.exerciseType.toString().toLowerCase()}"></td>
+        <td th:text="${basicExercise.necessaryEquipment.toString().toLowerCase()}"></td>
+        <td th:text="${basicExercise.description}"></td>
+        <td><a href="/main/"  th:href="@{/exercise-editor/update/{id}(id=${basicExercise.id})}">Update</a></td>
+        <td><a href="/exercise-editor" th:href="@{/exercise-editor/delete/{id}(id=${basicExercise.id})}">Delete</a></td>
+    </tr>
+</table>
+
+<p><a href="/exercise-editor/create">Create new</a></p>
+<p><a href="/">Back</a></p>
+</body>
+</html>

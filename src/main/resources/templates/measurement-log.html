@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Measurement log</title>
+</head>
+<body>
+<h1>Measurement Log</h1>
+
+<table th:if="${!measurements.isEmpty()}">
+    <tr>
+        <th>ID</th>
+        <th>Weight</th>
+        <th>Height</th>
+        <th>Neck</th>
+        <th>Arms</th>
+        <th>Forearms</th>
+        <th>Chest</th>
+        <th>Waist</th>
+        <th>Buttocks</th>
+        <th>Thighs</th>
+        <th>Calves</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr th:each="measurement : ${measurements}">
+        <td th:text="${measurement.id}"></td>
+        <td th:text="${measurement.weight}"></td>
+        <td th:text="${measurement.height}"></td>
+        <td th:text="${measurement.neck}"></td>
+        <td th:text="${measurement.arms}"></td>
+        <td th:text="${measurement.forearms}"></td>
+        <td th:text="${measurement.chest}"></td>
+        <td th:text="${measurement.waist}"></td>
+        <td th:text="${measurement.buttocks}"></td>
+        <td th:text="${measurement.thighs}"></td>
+        <td th:text="${measurement.calves}"></td>
+        <td><a href="/main/" th:href="@{/measurement-log/update/{id}(id=${measurement.id})}">Update</a></td>
+        <td><a href="/main/" th:href="@{/measurement-log/delete/{id}(id=${measurement.id})}">Delete</a></td>
+    </tr>
+</table>
+
+<p><a href="/measurement-log/create">Add new</a></p>
+<p><a href="/">Back</a></p>
+
+</body>
+</html>

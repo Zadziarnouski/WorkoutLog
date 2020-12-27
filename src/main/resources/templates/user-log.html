@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User log</title>
+</head>
+<body>
+<h1>User Log</h1>
+
+<table th:if="${!users.isEmpty()}">
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.firstName}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td><a href="/user-log"  th:href="@{/user-log/update/{id}(id=${user.id})}">Update</a></td>
+        <td><a href="/user-log" th:href="@{/user-log/delete/{id}(id=${user.id})}">Delete</a></td>
+    </tr>
+</table>
+
+<p><a href="/user-log/create">Create new</a></p>
+<p><a href="/">Back</a></p>
+</body>
+</html>
