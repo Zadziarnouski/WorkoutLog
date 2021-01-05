@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping(path = "/workout-log")
-public class WorkoutLogController {
+public class  WorkoutLogController {
 
     @GetMapping
     public String getWorkoutLogPage(Model model){

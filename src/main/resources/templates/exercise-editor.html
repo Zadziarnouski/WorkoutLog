@@ -9,26 +9,24 @@
 <h1>Exercise editor</h1>
 
 
-<table th:if="${!basicExercises.isEmpty()}">
+<table th:if="${!exercises.isEmpty()}">
     <tr>
-        <th>Id</th>
-        <th>Name</th>
+        <th>Name:</th>
         <th>Muscle group</th>
-        <th>Type</th>
+        <th>Type of exercise</th>
         <th>Necessary equipment</th>
         <th>Description</th>
         <th></th>
         <th></th>
     </tr>
-    <tr th:each="basicExercise : ${basicExercises}">
-        <td th:text="${basicExercise.id}"></td>
-        <td th:text="${basicExercise.name.toLowerCase()}"></td>
-        <td th:text="${basicExercise.muscleGroup.toString().toLowerCase()}"></td>
-        <td th:text="${basicExercise.exerciseType.toString().toLowerCase()}"></td>
-        <td th:text="${basicExercise.necessaryEquipment.toString().toLowerCase()}"></td>
-        <td th:text="${basicExercise.description}"></td>
-        <td><a href="/main/"  th:href="@{/exercise-editor/update/{id}(id=${basicExercise.id})}">Update</a></td>
-        <td><a href="/exercise-editor" th:href="@{/exercise-editor/delete/{id}(id=${basicExercise.id})}">Delete</a></td>
+    <tr th:each="exercise : ${exercises}">
+        <td th:text="${exercise.name}"></td>
+        <td th:text="${exercise.muscleGroup.displayValue}"></td>
+        <td th:text="${exercise.exerciseType.displayValue}"></td>
+        <td th:text="${exercise.necessaryEquipment.displayValue}"></td>
+        <td th:text="${exercise.description}"></td>
+        <td><a href="/main/"  th:href="@{/exercise-editor/update/{id}(id=${exercise.id})}">Update</a></td>
+        <td><a href="/exercise-editor" th:href="@{/exercise-editor/delete/{id}(id=${exercise.id})}">Delete</a></td>
     </tr>
 </table>
 

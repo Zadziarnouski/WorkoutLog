@@ -1,6 +1,8 @@
 package by.zadziarnouski.workoutlog.controller;
 
 
+import by.zadziarnouski.workoutlog.dto.MeasurementDTO;
+import by.zadziarnouski.workoutlog.mapper.MeasurementMapper;
 import by.zadziarnouski.workoutlog.model.Measurement;
 import by.zadziarnouski.workoutlog.model.User;
 import by.zadziarnouski.workoutlog.service.MeasurementService;
@@ -15,24 +17,28 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(path = "/measurement-log")
 public class MeasurementLogController {
     private final MeasurementService measurementService;
     private final UserService userService;
+    private final MeasurementMapper measurementMapper;
+
     private User currentUser;
 
     @Autowired
-    public MeasurementLogController(MeasurementService measurementService, UserService userService) {
+    public MeasurementLogController(MeasurementService measurementService, UserService userService, MeasurementMapper measurementMapper) {
         this.measurementService = measurementService;
         this.userService = userService;
+        this.measurementMapper = measurementMapper;
     }
 
     @GetMapping
     public String getMeasurementLogPage(Model model) {
         currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
-        model.addAttribute("measurements", currentUser.getMeasurements());
+        model.addAttribute("measurements", currentUser.getMeasurements().stream().map(measurementMapper::toDTO).collect(Collectors.toList()));
         return "measurement-log";
     }
 
@@ -44,22 +50,23 @@ public class MeasurementLogController {
 
     @GetMapping("/update/{id}")
     public String getUpdatePageForMeasurement(@PathVariable Long id, Model model) {
-        model.addAttribute("measurement", measurementService.findById(id));
+        model.addAttribute("measurement", measurementMapper.toDTO(measurementService.findById(id)));
         return "create-update-measurement";
     }
 
     @GetMapping("/create")
     public String getCreatePageForMeasurement(Model model) {
         Measurement newMeasurement = new Measurement();
-        newMeasurement.setUser(currentUser);
-        model.addAttribute("measurement", newMeasurement);
+        Measurement measurement = measurementService.saveOrUpdate(newMeasurement);
+        model.addAttribute("measurement", measurementMapper.toDTO(measurement));
         return "create-update-measurement";
     }
 
     @PostMapping("/create-update")
-    public String createUpdateMeasurement(@ModelAttribute Measurement measurement, Model model) {
-        Measurement savedOrUpdated = measurementService.saveOrUpdate(measurement);
-        model.addAttribute("measurement",savedOrUpdated);
+    public String createUpdateMeasurement(@ModelAttribute MeasurementDTO measurementDTO, Model model) {
+        measurementDTO.setUserID(currentUser.getId());
+        Measurement measurement = measurementService.saveOrUpdate(measurementMapper.toEntity(measurementDTO));
+        model.addAttribute("measurement", measurementMapper.toDTO(measurement));
         return "result-create-or-update-measurement";
     }
 

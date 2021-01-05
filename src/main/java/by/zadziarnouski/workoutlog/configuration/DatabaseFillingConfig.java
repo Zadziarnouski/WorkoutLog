@@ -1,7 +1,7 @@
 package by.zadziarnouski.workoutlog.configuration;
 
 import by.zadziarnouski.workoutlog.model.*;
-import by.zadziarnouski.workoutlog.service.BasicExerciseService;
+import by.zadziarnouski.workoutlog.service.ExerciseService;
 import by.zadziarnouski.workoutlog.service.MeasurementService;
 import by.zadziarnouski.workoutlog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +10,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @Configuration
 public class DatabaseFillingConfig {
-    private final BasicExerciseService basicExerciseService;
+    private final ExerciseService exerciseService;
     private final UserService userService;
     private final MeasurementService measurementService;
 
     @Autowired
-    public DatabaseFillingConfig(BasicExerciseService basicExerciseService, UserService userService, MeasurementService measurementService) {
+    public DatabaseFillingConfig(ExerciseService exerciseService, UserService userService, MeasurementService measurementService) {
         this.userService = userService;
-        this.basicExerciseService = basicExerciseService;
+        this.exerciseService = exerciseService;
         this.measurementService = measurementService;
     }
 
@@ -33,26 +35,31 @@ public class DatabaseFillingConfig {
         admin.setRole(Role.ROLE_ADMIN);
         admin.setFirstName("Taras");
         admin.setLastName("Zadziarnouski");
+        admin.setHeight(181f);
+        admin.setGender(Gender.MALE);
+        admin.setWeight(73f);
+        admin.setBirthday(LocalDate.parse("1994-08-03"));
+
         User save1 = userService.saveOrUpdate(admin);
 
-        BasicExercise templateBasicExercise1 = new BasicExercise();
-        templateBasicExercise1.setName("Squats");
-        templateBasicExercise1.setMuscleGroup(MuscleGroup.LEGS);
-        templateBasicExercise1.setExerciseType(ExerciseType.BASIS);
-        templateBasicExercise1.setNecessaryEquipment(NecessaryEquipment.NOEQUIPMENT);
-        templateBasicExercise1.setDescription("My exercise");
-        templateBasicExercise1.setUser(save1);
-        basicExerciseService.saveOrUpdate(templateBasicExercise1);
+        Exercise templateExercise1 = new Exercise();
+        templateExercise1.setName("Squats");
+        templateExercise1.setMuscleGroup(MuscleGroup.LEGS);
+        templateExercise1.setExerciseType(ExerciseType.BASIS);
+        templateExercise1.setNecessaryEquipment(NecessaryEquipment.NOEQUIPMENT);
+        templateExercise1.setDescription("My exercise");
+        templateExercise1.setUser(save1);
+        exerciseService.saveOrUpdate(templateExercise1);
 
 
-        BasicExercise templateBasicExercise2 = new BasicExercise();
-        templateBasicExercise2.setName("Pull-ups");
-        templateBasicExercise2.setMuscleGroup(MuscleGroup.BACK);
-        templateBasicExercise2.setExerciseType(ExerciseType.BASIS);
-        templateBasicExercise2.setNecessaryEquipment(NecessaryEquipment.HORIZONTALBAR);
-        templateBasicExercise2.setDescription("My exercise");
-        templateBasicExercise2.setUser(save1);
-        basicExerciseService.saveOrUpdate(templateBasicExercise2);
+        Exercise templateExercise2 = new Exercise();
+        templateExercise2.setName("Pull-ups");
+        templateExercise2.setMuscleGroup(MuscleGroup.BACK);
+        templateExercise2.setExerciseType(ExerciseType.BASIS);
+        templateExercise2.setNecessaryEquipment(NecessaryEquipment.HORIZONTALBAR);
+        templateExercise2.setDescription("My exercise");
+        templateExercise2.setUser(save1);
+        exerciseService.saveOrUpdate(templateExercise2);
 
         Measurement measurement = new Measurement();
         measurement.setWeight(72.5f);
@@ -90,15 +97,19 @@ public class DatabaseFillingConfig {
             user.setRole(Role.ROLE_USER);
             user.setFirstName("User" + i);
             user.setLastName("User" + i);
+            user.setHeight(175f);
+            user.setGender(Gender.FEMALE);
+            user.setWeight(80f);
+            user.setBirthday(LocalDate.parse("2001-01-01"));
             User save = userService.saveOrUpdate(user);
-            BasicExercise templateBasicExercise = new BasicExercise();
-            templateBasicExercise.setName("Push-ups " + i);
-            templateBasicExercise.setMuscleGroup(MuscleGroup.CHEST);
-            templateBasicExercise.setExerciseType(ExerciseType.BASIS);
-            templateBasicExercise.setNecessaryEquipment(NecessaryEquipment.HORIZONTALBAR);
-            templateBasicExercise.setDescription("My templateBasicExercise " + i);
-            templateBasicExercise.setUser(save);
-            basicExerciseService.saveOrUpdate(templateBasicExercise);
+            Exercise templateExercise = new Exercise();
+            templateExercise.setName("Push-ups " + i);
+            templateExercise.setMuscleGroup(MuscleGroup.CHEST);
+            templateExercise.setExerciseType(ExerciseType.BASIS);
+            templateExercise.setNecessaryEquipment(NecessaryEquipment.HORIZONTALBAR);
+            templateExercise.setDescription("My templateExercise " + i);
+            templateExercise.setUser(save);
+            exerciseService.saveOrUpdate(templateExercise);
             Measurement measurement2 = new Measurement();
             measurement2.setWeight(1 + i);
             measurement2.setHeight(1 + i);

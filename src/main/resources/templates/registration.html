@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        p, h1, div, form {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>Registration</h1>
+<form name="form" th:action="@{/registration}" method="post" th:object="${newUser}">
+
+    <p><label for="username">Username: </label>
+        <input type="text" id="username" th:field="*{username}"></p>
+    <p><label for="password">Password: </label>
+        <input type="password" id="password" th:field="*{password}"></p>
+    <p><label for="firstname">Firstname: </label>
+        <input type="text" id="firstname" th:field="*{firstName}"></p>
+    <p><label for="lastname">Lastname: </label>
+        <input type="text" id="lastname" th:field="*{lastName}"></p>
+    <p>
+    <p><label>Gender: </label>
+        <input type="radio" id="male" name="gender" th:field="*{gender}"
+               th:value="${T(by.zadziarnouski.workoutlog.model.Gender).MALE}"><label for="male">Male</label>
+        <input type="radio" id="female" name="gender" th:field="*{gender}"
+               th:value="${T(by.zadziarnouski.workoutlog.model.Gender).FEMALE}"><label for="female">Female</label></p>
+    <p><label for="birthday">Birthday:(yyyy-MM-dd)</label>
+        <input type="text" th:value="*{birthday}" id="birthday"></p>
+    <p><label for="height">Height:</label>
+        <input type="number" th:field="*{height}" id="height"></p>
+    <p><label for="weight">Weight:</label>
+        <input type="number" th:field="*{weight}" id="weight"></p>
+    <p>
+        <button type="submit">Register</button>
+    </p>
+    <p><a href="/login">Back</a></p>
+</form>
+</body>
+</html>

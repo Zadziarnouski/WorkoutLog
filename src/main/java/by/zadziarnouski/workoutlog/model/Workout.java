@@ -3,7 +3,7 @@ package by.zadziarnouski.workoutlog.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -11,23 +11,23 @@ import java.util.Set;
 public class Workout {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
     private String title;
 
+    @OneToMany(mappedBy = "workout",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    private List<Exercise> exercises;
+
     @Column
     private String comments;
+
     @Column
     private int restBetweenExercise;
 
     @Column
     private int rating;
-
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            orphanRemoval = true)
-    private Set<BasicExercise> basicExercises;
-
 }

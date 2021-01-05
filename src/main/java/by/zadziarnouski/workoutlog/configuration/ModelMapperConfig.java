@@ -1,7 +1,8 @@
 package by.zadziarnouski.workoutlog.configuration;
 
+import by.zadziarnouski.workoutlog.mapper.ModelMapperProvider;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,10 +10,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ModelMapperConfig {
 
+    private final ModelMapperProvider modelMapperProvider;
+
+    @Autowired
+    public ModelMapperConfig(ModelMapperProvider modelMapperProvider) {
+        this.modelMapperProvider = modelMapperProvider;
+    }
+
     @Bean
     public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE).setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE);
-        return modelMapper;
+        return modelMapperProvider.getModelMapper();
     }
 }

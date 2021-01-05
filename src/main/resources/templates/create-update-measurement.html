@@ -8,7 +8,7 @@
 <form th:action="@{/measurement-log/create-update}" th:object="${measurement}"
       method="post">
     <p><input type="hidden" th:field="*{id}"></p>
-    <p><input type="hidden" th:field="*{user}"></p>
+    <p><input type="hidden" th:field="*{userID}"></p>
     <p><label for="weight">Weight:</label>
         <input type="number" id="weight" th:field="*{weight}"></p>
     <p><label for="height">Height</label>

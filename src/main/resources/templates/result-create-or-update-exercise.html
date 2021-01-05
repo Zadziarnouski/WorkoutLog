@@ -6,14 +6,15 @@
 </head>
 <body>
 <h2>Result</h2>
-<p><strong>ID:</strong> <span th:text="${basisExercise.id}"></span></p>
-<p><strong>Exercise name:</strong> <span th:text="${basisExercise.name}"></span></p>
-<p><strong>Muscle group:</strong> <span th:text="${basisExercise.muscleGroup}"></span></p>
-<p><strong>Exercise type:</strong> <span th:text="${basisExercise.exerciseType}"></span></p>
-<p><strong>Necessary equipment:</strong> <span th:text="${basisExercise.necessaryEquipment}"></span></p>
-<p><strong>Description:</strong> <span th:text="${basisExercise.description}"></span></p>
-
-<p><a th:href="@{/exercise-editor/update/{id}(id=${basisExercise.id})}">Back</a></p>
+<div th:object="${exercise}">
+<p><strong>ID:</strong> <span th:text="*{id}"></span></p>
+<p><strong>Exercise name:</strong> <span th:text="*{name}"></span></p>
+<p><strong>Muscle group:</strong> <span th:text="*{muscleGroup}"></span></p>
+<p><strong>Exercise type:</strong> <span th:text="*{exerciseType}"></span></p>
+<p><strong>Necessary equipment:</strong> <span th:text="*{necessaryEquipment}"></span></p>
+<p><strong>Description:</strong> <span th:text="*{description}"></span></p>
+</div>
+<p><a th:href="@{/exercise-editor/update/{id}(id=${exercise.id})}">Back</a></p>
 <p><a href="/exercise-editor">Confirm</a>
 </body>
 </html>

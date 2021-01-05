@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title th:if="${newExercise.id!=0}?'Add exercise':'Update exercise'">Create/Update exercise</title>
+</head>
+<body>
+<form th:action="@{/workout-designer/add-or-update-exercise-in-workout}" th:object="${newExercise}"
+      method="post">
+
+    <p th:if="*{name eq null}"><label for="name">Exercise: </label>
+        <select th:field="*{id}" id="name">
+            <option th:each="exercise : ${exercises}"  th:value="${exercise.id}" th:text="${exercise.name}"></option>
+        </select></p>
+    <p th:if="*{id ne null}" th:text="'Exercise : ' + *{name}"></p>
+    <p><label for="numberOfSets">Number of sets: </label>
+        <input id="numberOfSets" type="number" th:field="*{numberOfSets}"></p>
+    <p><label for="restTimeBetweenSets">Rest time between sets: </label>
+        <input id="restTimeBetweenSets" type="number" th:field="*{restTimeBetweenSets}"></p>
+<!--    <p><label for="type">Type exercise: </label></p>-->
+
+    <p>
+        <button type="submit" th:text="${newExercise.name eq null}?'Add':'Update'">Add/Update</button>
+    </p>
+    <p><a href="create-update-workout.html">Back</a></p>
+</form>
+</body>
+</html>

@@ -3,7 +3,6 @@ package by.zadziarnouski.workoutlog.service;
 
 import by.zadziarnouski.workoutlog.model.User;
 import by.zadziarnouski.workoutlog.repository.UserRepository;
-import by.zadziarnouski.workoutlog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,15 +20,14 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-
     @Override
     public User saveOrUpdate(User user) {
-        User save = userRepository.save(user);
-        return save;
+        return userRepository.save(user);
     }
 
     @Override
     public List<User> findAll() {
+
         return userRepository.findAll();
     }
 
@@ -41,10 +39,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(long id) {
         Optional<User> byId = userRepository.findById(id);
-        if(byId.isPresent()){
+        if (byId.isPresent()) {
             return byId.get();
-        }else {
-            throw new IllegalArgumentException("User with such id=" + id +" does not exist");
+        } else {
+            throw new IllegalArgumentException("User with such id=" + id + " does not exist");
         }
     }
 

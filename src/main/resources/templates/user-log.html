@@ -11,7 +11,6 @@
     <tr>
         <th>Id</th>
         <th>Username</th>
-        <th>Password</th>
         <th>Firstname</th>
         <th>Lastname</th>
         <th></th>
@@ -20,7 +19,6 @@
     <tr th:each="user : ${users}">
         <td th:text="${user.id}"></td>
         <td th:text="${user.username}"></td>
-        <td th:text="${user.password}"></td>
         <td th:text="${user.firstName}"></td>
         <td th:text="${user.lastName}"></td>
         <td><a href="/user-log"  th:href="@{/user-log/update/{id}(id=${user.id})}">Update</a></td>

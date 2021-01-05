@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Create workout</title>
+</head>
+<body>
+<h1>Create workout</h1>
+<form th:action="@{/workout-designer/start-training}" th:object="${workout}"
+      method="post">
+
+    <table th:if="*{!getExercises.isEmpty()}">
+        <tr>
+            <th>Position</th>
+            <th>Name</th>
+            <th>Number of sets</th>
+            <th>Rest time between sets</th>
+            <th>Type of exercise</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="exercise : *{getExercises}">
+            <td th:text="${workout.getExercises.indexOf(exercise)+1}"></td>
+            <td th:text="${exercise.name}"></td>
+            <td th:text="${exercise.numberOfSets}"></td>
+            <td th:text="${exercise.restTimeBetweenSets}"></td>
+            <td th:text="${exercise.isForAWhile()==true} ? 'for a while' : 'for repetitions' "></td>
+            <td><a href="/workout-designer"
+                   th:href="@{/workout-designer/update/{id}(id=${exercise.id})}">Update</a></td>
+            <td><a href="/workout-designer"
+                   th:href="@{/workout-designer/delete/{id}(id=${exercise.id})}">Delete</a></td>
+        </tr>
+    </table>
+
+    <p>
+        <button type="submit">Start training</button>
+    </p>
+     <p><a href="/workout-designer/getFormForAddOrUpdateExercise">Add exercise</a> </p>
+    <p><a href="/exercise-editor">Back</a></p>
+</form>
+</body>
+</html>

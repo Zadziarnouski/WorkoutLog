@@ -8,10 +8,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "exercises")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type_of_exercise", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue("template")
-public class BasicExercise {
+public class Exercise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +27,22 @@ public class BasicExercise {
     private NecessaryEquipment necessaryEquipment;
 
     @Column
+    private int numberOfSets;
+
+    @Column
+    private int restTimeBetweenSets;
+
+    @Column
+    private boolean forAWhile;
+
+    @Column
     private String description;
+
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Workout workout;
+
 }

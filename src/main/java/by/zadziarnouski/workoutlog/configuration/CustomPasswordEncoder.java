@@ -1,4 +1,4 @@
-package by.zadziarnouski.workoutlog.configuration;//package by.zadziarnouski.workoutlog.configuration;
+package by.zadziarnouski.workoutlog.configuration;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 

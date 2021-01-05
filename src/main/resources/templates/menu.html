@@ -20,14 +20,14 @@
         <a href="workout-designer">Workout designer</a> |
         <a href="workout-log">Workout log</a> |
         <a href="measurement-log">Measurement log</a> |
-         <a th:if="${myUser.getRole().toString().equals('ROLE_ADMIN')}" href="/user-log">User log</a>
+         <a th:if="${myUser.getRole().toString().equals('ROLE_ADMIN')}" href="/user-log">User log</a> |
+         <a href="/personal-profile">Personal profile</a>
+
     </span>
 </nav>
+<br>
 
-<h1>Start training</h1>
-
-<p><a href="/login">Login</a></p>
-<p><a href="/logout">Logout</a></p>
+<p><a href="/perform_logout">Logout</a></p>
 
 </body>
 </html>
