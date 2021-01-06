@@ -1,6 +1,7 @@
 package by.zadziarnouski.workoutlog.configuration;//package by.zadziarnouski.workoutlog.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.persistence.Basic;
 
 
 @Configuration
@@ -20,11 +23,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.myUserDetailsService = myUserDetailsService;
     }
 
-
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder encoder = new CustomPasswordEncoder();
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
         auth
                 .userDetailsService(myUserDetailsService).passwordEncoder(encoder);
     }
@@ -40,8 +46,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .formLogin().loginPage("/login").loginProcessingUrl("/perform_login")
-                    .defaultSuccessUrl("/menu",true)
-                    .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/menu", true)
+                .failureUrl("/login?error=true")
 //                .failureHandler(authenticationFailureHandler())
 
                 .and()
@@ -51,12 +57,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .and()
 
-                .cors().disable()
-                .csrf().disable()
+//                .cors().disable()
+//                .csrf().disable()
                 .httpBasic();
     }
-
-
 
 
 }

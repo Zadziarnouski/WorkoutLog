@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 public class MeasurementDTO {
-    private long id;
+    private Long id;
     private float weight;
     private float height;
     private float neck;

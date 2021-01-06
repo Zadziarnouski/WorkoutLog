@@ -49,7 +49,6 @@ public class Measurement {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
     private User user;
 
 

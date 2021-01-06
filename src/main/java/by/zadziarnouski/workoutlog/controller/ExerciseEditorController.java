@@ -28,8 +28,7 @@ public class ExerciseEditorController {
     private final ExerciseService exerciseService;
     private final UserService userService;
     private final ExerciseMapper exerciseMapper;
-
-    private User currentUser;
+    private User currentUser; //Вынести в сервис???
 
     @Autowired
     public ExerciseEditorController(ExerciseService exerciseService, UserService userService, ExerciseMapper exerciseMapper) {
@@ -60,7 +59,6 @@ public class ExerciseEditorController {
     @GetMapping("/create")
     public String getCreatePageForExercise(Model model) {
         Exercise newExercise = new Exercise();
-        newExercise.setUser(currentUser);
         Exercise exercise = exerciseService.saveOrUpdate(newExercise);
         model.addAttribute("exercise", exerciseMapper.toDTO(exercise));
         return "create-update-exercise";

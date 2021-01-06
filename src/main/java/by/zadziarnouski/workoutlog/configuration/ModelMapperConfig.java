@@ -1,6 +1,7 @@
 package by.zadziarnouski.workoutlog.configuration;
 
 import by.zadziarnouski.workoutlog.mapper.ModelMapperProvider;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

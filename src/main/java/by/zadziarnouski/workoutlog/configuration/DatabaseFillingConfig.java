@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -17,21 +18,22 @@ public class DatabaseFillingConfig {
     private final ExerciseService exerciseService;
     private final UserService userService;
     private final MeasurementService measurementService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public DatabaseFillingConfig(ExerciseService exerciseService, UserService userService, MeasurementService measurementService) {
+    public DatabaseFillingConfig(ExerciseService exerciseService, UserService userService, MeasurementService measurementService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.exerciseService = exerciseService;
         this.measurementService = measurementService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
     @EventListener(ApplicationReadyEvent.class)
     public void addTemplatesApplication() {
 
         User admin = new User();
         admin.setUsername("tarasss");
-        admin.setPassword("1111");
+        admin.setPassword(passwordEncoder.encode("1111"));
         admin.setRole(Role.ROLE_ADMIN);
         admin.setFirstName("Taras");
         admin.setLastName("Zadziarnouski");
@@ -93,7 +95,7 @@ public class DatabaseFillingConfig {
         for (int i = 0; i < 5; i++) {
             User user = new User();
             user.setUsername("user" + i);
-            user.setPassword("12345");
+            user.setPassword(passwordEncoder.encode("12345"));
             user.setRole(Role.ROLE_USER);
             user.setFirstName("User" + i);
             user.setLastName("User" + i);

@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 
 @Controller
-@RequestMapping(path = "/workout-designer")
+@RequestMapping(path = "/workout-constructor")
 public class WorkoutConstructorController {
     private final WorkoutService workoutService;
     private final ExerciseService exerciseService;
@@ -48,13 +48,13 @@ public class WorkoutConstructorController {
         currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
         model.addAttribute("workouts", workoutService.findAll().stream().map(workoutMapper::toDTO).collect(Collectors.toList()));
         model.addAttribute("newWorkout", workoutMapper.toDTO(new Workout()));
-        return "workout-designer";
+        return "workout-constructor";
     }
 
     @PostMapping("/start-training")
     public String StartTraining(@ModelAttribute WorkoutDTO workoutDTO, Model model) {
         model.addAttribute("workout", workoutMapper.toDTO(newWorkout));
-        return "start-training";
+        return "workout";
     }
 
     @GetMapping("/create-new-workout")
@@ -104,7 +104,6 @@ public class WorkoutConstructorController {
 
     @GetMapping("/create")
     public String getCreatePageForExercise(Model model) {
-        Exercise newExercise = new Exercise();
         model.addAttribute("exercise", exerciseMapper.toDTO(new Exercise()));
         return "create-update-exercise";
     }

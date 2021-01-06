@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Workout designer</title>
+    <title>Workout constructor</title>
 </head>
 <body>
-<h1>Workout Designer</h1>
+<h1>Workout Constructor</h1>
 
-<form th:if="${workouts.size()>1 }" th:action="@{/workout-designer/start-training}" th:object="${newWorkout}"
+<form th:if="${workouts.size()>1 }" th:action="@{/workout-constructor/start-training}" th:object="${newWorkout}"
       method="post">
 
 
@@ -16,7 +16,7 @@
 
     <p><button type="submit"><S></S>tart training</button></p>
 </form>
-<p><a href="/workout-designer/create-new-workout">Create new workout</a></p>
+<p><a href="/workout-constructor/create-new-workout">Create new workout</a></p>
 <p><a href="/">Back</a></p>
 </body>
 </html>

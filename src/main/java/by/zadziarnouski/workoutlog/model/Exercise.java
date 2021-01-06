@@ -41,7 +41,7 @@ public class Exercise {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private Workout workout;
 

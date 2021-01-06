@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "/")
 public class LoginAndRegistrationController {
     private final UserService userService;
-    
+    private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public LoginAndRegistrationController(UserService userService){
+    public LoginAndRegistrationController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
-        
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/login")
@@ -38,8 +39,9 @@ public class LoginAndRegistrationController {
     @PostMapping("/registration")
     public String registerNewUser(@ModelAttribute User user, Model model) {
         user.setRole(Role.ROLE_USER);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveOrUpdate(user);
-        model.addAttribute("registerCompleted","");
+        model.addAttribute("registerCompleted", "");
         return "login";
     }
 

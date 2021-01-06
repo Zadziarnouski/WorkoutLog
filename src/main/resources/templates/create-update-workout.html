@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Create workout</h1>
-<form th:action="@{/workout-designer/start-training}" th:object="${workout}"
+<form th:action="@{/workout-constructor/start-training}" th:object="${workout}"
       method="post">
 
     <table th:if="*{!getExercises.isEmpty()}">
@@ -26,16 +26,16 @@
             <td th:text="${exercise.restTimeBetweenSets}"></td>
             <td th:text="${exercise.isForAWhile()==true} ? 'for a while' : 'for repetitions' "></td>
             <td><a href="/workout-designer"
-                   th:href="@{/workout-designer/update/{id}(id=${exercise.id})}">Update</a></td>
+                   th:href="@{/workout-constructor/update(id=${exercise.id})}">Update</a></td>
             <td><a href="/workout-designer"
-                   th:href="@{/workout-designer/delete/{id}(id=${exercise.id})}">Delete</a></td>
+                   th:href="@{/workout-constructor/delete(id=${exercise.id})}">Delete</a></td>
         </tr>
     </table>
 
     <p>
         <button type="submit">Start training</button>
     </p>
-     <p><a href="/workout-designer/getFormForAddOrUpdateExercise">Add exercise</a> </p>
+     <p><a href="/workout-constructor/getFormForAddOrUpdateExercise">Add exercise</a> </p>
     <p><a href="/exercise-editor">Back</a></p>
 </form>
 </body>

@@ -16,13 +16,12 @@
 
 <nav>
     <span th:if="${myUser} ne null">
-        <a href="exercise-editor">Exercise editor</a> |
-        <a href="workout-designer">Workout designer</a> |
+        <a href="exercise-editor">Exercise editor |</a>
+        <a href="workout-constructor">Workout constructor</a> |
         <a href="workout-log">Workout log</a> |
         <a href="measurement-log">Measurement log</a> |
-         <a th:if="${myUser.getRole().toString().equals('ROLE_ADMIN')}" href="/user-log">User log</a> |
+         <a th:if="${myUser.getRole().toString().equals('ROLE_ADMIN')}" href="/user-log">User log </a> |
          <a href="/personal-profile">Personal profile</a>
-
     </span>
 </nav>
 <br>
