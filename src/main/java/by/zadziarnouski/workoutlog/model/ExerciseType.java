@@ -8,7 +8,7 @@ public enum ExerciseType {
 
     private final String displayValue;
 
-    private ExerciseType(String displayValue){
+    ExerciseType(String displayValue){
         this.displayValue = displayValue;
     }
 

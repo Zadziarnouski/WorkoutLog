@@ -9,7 +9,6 @@ import by.zadziarnouski.workoutlog.model.User;
 import by.zadziarnouski.workoutlog.model.Workout;
 import by.zadziarnouski.workoutlog.service.ExerciseService;
 import by.zadziarnouski.workoutlog.service.UserService;
-import by.zadziarnouski.workoutlog.service.WorkoutService;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -17,8 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-import java.util.Objects;
-import java.util.Optional;
+
 
 import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
@@ -26,15 +24,11 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 public class ModelMapperProviderImpl implements ModelMapperProvider {
 
     private ModelMapper modelMapper;
-
     private final UserService userService;
-    private final ExerciseService exerciseService;
-    private final WorkoutService workoutService;
 
-    public ModelMapperProviderImpl(UserService userService, ExerciseService exerciseService, WorkoutService workoutService) {
+
+    public ModelMapperProviderImpl(UserService userService) {
         this.userService = userService;
-        this.exerciseService = exerciseService;
-        this.workoutService = workoutService;
     }
 
     @Override
@@ -59,37 +53,17 @@ public class ModelMapperProviderImpl implements ModelMapperProvider {
         modelMapper.createTypeMap(Exercise.class, ExerciseDTO.class)
                 .addMappings(mapper -> {
                     mapper.map(exercise -> exercise.getUser().getId(), ExerciseDTO::setUserID);
-                    mapper.map(exercise -> exercise.getWorkout().getId(), ExerciseDTO::setWorkoutID); //?
                 });
-
-        modelMapper.createTypeMap(ExerciseDTO.class, Exercise.class)
-                .addMappings(mapper -> mapper.skip(Exercise::setWorkout)).setPostConverter(toEntityConverter());
 
         modelMapper.typeMap(ExerciseDTO.class, Exercise.class)
                 .addMappings(mapper -> mapper.using(longUserConverter()).map(ExerciseDTO::getUserID, Exercise::setUser));
         return modelMapper;
     }
 
-    private Converter<ExerciseDTO, Exercise> toEntityConverter() {
-        return context -> {
-            ExerciseDTO source = context.getSource();
-            Exercise destination = context.getDestination();
-            mapSpecificFields(source,destination);
-            return context.getDestination();
-        };
-    }
-
 
     private Converter<Long, User> longUserConverter() {
         return context -> userService.findById(context.getSource());
     }
-
-    void mapSpecificFields(ExerciseDTO source, Exercise destination) {
-        if(Objects.nonNull(source.getWorkoutID())){
-            destination.setWorkout(workoutService.findById(source.getWorkoutID()));
-        }
-    }
-
 
 
 }

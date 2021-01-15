@@ -48,6 +48,13 @@ public class User {
     //Есть другие варианты решить проблему двух коллекций EAGER в одной сущности?
     private List<Measurement> measurements;
 
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Workout> workout;
+
+
     @Column
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;

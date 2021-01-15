@@ -1,4 +1,4 @@
-package by.zadziarnouski.workoutlog.configuration;//package by.zadziarnouski.workoutlog.configuration;
+package by.zadziarnouski.workoutlog.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Basic;
 
 
 @Configuration
@@ -42,23 +41,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user-log/**").hasRole("ADMIN")
                 .antMatchers("/login*", "/registration*").permitAll()
                 .anyRequest().authenticated()
-
                 .and()
-
                 .formLogin().loginPage("/login").loginProcessingUrl("/perform_login")
                 .defaultSuccessUrl("/menu", true)
                 .failureUrl("/login?error=true")
 //                .failureHandler(authenticationFailureHandler())
-
                 .and()
-
                 .logout().logoutUrl("/perform_logout").deleteCookies("JSESSIONID")
 //                .logoutSuccessHandler(logoutSuccessHandler())
-
                 .and()
-
-//                .cors().disable()
-//                .csrf().disable()
+                .cors().disable()
+                .csrf().disable()
                 .httpBasic();
     }
 

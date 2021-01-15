@@ -1,9 +1,7 @@
 package by.zadziarnouski.workoutlog.controller;
 
 import by.zadziarnouski.workoutlog.dto.ExerciseDTO;
-import by.zadziarnouski.workoutlog.dto.UserDTO;
 import by.zadziarnouski.workoutlog.mapper.ExerciseMapper;
-import by.zadziarnouski.workoutlog.mapper.UserMapper;
 import by.zadziarnouski.workoutlog.model.Exercise;
 import by.zadziarnouski.workoutlog.model.User;
 import by.zadziarnouski.workoutlog.service.ExerciseService;
@@ -28,7 +26,6 @@ public class ExerciseEditorController {
     private final ExerciseService exerciseService;
     private final UserService userService;
     private final ExerciseMapper exerciseMapper;
-    private User currentUser; //Вынести в сервис???
 
     @Autowired
     public ExerciseEditorController(ExerciseService exerciseService, UserService userService, ExerciseMapper exerciseMapper) {
@@ -39,7 +36,7 @@ public class ExerciseEditorController {
 
     @GetMapping
     public String getExerciseEditorPage(Model model) {
-        currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
+        User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
         model.addAttribute("exercises", currentUser.getExercises().stream().map(exerciseMapper::toDTO).collect(Collectors.toList()));
         return "exercise-editor";
     }
@@ -58,14 +55,14 @@ public class ExerciseEditorController {
 
     @GetMapping("/create")
     public String getCreatePageForExercise(Model model) {
-        Exercise newExercise = new Exercise();
-        Exercise exercise = exerciseService.saveOrUpdate(newExercise);
+        Exercise exercise = exerciseService.saveOrUpdate(new Exercise());
         model.addAttribute("exercise", exerciseMapper.toDTO(exercise));
         return "create-update-exercise";
     }
 
     @PostMapping("/create-update")
     public String createUpdateExercise(@ModelAttribute ExerciseDTO exerciseDTO, Model model) {
+        User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
         exerciseDTO.setUserID(currentUser.getId());
         Exercise exercise = exerciseService.saveOrUpdate(exerciseMapper.toEntity(exerciseDTO));
         model.addAttribute("exercise", exerciseMapper.toDTO(exercise));

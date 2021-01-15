@@ -11,7 +11,7 @@ public enum MuscleGroup {
 
     private final String displayValue;
 
-    private MuscleGroup(String displayValue) {
+    MuscleGroup(String displayValue) {
         this.displayValue = displayValue;
     }
 

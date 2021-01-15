@@ -26,7 +26,6 @@ public class MeasurementLogController {
     private final UserService userService;
     private final MeasurementMapper measurementMapper;
 
-    private User currentUser;
 
     @Autowired
     public MeasurementLogController(MeasurementService measurementService, UserService userService, MeasurementMapper measurementMapper) {
@@ -37,7 +36,7 @@ public class MeasurementLogController {
 
     @GetMapping
     public String getMeasurementLogPage(Model model) {
-        currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
+        User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
         model.addAttribute("measurements", currentUser.getMeasurements().stream().map(measurementMapper::toDTO).collect(Collectors.toList()));
         return "measurement-log";
     }
@@ -64,6 +63,7 @@ public class MeasurementLogController {
 
     @PostMapping("/create-update")
     public String createUpdateMeasurement(@ModelAttribute MeasurementDTO measurementDTO, Model model) {
+        User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
         measurementDTO.setUserID(currentUser.getId());
         Measurement measurement = measurementService.saveOrUpdate(measurementMapper.toEntity(measurementDTO));
         model.addAttribute("measurement", measurementMapper.toDTO(measurement));

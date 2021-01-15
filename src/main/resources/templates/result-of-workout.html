@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Result of workout</h2>
+<div th:object="${workout}">
+<p><strong>ID:</strong> <span th:text="*{id}"></span></p>
+<p><strong>Title:</strong> <span th:text="*{title}"></span></p>
+<p><strong>Exercises:</strong></p>
+
+    <table>
+        <tr th:each="exercise : *{exercises}">
+            <td th:text="${exercise.name}"></td>
+            <td th:each=" set : ${exercise.set}" th:text="${set}"></td>
+        </tr>
+    </table>
+
+<p><strong>Rating:</strong> <span th:text="*{rating}"></span></p>
+<p><strong>Comments:</strong> <span th:text="*{comments}"></span></p>
+</div>
+
+
+<p><a th:href="@{/workout-constructor/get-save-workout-form}">Back</a></p>
+<p><a href="/workout-log">Confirm</a>
+</body>
+</html>

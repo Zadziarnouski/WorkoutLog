@@ -8,15 +8,30 @@
 <form th:action="@{/workout-constructor/add-or-update-exercise-in-workout}" th:object="${newExercise}"
       method="post">
 
-    <p th:if="*{name eq null}"><label for="name">Exercise: </label>
-        <select th:field="*{id}" id="name">
-            <option th:each="exercise : ${exercises}"  th:value="${exercise.id}" th:text="${exercise.name}"></option>
-        </select></p>
-    <p><label for="numberOfSets">Number of sets: </label>
-        <input id="numberOfSets" type="number" th:field="*{numberOfSets}"></p>
+
+    <p><label for="name">Exercise: </label>
+        <select th:if="*{getNumberOfSets()==0}" th:field="*{id}" id="name">
+            <option th:each="exercise : ${exercises}" th:value="${exercise.id}" th:text="${exercise.name}"></option>
+        </select> <strong th:if="*{id ne null}" th:text="*{name}"></strong>
+        <input th:if="*{id ne null}" type="hidden" th:field="*{id}">
+    </p>
+    <input th:if="*{id ne null}" type="hidden" th:field="*{name}">
+    <input th:if="*{id ne null}" type="hidden" th:field="*{muscleGroup}">
+    <input th:if="*{id ne null}" type="hidden" th:field="*{exerciseType}">
+    <input th:if="*{id ne null}" type="hidden" th:field="*{necessaryEquipment}">
+    <input th:if="*{id ne null}" type="hidden" th:field="*{description}">
+    <input th:if="*{id ne null}" type="hidden" th:field="*{userID}">
+    <input th:if="*{id ne null}" type="hidden" th:field="*{workouts}">
+
+    <p><label for="set">Number of sets: </label>
+        <input id="set" type="number" th:field="*{numberOfSets}"></p>
     <p><label for="restTimeBetweenSets">Rest time between sets: </label>
         <input id="restTimeBetweenSets" type="number" th:field="*{restTimeBetweenSets}"></p>
-<!--    <p><label for="type">Type exercise: </label></p>-->
+    <p><label for="type">Type exercise: </label>
+        <select id="type" th:field="*{forAWhile}">
+            <option  th:value="'true'">For a while</option>
+            <option  th:value="'false'">For repetitions</option>
+        </select></p>
 
     <p>
         <button type="submit" th:text="${newExercise.name eq null}?'Add':'Update'">Add/Update</button>

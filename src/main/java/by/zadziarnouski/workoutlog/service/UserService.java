@@ -1,7 +1,6 @@
 package by.zadziarnouski.workoutlog.service;
 
 
-import by.zadziarnouski.workoutlog.dto.UserDTO;
 import by.zadziarnouski.workoutlog.model.User;
 import org.springframework.stereotype.Service;
 

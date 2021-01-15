@@ -6,7 +6,7 @@ public enum Gender {
 
     private final String displayValue;
 
-    private Gender(String displayValue){
+    Gender(String displayValue){
         this.displayValue = displayValue;
     }
 

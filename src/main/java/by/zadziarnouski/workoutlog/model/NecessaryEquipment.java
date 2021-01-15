@@ -9,7 +9,7 @@ public enum NecessaryEquipment {
 
     private final String displayValue;
 
-    private NecessaryEquipment(String displayValue) {
+    NecessaryEquipment(String displayValue) {
         this.displayValue = displayValue;
     }
 

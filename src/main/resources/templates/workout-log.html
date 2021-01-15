@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Workout log</title>
 </head>
 <body>
 <h1>Workout Log</h1>
-<a href="/">Back</a>
+
+<table th:if="${!workouts.isEmpty()}">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Exercises</th>
+        <th>Rating</th>
+        <th>Comments</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr th:each="workout : ${workouts}">
+        <td th:text="${workout.id}"></td>
+        <td th:text="${workout.title}"></td>
+        <td>
+            <table>
+                <tr th:each="exercise : ${workout.exercises}">
+                    <td th:text="${exercise.name}"></td>
+                    <td th:each=" set : ${exercise.set}" th:text="${set}"></td>
+                </tr>
+            </table>
+        </td>
+        <td th:text="${workout.rating}"></td>
+        <td th:text="${workout.comments}"></td>
+        <td><a th:href="@{/workout-log/update/{id}(id=${workout.id})}">Update</a></td>
+        <td><a th:href="@{/workout-log/delete/{id}(id=${workout.id})}">Delete</a></td>
+    </tr>
+</table>
+
+<p><a href="/">Back</a></p>
+
 </body>
 </html>

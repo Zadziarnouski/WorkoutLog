@@ -1,8 +1,10 @@
 package by.zadziarnouski.workoutlog.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,10 +19,13 @@ public class Workout {
     @Column
     private String title;
 
-    @OneToMany(mappedBy = "workout",
-            cascade = CascadeType.ALL,
+    @ManyToMany(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    private List<Exercise> exercises;
+    @JoinTable(
+            name = "exercises_in_workout",
+            joinColumns = @JoinColumn(name = "exercise_id"),
+            inverseJoinColumns = @JoinColumn(name = "workout_id"))
+    private List<Exercise> exercises = new ArrayList<>();
 
     @Column
     private String comments;
@@ -30,4 +35,8 @@ public class Workout {
 
     @Column
     private int rating;
+
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 }
