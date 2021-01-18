@@ -9,15 +9,15 @@
 
 <table th:if="${!users.isEmpty()}">
     <tr>
-        <th>Id</th>
+        <th>No.</th>
         <th>Username</th>
         <th>Firstname</th>
         <th>Lastname</th>
         <th></th>
         <th></th>
     </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}"></td>
+    <tr th:each="user, stat : ${users}">
+        <td th:text="${stat.index+1}"></td>
         <td th:text="${user.username}"></td>
         <td th:text="${user.firstName}"></td>
         <td th:text="${user.lastName}"></td>
@@ -26,7 +26,7 @@
     </tr>
 </table>
 
-<p><a href="/user-log/create">Create new</a></p>
+<!--<p><a href="/user-log/create">Create new</a></p>-->
 <p><a href="/">Back</a></p>
 </body>
 </html>

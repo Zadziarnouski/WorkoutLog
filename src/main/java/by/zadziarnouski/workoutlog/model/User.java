@@ -1,12 +1,14 @@
 package by.zadziarnouski.workoutlog.model;
 
 
+import by.zadziarnouski.workoutlog.validation.EnumNamePattern;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,22 +21,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String username;     //добавить валидацию
+    @NotBlank(message = "Username is mandatory")
+    private String username;
 
-    @Column
+    @NotBlank(message = "Password is mandatory")
     private String password;     //добавить валидацию
 
-    @Enumerated
+    @EnumNamePattern(regexp = "ROLE_USER|ROLE_ADMIN")
     private Role role;
 
-    @Column
+    @NotBlank(message = "Firstname is mandatory")
     private String firstName;
 
-    @Column
+    @NotBlank(message = "Lastname is mandatory")
     private String lastName;
 
-    @Enumerated
+    @EnumNamePattern(regexp = "MALE|FEMALE")
     private Gender gender;
 
     @OneToMany(mappedBy = "user",
@@ -54,19 +56,14 @@ public class User {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Workout> workout;
 
-
-    @Column
+    @Past
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;
 
-    @Column
     private float height;
 
-    @Column
     private float weight;
 
-    @Column
+    @PastOrPresent
     private LocalDate registrationDate = LocalDate.now();
-
-
 }

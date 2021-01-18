@@ -3,32 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title th:if="${measurement.id==null}?'Add measurement':'Update measurement'">Add/Update measurement</title>
+    <script>
+        function validateForm() {
+            let weight = document.forms["form"]["weight"].value;
+            let height = document.forms["form"]["height"].value;
+            let arms = document.forms["form"]["arms"].value;
+            let forearms = document.forms["form"]["forearms"].value;
+            let chest = document.forms["form"]["chest"].value;
+            let waist = document.forms["form"]["waist"].value;
+            let buttocks = document.forms["form"]["buttocks"].value;
+            let thighs = document.forms["form"]["thighs"].value;
+            let calves = document.forms["form"]["calves"].value;
+
+
+            if (weight === "" || height === "" || arms === ""|| forearms === ""|| chest === ""|| waist === ""|| buttocks === ""|| thighs === ""|| calves === "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+
+        }
+    </script>
 </head>
 <body>
-<form th:action="@{/measurement-log/create-update}" th:object="${measurement}"
+<form name="form" onsubmit="return validateForm() " th:action="@{/measurement-log/create-update}" th:object="${measurement}"
       method="post">
     <p><input type="hidden" th:field="*{id}"></p>
     <p><input type="hidden" th:field="*{userID}"></p>
     <p><label for="weight">Weight:</label>
-        <input type="number" id="weight" th:field="*{weight}"></p>
+        <input type="number" min="35" max="120" step="1" id="weight" th:field="*{weight}"></p>
     <p><label for="height">Height</label>
-        <input type="number" id="height" th:field="*{height}"></p>
+        <input type="number" min="120" max="230" step="1" id="height" th:field="*{height}"></p>
     <p><label for="neck">Neck</label>
-        <input type="number" id="neck" th:field="*{neck}"></p>
+        <input type="number" min="20" max="50" step="1" id="neck" th:field="*{neck}"></p>
     <p><label for="arms">Arms:</label>
-        <input type="number" id="arms" th:field="*{arms}"></p>
+        <input type="number" min="25" max="60" step="1" id="arms" th:field="*{arms}"></p>
     <p><label for="forearms">Forearms:</label>
-        <input type="number" id="forearms" th:field="*{forearms}"></p>
+        <input type="number" min="15" max="50" step="1" id="forearms" th:field="*{forearms}"></p>
     <p><label for="chest">Chest:</label>
-        <input type="number" id="chest" th:field="*{chest}"></p>
+        <input type="number" min="40" max="150" step="1" id="chest" th:field="*{chest}"></p>
     <p><label for="waist">Waist:</label>
-        <input type="number" id="waist" th:field="*{waist}"></p>
+        <input type="number" min="40" max="150" step="1" id="waist" th:field="*{waist}"></p>
     <p><label for="buttocks">Buttocks:</label>
-        <input type="number" id="buttocks" th:field="*{buttocks}"></p>
+        <input type="number" min="40" max="150" step="1" id="buttocks" th:field="*{buttocks}"></p>
     <p><label for="thighs">Thighs:</label>
-        <input type="number" id="thighs" th:field="*{thighs}"></p>
+        <input type="number" min="35" max="100" step="1" id="thighs" th:field="*{thighs}"></p>
     <p><label for="calves">Calves:</label>
-        <input type="number" id="calves" th:field="*{calves}"></p>
+        <input type="number" min="15" max="40" step="1" id="calves" th:field="*{calves}"></p>
     <p>
         <button type="submit" th:text="${measurement.weight==0.0}?'Add measurement':'Update measurement'">Add/Update
         </button>

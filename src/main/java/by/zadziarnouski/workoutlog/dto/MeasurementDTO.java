@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 @Setter
 public class MeasurementDTO {
     private Long id;
+    private LocalDateTime fixationTime;
     private float weight;
     private float height;
     private float neck;

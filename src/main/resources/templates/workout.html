@@ -6,6 +6,16 @@
     <script th:inline="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script th:inline="javascript">
 
+
+        function validateForm() {
+            let resultOfSet = document.forms["form2"]["resultOfSet"].value;
+
+            if (resultOfSet === "") {
+                alert("Field Result of Set must be filled out");
+                return false;
+            }
+        }
+
         // /***Event Listener on Button**/
         // $(document).ready(function () {
         //
@@ -80,6 +90,10 @@
         //         }
         //     });
         // }
+
+
+
+
     </script>
 </head>
 <body>
@@ -102,11 +116,11 @@
     </p>
 </div>
 
-<form id="form2" th:action="@{/workout-constructor/save-result-of-set}" method="post">
+<form id="form2" onsubmit="validateForm()" th:action="@{/workout-constructor/save-result-of-set}" method="post">
 
 
-    <p th:if="${finish eq null}"><label>Result:</label>
-        <input type="number" th:value="${resultOfSet}" name="set">
+    <p th:if="${finish eq null}"><label for="resultOfSet">Result:</label>
+        <input type="number" id="resultOfSet" min="1" step="1" th:value="${resultOfSet}" name="set">
         <button onclick="startTimerAfterSetResult()">Save result of set</button>
     </p>
 </form>

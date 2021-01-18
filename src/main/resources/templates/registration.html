@@ -8,10 +8,31 @@
             text-align: center;
         }
     </style>
+    <script>
+        function validateForm() {
+            let username = document.forms["form"]["username"].value;
+            let password = document.forms["form"]["password"].value;
+            let firstname = document.forms["form"]["firstname"].value;
+            let lastname = document.forms["form"]["lastname"].value;
+            let gender = document.forms["form"]["gender"].value;
+            let birthday = document.forms["form"]["birthday"].value;
+            let height = document.forms["form"]["height"].value;
+            let weight = document.forms["form"]["weight"].value;
+            if (username === "" || password === "" || firstname === "" || lastname === "" || gender === ""
+                || birthday === "" || height === "" || weight === "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+            if (weight < 0 || height < 0) {
+                alert("Field Height and Weight must be positive");
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
 <h1>Registration</h1>
-<form name="form" th:action="@{/registration}" method="post" th:object="${newUser}">
+<form name="form" th:action="@{/registration}" onsubmit="return validateForm()" method="post" th:object="${newUser}">
 
     <p><label for="username">Username: </label>
         <input type="text" id="username" th:field="*{username}"></p>
@@ -28,11 +49,11 @@
         <input type="radio" id="female" name="gender" th:field="*{gender}"
                th:value="${T(by.zadziarnouski.workoutlog.model.Gender).FEMALE}"><label for="female">Female</label></p>
     <p><label for="birthday">Birthday:(yyyy-MM-dd)</label>
-        <input type="text" th:value="*{birthday}" id="birthday"></p>
+        <input type="text" pattern="[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}" th:value="*{birthday}" id="birthday"></p>
     <p><label for="height">Height:</label>
-        <input type="number" th:field="*{height}" id="height"></p>
+        <input type="number" min="0" step="1" th:field="*{height}" id="height"></p>
     <p><label for="weight">Weight:</label>
-        <input type="number" th:field="*{weight}" id="weight"></p>
+        <input type="number" min="0" step="1" th:field="*{weight}" id="weight"></p>
     <p>
         <button type="submit">Register</button>
     </p>

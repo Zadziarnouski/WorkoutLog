@@ -1,11 +1,12 @@
 package by.zadziarnouski.workoutlog.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import by.zadziarnouski.workoutlog.validation.EnumNamePattern;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,28 +19,25 @@ public class Exercise  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+
+//    @NotBlank(message = "Name is mandatory")
     private String name;
 
-    @Enumerated
+    @EnumNamePattern(regexp = "CHEST|BACK|ARMS|SHOULDERS|LEGS|ABS|CALVES")
     private MuscleGroup muscleGroup;
 
-    @Enumerated
+    @EnumNamePattern(regexp = "BASIS|ISOLATION|CARDIO|STATIC")
     private ExerciseType exerciseType;
 
-    @Enumerated
+    @EnumNamePattern(regexp = "NOEQUIPMENT|ELASTICBAND|HORIZONTALBAR|KETTLEBELL|MAT")
     private NecessaryEquipment necessaryEquipment;
 
-    @Column
     private int numberOfSets;
 
-    @Column
     private int restTimeBetweenSets;
 
-    @Column
     private boolean forAWhile;
 
-    @Column
     private String description;
 
     @ToString.Exclude
@@ -51,5 +49,5 @@ public class Exercise  {
     private List<Workout> workouts = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)
-    private List<Integer> set = new ArrayList<>();
+    private List<@PositiveOrZero Integer> set = new ArrayList<>();
 }

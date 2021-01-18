@@ -37,7 +37,7 @@ public class ExerciseEditorController {
     @GetMapping
     public String getExerciseEditorPage(Model model) {
         User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
-        model.addAttribute("exercises", currentUser.getExercises().stream().map(exerciseMapper::toDTO).collect(Collectors.toList()));
+        model.addAttribute("exercises", currentUser.getExercises().stream().filter(exercise -> exercise.getNumberOfSets()==0).map(exerciseMapper::toDTO).collect(Collectors.toList()));
         return "exercise-editor";
     }
 

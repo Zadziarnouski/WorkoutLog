@@ -8,10 +8,25 @@
             text-align: center;
         }
     </style>
+    <script>
+        function validateForm() {
+            let username = document.forms["form"]["username"].value;
+            let password = document.forms["form"]["password"].value;
+
+            if (username === "") {
+                alert("Field Username must be filled out");
+                return false;
+            }
+            if (password === "") {
+                alert("Field Password must be filled out");
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
 <h1>Login</h1>
-<form name="form" th:action="@{/perform_login}" method="post">
+<form name="form" onsubmit="return validateForm()" th:action="@{/perform_login}" method="post">
     <div th:if="${param.error}">
         Invalid username and password.
     </div>

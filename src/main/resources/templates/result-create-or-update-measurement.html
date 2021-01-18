@@ -6,8 +6,7 @@
 </head>
 <body>
 <h2>Result</h2>
-<p><strong>ID:</strong> <span th:text="${measurement.id}"></span></p>
-
+<p><strong>Fixation time:</strong> <span th:text="${#temporals.format(measurement.getFixationTime(), 'HH:mm, dd-MM-yyyy')}"></span></p>
 <p><strong>Weight, kg:</strong> <span th:text="${measurement.weight}"></span></p>
 <p><strong>Height, cm:</strong> <span th:text="${measurement.height}"></span></p>
 <p><strong>Neck, cm:</strong> <span th:text="${measurement.neck}"></span></p>

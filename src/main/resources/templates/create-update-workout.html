@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Create workout</h1>
-<p th:if="${newWorkout ne null}">This workout does not contain any added exercises yet.</p>
+<p th:if="${workout.exercises.isEmpty()}">This workout does not contain any added exercises yet.</p>
 <div th:if="${workout ne null}"  th:object="${workout}">
 <div th:if="${!workout.exercises.isEmpty()}">
     <table >

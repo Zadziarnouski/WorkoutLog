@@ -3,20 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title th:if="${user.username==null}?'Create user':'Update user'">Create/Update user</title>
+    <script>
+        function validateForm() {
+            let username = document.forms["form"]["username"].value;
+            let firstname = document.forms["form"]["firstname"].value;
+            let lastname = document.forms["form"]["lastname"].value;
+
+
+            if (username === "" || firstname === "" || lastname === "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+
+        }
+    </script>
 </head>
 <body>
-<form th:action="@{/user-log/create-update}" th:object="${user}"
+<form name="form" onsubmit="return validateForm()" th:action="@{/user-log/create-update}" th:object="${user}"
       method="post">
     <p><input type="hidden" th:field="*{id}"></p>
     <p><label for="username">Username: </label>
-        <input type="text" id="username" th:field="*{username}"></p>
-<!--    <p><label for="password">Password: </label>-->
-<!--        <input type="text" id="password" th:field="*{password}"></p>-->
+        <input type="text" pattern="[a-zA-Z]+" id="username" th:field="*{username}"></p>
     <p><input type="hidden" th:field="*{role}"></p>
     <p><label for="firstname">Firstname: </label>
-        <input type="text" id="firstname" th:field="*{firstName}"></p>
+        <input type="text" pattern="[a-zA-Z]+" id="firstname" th:field="*{firstName}"></p>
     <p><label for="lastname">Lastname: </label>
-        <input type="text" id="lastname" th:field="*{lastName}"></p>
+        <input type="text" pattern="[a-zA-Z]+" id="lastname" th:field="*{lastName}"></p>
     <p>
         <button type="submit" th:text="${user.username==null}?'Create':'Update'">Create/Update</button>
     </p>

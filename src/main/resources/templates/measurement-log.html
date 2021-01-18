@@ -9,7 +9,8 @@
 
 <table th:if="${!measurements.isEmpty()}">
     <tr>
-        <th>ID</th>
+        <th>No.</th>
+        <th>Fixation time</th>
         <th>Weight</th>
         <th>Height</th>
         <th>Neck</th>
@@ -23,8 +24,9 @@
         <th></th>
         <th></th>
     </tr>
-    <tr th:each="measurement : ${measurements}">
-        <td th:text="${measurement.id}"></td>
+    <tr th:each="measurement,stat : ${measurements}">
+        <td th:text="${stat.index+1}"></td>
+        <td th:text="${#temporals.format(measurement.getFixationTime(), 'HH:mm, dd-MM-yyyy')}"></td>
         <td th:text="${measurement.weight}"></td>
         <td th:text="${measurement.height}"></td>
         <td th:text="${measurement.neck}"></td>

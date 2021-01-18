@@ -3,6 +3,10 @@ package by.zadziarnouski.workoutlog.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,43 +18,31 @@ public class Measurement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @PastOrPresent
     public LocalDateTime fixationTime = LocalDateTime.now();
 
-    @Column
     private float weight;
 
-    @Column
     private float height;
 
-    @Column
     private float neck;
 
-    @Column
     private float arms;
 
-    @Column
     private float forearms;
 
-    @Column
     private float chest;
 
-    @Column
     private float waist;
 
-    @Column
     private float buttocks;
 
-    @Column
     private float thighs;
 
-    @Column
     private float calves;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
-
 
 }

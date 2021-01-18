@@ -8,15 +8,25 @@
             text-align: center;
         }
     </style>
+    <script>
+        function validateForm() {
+            let title = document.forms["form"]["title"].value;
+            let rating = document.forms["form"]["rating"].value;
+
+            if (title === "" || rating === "" ) {
+                alert("All fields must be filled out except for comments");
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
 <h1>Saving a workout</h1>
-<form name="form" th:action="@{/workout-constructor/save-workout}" method="post" th:object="${workout}">
+<form name="form" onsubmit="return validateForm()" th:action="@{/workout-constructor/save-workout}" method="post" th:object="${workout}">
 
 
     <p><label for="title">Title: </label>
-        <input type="text" id="title" th:field="*{title}"></p>
-
+        <input type="text" pattern="[a-zA-z0-9-]+" id="title" th:field="*{title}"></p>
 
     <p><label>Rating:</label></p>
         <p><input type="radio" id="1" name="rating" th:field="*{rating}" th:value="'1'"><label for="1">1</label>

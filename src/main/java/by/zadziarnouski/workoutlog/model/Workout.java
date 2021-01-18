@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,6 @@ public class Workout {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String title;
 
     @ManyToMany(cascade = CascadeType.ALL,
@@ -27,13 +27,10 @@ public class Workout {
             inverseJoinColumns = @JoinColumn(name = "workout_id"))
     private List<Exercise> exercises = new ArrayList<>();
 
-    @Column
     private String comments;
 
-    @Column
     private int restBetweenExercise;
 
-    @Column
     private int rating;
 
     @ToString.Exclude
