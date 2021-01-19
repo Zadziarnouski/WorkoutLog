@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
     <title>Workout</title>
-    <script th:inline="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script th:inline="javascript">
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
+    <script>
 
 
         function validateForm() {
@@ -16,29 +35,26 @@
             }
         }
 
-        // /***Event Listener on Button**/
-        // $(document).ready(function () {
-        //
-        // })
+        /***Event Listener on Button**/
+        $(document).ready(function () {
 
-
-        // let timeOfRest = [[${restTimeBetweenSets}]]
+        })
 
         function startTimerAfterSetResult() {
-            // countdownTimer(timeOfRest)
             countdownTimer(1)
         }
 
         function countdownTimer(minutes) {
 
             // document.getElementById('form1').style.display = "none";
-            // document.getElementById('form2').style.display = "none";
+            document.getElementById('form2').style.display = "none";
 
             function minTwoDigits(n) {
                 return (n < 10 ? '0' : '') + n;
             }
 
-            let interval = minutes * 60;  //5 minutes = 300 sec
+            // let interval = minutes * 60;  //5 minutes = 300 sec
+            let interval = 3;  //5 minutes = 300 sec
             let counter = setInterval(function () {
                 let hours = Math.floor((interval % (60 * 60 * 24)) / (60 * 60));
                 let minutes = Math.floor((interval % (60 * 60)) / (60));
@@ -56,76 +72,73 @@
             }, 1000)
         }
 
-        // /**Functions**/
-        //
-        //
-        // /***Ajax query****/
-        // function getWorkout() {
-        //     $.ajax({
-        //         url: "http://localhost:8080/workout-constructor/workout-start",
-        //         dataType: "json", // Для использования JSON формата получаемых данных
-        //         method: "GET", // Что бы воспользоваться POST методом, меняем данную строку на POST
-        //         success: function (data) {
-        //             let result = ""
-        //             let numberOfSets
-        //             for (let i = 0; i < data.exercises.length; i++) {
-        //                 numberOfSets = data.exercises[i].numberOfSets
-        //                 if (numberOfSets > 0) {
-        //                     result += '<p>' + data.exercises[i].name
-        //                     for (let j = 0; j < data.exercises[i].set.length; j++) {
-        //                         result += '<strong>' + data.exercises.exercises[i].set[j] + '</strong>'
-        //                     }
-        //                     result += '<input type="number" id="exercise" th:field="*{' + data.exercises[i].set[data.exercises[i].set.length] + '}"/>'
-        //
-        //                     result += '<button type="button" th:onclick="getNumberOfReps()">Enter</button></p>'
-        //                 }
-        //                 numberOfSets--
-        //             }
-        //
-        //             document.getElementById("form").innerHTML = result
-        //
-        //         },
-        //         error: function (jqXHR, textStatus, errorThrown) {
-        //             console.log(errorThrown);
-        //         }
-        //     });
-        // }
-
-
-
-
     </script>
 </head>
+
 <body>
 
-<div id="startBtn"></div>
+<!-- Static navbar -->
 
-<div th:object="${workout}">
+<div th:insert="~{navbar::#navbar}"></div>
 
-    <table>
+<!-- +++++ Contact Section +++++ -->
 
-        <tr th:each="exercise : *{exercises}">
-            <td th:text="${exercise.name}"></td>
-            <td th:each=" set : ${exercise.set}" th:text="${set}"></td>
-        </tr>
-    </table>
+<div class="container pt">
+    <div class="row mt">
+        <div class="col-lg-6 col-lg-offset-3 centered">
+            <h3>Create new exercise</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row mt">
+        <div class="col-lg-8 col-lg-offset-2">
+
+            <div th:object="${workout}">
+
+                <table >
+                    <tr th:each="exercise : *{exercises}">
+                        <td th:text="${exercise.name}"></td>
+                        <td th:each=" set : ${exercise.set}" th:text="${set}"></td>
+                    </tr>
+                </table>
+
+            </div>
+            <p th:if="${finish ne null}">
+                <a href="/workout-constructor/get-save-workout-form">Go to save workout</a>
+            </p>
 
 
-    <p th:if="${finish ne null}">
-        <a href="/workout-constructor/get-save-workout-form">Go to save workout</a>
-    </p>
+            <form class="contact-form php-mail-form" id="form" onsubmit="validateForm()"
+                  th:action="@{/workout-constructor/save-result-of-set}" method="post">
+
+                <p th:if="${finish eq null}"><label for="resultOfSet">Result:</label>
+                    <input type="number" id="resultOfSet" min="1" step="1" th:value="${resultOfSet}" name="set">
+                    <button onclick="startTimerAfterSetResult()">Save result of set</button>
+                </p>
+            </form>
+
+            <div id="timer"></div>
+
+        </div>
+    </div>
+    <!-- /row -->
 </div>
+<!-- /container -->
 
-<form id="form2" onsubmit="validateForm()" th:action="@{/workout-constructor/save-result-of-set}" method="post">
+<!-- +++++ Footer Section +++++ -->
 
+<div th:insert="~{footer::#footer}"></div>
+<div th:insert="~{footer::#copyrights}"></div>
 
-    <p th:if="${finish eq null}"><label for="resultOfSet">Result:</label>
-        <input type="number" id="resultOfSet" min="1" step="1" th:value="${resultOfSet}" name="set">
-        <button onclick="startTimerAfterSetResult()">Save result of set</button>
-    </p>
-</form>
+<!-- JavaScript Libraries -->
 
-<div id="timer"></div>
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
 
 </body>
 </html>

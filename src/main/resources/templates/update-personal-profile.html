@@ -1,61 +1,147 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8">
-    <title>Personal profile</title>
-</head>
-<script>
-    function validateForm() {
-        let username = document.forms["form"]["username"].value;
-        let password = document.forms["form"]["password"].value;
-        let firstname = document.forms["form"]["firstname"].value;
-        let lastname = document.forms["form"]["lastname"].value;
-        let gender = document.forms["form"]["gender"].value;
-        let birthday = document.forms["form"]["birthday"].value;
-        let height = document.forms["form"]["height"].value;
-        let weight = document.forms["form"]["weight"].value;
-        if (username === "" || password === "" || firstname === "" || lastname === "" || gender === ""
-            || birthday === "" || height === "" || weight === "") {
-            alert("All fields must be filled out");
-            return false;
-        }
-        if (weight < 0 || height < 0) {
-            alert("Field Height and Weight must be positive");
-            return false;
-        }
-    }
-</script>
-<body>
-<h1>Personal Profile</h1>
 
-<form name="form" th:action="@{/personal-profile/update}" th:object="${user}"
-      method="post">
-    <p><input type="hidden" th:field="*{id}"></p>
-    <p><label for="username">Username: </label>
-        <input type="text" id="username" pattern="[a-zA-Z]+" th:field="*{username}"></p>
-    <p><label for="password">Password: </label>
-        <input type="password" id="password" pattern="[a-zA-Z0-9]{5,10}" th:field="*{password}"></p>
-    <p><input type="hidden" th:field="*{role}"></p>
-    <p><label for="firstname">Firstname: </label>
-        <input type="text" id="firstname" pattern="[a-zA-Z]+"  th:field="*{firstName}"></p>
-    <p><label for="lastname">Lastname: </label>
-        <input type="text" id="lastname" pattern="[a-zA-Z]+" th:field="*{lastName}"></p>
-    <p>
-    <p><label>Gender: </label>
-        <input type="radio" id="male" name="gender" th:field="*{gender}"
-               th:value="${T(by.zadziarnouski.workoutlog.model.Gender).MALE}"><label for="male">Male</label>
-        <input type="radio" id="female" name="gender" th:field="*{gender}"
-               th:value="${T(by.zadziarnouski.workoutlog.model.Gender).FEMALE}"><label for="female">Female</label></p>
-    <p><label for="birthday">Birthday:(yyyy-MM-dd)</label>
-        <input type="text" pattern="[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}" th:value="*{birthday}" id="birthday"></p>
-    <p><label for="height">Height:</label>
-        <input type="number" min="120" max="230" step="1"  th:field="*{height}" id="height"></p>
-    <p><label for="weight">Weight:</label>
-        <input type="number" min="35" max="120" step="1" th:field="*{weight}" id="weight"></p>
-    <p>
-        <button type="submit">Update profile</button>
-    </p>
-    <p><a href="/personal-profile">Back</a></p>
-</form>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <title>Update personal profile</title>
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
+    <script>
+        function validateForm() {
+            let username = document.forms["form"]["username"].value;
+            let password = document.forms["form"]["password"].value;
+            let firstname = document.forms["form"]["firstname"].value;
+            let lastname = document.forms["form"]["lastname"].value;
+            let gender = document.forms["form"]["gender"].value;
+            let birthday = document.forms["form"]["birthday"].value;
+            let height = document.forms["form"]["height"].value;
+            let weight = document.forms["form"]["weight"].value;
+            if (username === "" || password === "" || firstname === "" || lastname === "" || gender === ""
+                || birthday === "" || height === "" || weight === "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+            if (weight < 0 || height < 0) {
+                alert("Field Height and Weight must be positive");
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+<!-- Static navbar -->
+
+<div th:insert="~{navbar::#navbar}"></div>
+
+<!-- +++++ Contact Section +++++ -->
+
+<div class="container pt">
+    <div class="row mt">
+        <div class="col-lg-6 col-lg-offset-3 centered">
+            <h3>Create new exercise</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row mt">
+        <div class="col-lg-8 col-lg-offset-2">
+
+
+
+            <form name="form" class="contact-form php-mail-form" th:action="@{/personal-profile/update}" th:object="${user}"
+                  method="post">
+                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{role}">
+
+                <div class="form-group">
+                <label for="username">Username: </label>
+                    <input type="text" id="username" pattern="[a-zA-Z]+" th:field="*{username}">
+                </div>
+
+                <div class="form-group">
+                <label for="password">Password: </label>
+                    <input type="password" id="password" pattern="[a-zA-Z0-9]{5,10}" th:field="*{password}">
+                </div>
+
+                <div class="form-group">
+                <label for="firstname">Firstname: </label>
+                    <input type="text" id="firstname" pattern="[a-zA-Z]+"  th:field="*{firstName}">
+                </div>
+
+                <div class="form-group">
+                <label for="lastname">Lastname: </label>
+                    <input type="text" id="lastname" pattern="[a-zA-Z]+" th:field="*{lastName}">
+                </div>
+
+                <div class="form-group">
+                <label>Gender: </label>
+                    <input type="radio" id="male" name="gender" th:field="*{gender}"
+                           th:value="${T(by.zadziarnouski.workoutlog.model.Gender).MALE}"><label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" th:field="*{gender}"
+                           th:value="${T(by.zadziarnouski.workoutlog.model.Gender).FEMALE}"><label for="female">Female</label>
+                </div>
+
+                <div class="form-group">
+                <label for="birthday">Birthday:(yyyy-MM-dd)</label>
+                    <input type="text" pattern="[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}" th:value="*{birthday}" id="birthday">
+                </div>
+
+                <div class="form-group">
+                <label for="height">Height:</label>
+                    <input type="number" min="120" max="230" step="1"  th:field="*{height}" id="height">
+                </div>
+
+                <div class="form-group">
+                <label for="weight">Weight:</label>
+                    <input type="number" min="35" max="120" step="1" th:field="*{weight}" id="weight">
+                </div>
+
+
+                <div class="form-send">
+                    <button type="submit"  class="btn btn-large">Update profile</button>
+                </div>
+                <p><a href="/personal-profile">Back</a></p>
+            </form>
+
+        </div>
+    </div>
+    <!-- /row -->
+</div>
+<!-- /container -->
+
+<!-- +++++ Footer Section +++++ -->
+
+<div th:insert="~{footer::#footer}"></div>
+<div th:insert="~{footer::#copyrights}"></div>
+
+<!-- JavaScript Libraries -->
+
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
+
 </body>
 </html>

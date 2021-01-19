@@ -1,32 +1,87 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
     <title>User log</title>
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
 </head>
+
 <body>
-<h1>User Log</h1>
 
-<table th:if="${!users.isEmpty()}">
-    <tr>
-        <th>No.</th>
-        <th>Username</th>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th></th>
-        <th></th>
-    </tr>
-    <tr th:each="user, stat : ${users}">
-        <td th:text="${stat.index+1}"></td>
-        <td th:text="${user.username}"></td>
-        <td th:text="${user.firstName}"></td>
-        <td th:text="${user.lastName}"></td>
-        <td><a href="/user-log"  th:href="@{/user-log/update/{id}(id=${user.id})}">Update</a></td>
-        <td><a href="/user-log" th:href="@{/user-log/delete/{id}(id=${user.id})}">Delete</a></td>
-    </tr>
-</table>
+<!-- Static navbar -->
 
-<!--<p><a href="/user-log/create">Create new</a></p>-->
-<p><a href="/">Back</a></p>
+<div th:insert="~{navbar::#navbar}"></div>
+
+<!-- +++++ Contact Section +++++ -->
+
+<div class="container pt">
+    <div class="row mt">
+        <div class="col-lg-6 col-lg-offset-3 centered">
+            <h3>User log</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row mt">
+        <div class="col-lg-8 col-lg-offset-2">
+            <table th:if="${!users.isEmpty()}">
+                <tr>
+                    <th>No.</th>
+                    <th>Username</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr th:each="user, stat : ${users}">
+                    <td th:text="${stat.index+1}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.firstName}"></td>
+                    <td th:text="${user.lastName}"></td>
+                    <td><a href="/user-log"  th:href="@{/user-log/update/{id}(id=${user.id})}">Update</a></td>
+                    <td><a href="/user-log" th:href="@{/user-log/delete/{id}(id=${user.id})}">Delete</a></td>
+                </tr>
+            </table>
+            <p><a th:href="@{/}">Back</a></p>
+        </div>
+    </div>
+    <!-- /row -->
+</div>
+<!-- /container -->
+
+<!-- +++++ Footer Section +++++ -->
+
+<div th:insert="~{footer::#footer}"></div>
+<div th:insert="~{footer::#copyrights}"></div>
+
+<!-- JavaScript Libraries -->
+
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
+
 </body>
 </html>

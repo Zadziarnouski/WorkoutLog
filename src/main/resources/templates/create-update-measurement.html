@@ -1,8 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
 <head>
-    <meta charset="UTF-8">
-    <title th:if="${measurement.id==null}?'Add measurement':'Update measurement'">Add/Update measurement</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <title th:if="${measurement.id==null}?'Add measurement':'Update measurement'"></title>
+
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
+
+
     <script>
         function validateForm() {
             let weight = document.forms["form"]["weight"].value;
@@ -15,45 +39,121 @@
             let thighs = document.forms["form"]["thighs"].value;
             let calves = document.forms["form"]["calves"].value;
 
-
-            if (weight === "" || height === "" || arms === ""|| forearms === ""|| chest === ""|| waist === ""|| buttocks === ""|| thighs === ""|| calves === "") {
+            if (weight === "" || height === "" || arms === "" || forearms === "" || chest === "" || waist === "" || buttocks === "" || thighs === "" || calves === "") {
                 alert("All fields must be filled out");
                 return false;
             }
-
         }
     </script>
 </head>
+
 <body>
-<form name="form" onsubmit="return validateForm() " th:action="@{/measurement-log/create-update}" th:object="${measurement}"
-      method="post">
-    <p><input type="hidden" th:field="*{id}"></p>
-    <p><input type="hidden" th:field="*{userID}"></p>
-    <p><label for="weight">Weight:</label>
-        <input type="number" min="35" max="120" step="1" id="weight" th:field="*{weight}"></p>
-    <p><label for="height">Height</label>
-        <input type="number" min="120" max="230" step="1" id="height" th:field="*{height}"></p>
-    <p><label for="neck">Neck</label>
-        <input type="number" min="20" max="50" step="1" id="neck" th:field="*{neck}"></p>
-    <p><label for="arms">Arms:</label>
-        <input type="number" min="25" max="60" step="1" id="arms" th:field="*{arms}"></p>
-    <p><label for="forearms">Forearms:</label>
-        <input type="number" min="15" max="50" step="1" id="forearms" th:field="*{forearms}"></p>
-    <p><label for="chest">Chest:</label>
-        <input type="number" min="40" max="150" step="1" id="chest" th:field="*{chest}"></p>
-    <p><label for="waist">Waist:</label>
-        <input type="number" min="40" max="150" step="1" id="waist" th:field="*{waist}"></p>
-    <p><label for="buttocks">Buttocks:</label>
-        <input type="number" min="40" max="150" step="1" id="buttocks" th:field="*{buttocks}"></p>
-    <p><label for="thighs">Thighs:</label>
-        <input type="number" min="35" max="100" step="1" id="thighs" th:field="*{thighs}"></p>
-    <p><label for="calves">Calves:</label>
-        <input type="number" min="15" max="40" step="1" id="calves" th:field="*{calves}"></p>
-    <p>
-        <button type="submit" th:text="${measurement.weight==0.0}?'Add measurement':'Update measurement'">Add/Update
-        </button>
-    </p>
-    <p><a href="/measurement-log">Back</a></p>
-</form>
+
+<!-- Static navbar -->
+
+<div th:insert="~{navbar::#navbar}"></div>
+
+<!-- +++++ Contact Section +++++ -->
+
+<div class="container pt">
+    <div class="row mt">
+        <div class="col-lg-6 col-lg-offset-3 centered">
+            <h3>Create new exercise</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row mt">
+        <div class="col-lg-8 col-lg-offset-2">
+
+            <form class="contact-form php-mail-form" name="form" onsubmit="return validateForm() "
+                  th:action="@{/measurement-log/create-update}" th:object="${measurement}"
+                  method="post">
+
+                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{userID}"/>
+
+                <div class="form-group">
+                    <label for="weight">Weight:        </label>
+                    <input type="number" min="35" max="120" step="1" id="weight" th:field="*{weight}">
+                </div>
+
+                <div class="form-group">
+                    <label for="height">Height:     <span>     </span>              </label>
+                    <input type="number" min="120" max="230" step="1" id="height" th:field="*{height}">
+                </div>
+
+                <div class="form-group">
+                    <label for="neck">Neck</label>
+                    <input type="number" min="20" max="50" step="1" id="neck" th:field="*{neck}">
+                </div>
+
+                <div class="form-group">
+                    <label for="arms">Arms:</label>
+                    <input type="number" min="25" max="60" step="1" id="arms" th:field="*{arms}">
+                </div>
+                <div class="form-group">
+                    <label for="forearms">Forearms:</label>
+                    <input type="number" min="15" max="50" step="1" id="forearms"
+                           th:field="*{forearms}">
+                </div>
+
+                <div class="form-group">
+                    <label for="chest">Chest:</label>
+                    <input type="number" min="40" max="150" step="1" id="chest" th:field="*{chest}">
+                </div>
+
+                <div class="form-group">
+                    <label for="waist">Waist:</label>
+                    <input type="number" min="40" max="150" step="1" id="waist" th:field="*{waist}">
+                </div>
+
+                <div class="form-group">
+                    <label for="buttocks">Buttocks:</label>
+                    <input type="number" min="40" max="150" step="1" id="buttocks"
+                           th:field="*{buttocks}">
+                </div>
+
+                <div class="form-group">
+                    <label for="thighs">Thighs:</label>
+                    <input type="number" min="35" max="100" step="1" id="thighs" th:field="*{thighs}">
+                </div>
+
+                <div class="form-group">
+                    <label for="calves">Calves:</label>
+                    <input type="number" min="15" max="40" step="1" id="calves" th:field="*{calves}">
+                </div>
+
+                <div class="form-send">
+                    <button type="submit" class="btn btn-large"
+                            th:text="${measurement.weight==0.0}?'Add measurement':'Update measurement'">
+                        Add/Update
+                    </button>
+                </div>
+
+                <p><a href="/measurement-log">Back</a></p>
+
+            </form>
+
+        </div>
+    </div>
+    <!-- /row -->
+</div>
+<!-- /container -->
+
+<!-- +++++ Footer Section +++++ -->
+
+<div th:insert="~{footer::#footer}"></div>
+<div th:insert="~{footer::#copyrights}"></div>
+
+<!-- JavaScript Libraries -->
+
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
+
 </body>
 </html>

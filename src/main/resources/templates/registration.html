@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <style>
-        p, h1, div, form {
-            text-align: center;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <title>Registration</title>
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
     <script>
         function validateForm() {
             let username = document.forms["form"]["username"].value;
@@ -30,34 +46,93 @@
         }
     </script>
 </head>
-<body>
-<h1>Registration</h1>
-<form name="form" th:action="@{/registration}" onsubmit="return validateForm()" method="post" th:object="${newUser}">
 
-    <p><label for="username">Username: </label>
-        <input type="text" id="username" th:field="*{username}"></p>
-    <p><label for="password">Password: </label>
-        <input type="password" id="password" th:field="*{password}"></p>
-    <p><label for="firstname">Firstname: </label>
-        <input type="text" id="firstname" th:field="*{firstName}"></p>
-    <p><label for="lastname">Lastname: </label>
-        <input type="text" id="lastname" th:field="*{lastName}"></p>
-    <p>
-    <p><label>Gender: </label>
-        <input type="radio" id="male" name="gender" th:field="*{gender}"
-               th:value="${T(by.zadziarnouski.workoutlog.model.Gender).MALE}"><label for="male">Male</label>
-        <input type="radio" id="female" name="gender" th:field="*{gender}"
-               th:value="${T(by.zadziarnouski.workoutlog.model.Gender).FEMALE}"><label for="female">Female</label></p>
-    <p><label for="birthday">Birthday:(yyyy-MM-dd)</label>
-        <input type="text" pattern="[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}" th:value="*{birthday}" id="birthday"></p>
-    <p><label for="height">Height:</label>
-        <input type="number" min="0" step="1" th:field="*{height}" id="height"></p>
-    <p><label for="weight">Weight:</label>
-        <input type="number" min="0" step="1" th:field="*{weight}" id="weight"></p>
-    <p>
-        <button type="submit">Register</button>
-    </p>
-    <p><a href="/login">Back</a></p>
-</form>
+<body>
+
+<!-- Static navbar -->
+
+<div th:insert="~{navbar::#navbar2}"></div>
+
+<!-- +++++ Contact Section +++++ -->
+
+<div class="container pt">
+    <div class="row mt">
+        <div class="col-lg-6 col-lg-offset-3 centered">
+            <h3>Registration</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row mt">
+        <div class="col-lg-8 col-lg-offset-2">
+
+
+            <form name="form" class="contact-form php-mail-form" th:action="@{/registration}"
+                  onsubmit="return validateForm()" method="post" th:object="${newUser}">
+
+                <div class="form-group">
+                    <label for="username">Username: </label>
+                    <input type="text" id="username" th:field="*{username}">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password: </label>
+                    <input type="password" id="password" th:field="*{password}">
+                </div>
+                <div class="form-group">
+                    <label for="firstname">Firstname:</label>
+                    <input type="text" id="firstname" th:field="*{firstName}">
+                </div>
+
+                <div class="form-group">
+                    <label for="lastname">Lastname: </label>
+                    <input type="text" id="lastname" th:field="*{lastName}">
+                </div>
+                <div class="form-group">
+                    <label>Gender: </label>
+                    <input type="radio" id="male" name="gender" th:field="*{gender}"
+                           th:value="${T(by.zadziarnouski.workoutlog.model.Gender).MALE}"><label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" th:field="*{gender}"
+                           th:value="${T(by.zadziarnouski.workoutlog.model.Gender).FEMALE}"><label
+                        for="female">Female</label></div>
+                <div class="form-group">
+                    <label for="birthday">Birthday:(yyyy-MM-dd)</label>
+                    <input type="text" pattern="[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}"
+                           th:value="*{birthday}" id="birthday"></div>
+
+                <div class="form-group">
+                    <label for="height">Height:</label>
+                    <input type="number" min="0" step="1" th:field="*{height}" id="height"></div>
+
+                <div class="form-group">
+                    <label for="weight">Weight:</label>
+                    <input type="number" min="0" step="1" th:field="*{weight}" id="weight"></div>
+
+
+                <div class="form-send">
+                    <button type="submit" class="btn btn-large">Register</button>
+                </div>
+                <p><a href="/login">Back</a></p>
+            </form>
+
+        </div>
+    </div>
+    <!-- /row -->
+</div>
+<!-- /container -->
+
+<!-- +++++ Footer Section +++++ -->
+
+<div th:insert="~{footer::#footer}"></div>
+
+<!-- JavaScript Libraries -->
+
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
+
 </body>
 </html>

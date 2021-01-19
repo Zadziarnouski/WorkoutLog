@@ -1,44 +1,111 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
     <title>Create workout</title>
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
 </head>
+
 <body>
-<h1>Create workout</h1>
-<p th:if="${workout.exercises.isEmpty()}">This workout does not contain any added exercises yet.</p>
-<div th:if="${workout ne null}"  th:object="${workout}">
-<div th:if="${!workout.exercises.isEmpty()}">
-    <table >
-        <tr>
-            <th>Position</th>
-            <th>Name</th>
-            <th>Number of sets</th>
-            <th>Rest time between sets</th>
-            <th>Type of exercise</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr th:each="exercise,stat : *{exercises}">
-            <td th:text="${workout.exercises.indexOf(exercise)+1}"></td>
-            <td th:text="${exercise.name}"></td>
-            <td th:text="${exercise.numberOfSets}"></td>
-            <td th:text="${exercise.restTimeBetweenSets}"></td>
-            <td th:text="${exercise.isForAWhile()==true} ? 'for a while' : 'for repetitions' "></td>
-            <td><a href="/workout-designer"
-                   th:href="@{/workout-constructor/update/{id}(id=${exercise.id})}">Update</a></td>
-            <td><a th:href="@{/workout-constructor/delete/{id}(id=${exercise.id})}">Delete</a></td>
 
-        </tr>
-    </table>
+<!-- Static navbar -->
 
-<!--    <p>-->
-<!--        <button type="submit">Start training</button>-->
-<!--    </p>-->
+<div th:insert="~{navbar::#navbar}"></div>
+
+<!-- +++++ Welcome Section +++++ -->
+<div id="ww">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 centered">
+
+                <div class="row mt">
+                    <div class="col-lg-6 col-lg-offset-3 centered">
+                        <h3>Create workout</h3>
+                        <hr>
+                    </div>
+                </div>
+                <p th:if="${workout.exercises.isEmpty()}">This workout does not contain any added exercises yet.</p>
+                <div th:if="${workout ne null}" th:object="${workout}">
+                    <div th:if="${!workout.exercises.isEmpty()}">
+                        <table>
+                            <tr>
+                                <th>Position</th>
+                                <th>Name</th>
+                                <th>Number of sets</th>
+                                <th>Rest time between sets</th>
+                                <th>Type of exercise</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tr th:each="exercise,stat : *{exercises}">
+                                <td th:text="${workout.exercises.indexOf(exercise)+1}"></td>
+                                <td th:text="${exercise.name}"></td>
+                                <td th:text="${exercise.numberOfSets}"></td>
+                                <td th:text="${exercise.restTimeBetweenSets}"></td>
+                                <td th:text="${exercise.isForAWhile()==true} ? 'for a while' : 'for repetitions' "></td>
+                                <td><a href="/workout-designer"
+                                       th:href="@{/workout-constructor/update/{id}(id=${exercise.id})}">Update</a></td>
+                                <td><a th:href="@{/workout-constructor/delete/{id}(id=${exercise.id})}">Delete</a></td>
+
+                            </tr>
+                        </table>
+
+
+                    </div>
+
+                </div>
+                <p><a href="/workout-constructor/getFormForAddOrUpdateExercise">Add exercise</a></p>
+                <p th:if="${workout.exercises.size()>0}"><a
+                        th:href="@{/workout-constructor/start-training/{id}(id =${workout.id})}">Start training</a>
+                </p>
+                <p><a href="/workout-constructor">Back</a></p>
+
+
+            </div>
+            <!-- /col-lg-8 -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
 </div>
-    <p th:if="${workout.exercises.size()>0}"><a th:href="@{/workout-constructor/start-training/{id}(id =${workout.id})}">Start training</a> </p>
-</div>
-<p><a href="/workout-constructor/getFormForAddOrUpdateExercise">Add exercise</a> </p>
-<p><a href="/workout-constructor">Back</a></p>
+<!-- /ww -->
+
+
+<!-- +++++ Footer Section +++++ -->
+
+<div th:insert="~{footer::#footer}"></div>
+<div th:insert="~{footer::#copyrights}"></div>
+
+
+<!-- JavaScript Libraries -->
+
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
+
 </body>
 </html>

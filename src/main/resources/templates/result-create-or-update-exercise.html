@@ -1,19 +1,92 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <title>Result</title>
+
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
+    <script>
+        function validateForm() {
+            let name = document.forms["form"]["name"].value;
+            let muscleGroup = document.forms["form"]["muscleGroup"].value;
+            let exerciseType = document.forms["form"]["exerciseType"].value;
+            let necessaryEquipment = document.forms["form"]["necessaryEquipment"].value;
+            if (name === "" || muscleGroup === "" || exerciseType === "" || necessaryEquipment === "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+        }
+    </script>
 </head>
+
 <body>
-<h2>Result</h2>
-<div th:object="${exercise}">
-<p><strong>Exercise name:</strong> <span th:text="*{name}"></span></p>
-<p><strong>Muscle group:</strong> <span th:text="*{muscleGroup}"></span></p>
-<p><strong>Exercise type:</strong> <span th:text="*{exerciseType}"></span></p>
-<p><strong>Necessary equipment:</strong> <span th:text="*{necessaryEquipment}"></span></p>
-<p><strong>Description:</strong> <span th:text="*{description}"></span></p>
+
+<!-- Static navbar -->
+
+<div th:insert="~{navbar::#navbar}"></div>
+
+<!-- +++++ Contact Section +++++ -->
+
+<div class="container pt">
+    <div class="row mt">
+        <div class="col-lg-6 col-lg-offset-3 centered">
+            <h3>Result</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row mt">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div th:object="${exercise}">
+                <p><strong>Exercise name:</strong> <span th:text="*{name}"></span></p>
+                <p><strong>Muscle group:</strong> <span th:text="*{muscleGroup.displayValue}"></span></p>
+                <p><strong>Exercise type:</strong> <span th:text="*{exerciseType.displayValue}"></span></p>
+                <p><strong>Necessary equipment:</strong> <span th:text="*{necessaryEquipment.displayValue}"></span></p>
+                <p><strong>Description:</strong> <span th:text="*{description}"></span></p>
+            </div>
+            <p><a th:href="@{/exercise-editor/update/{id}(id=${exercise.id})}">Back</a></p>
+            <p><a href="/exercise-editor">Confirm</a>
+
+        </div>
+    </div>
+    <!-- /row -->
 </div>
-<p><a th:href="@{/exercise-editor/update/{id}(id=${exercise.id})}">Back</a></p>
-<p><a href="/exercise-editor">Confirm</a>
+<!-- /container -->
+
+<!-- +++++ Footer Section +++++ -->
+
+<div th:insert="~{footer::#footer}"></div>
+<div th:insert="~{footer::#copyrights}"></div>
+
+<!-- JavaScript Libraries -->
+
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
+
+
 </body>
 </html>

@@ -1,32 +1,72 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
-    <title>First page</title>
-    <style>
-        p, h1, nav {
-            text-align: center;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <title>Menu</title>
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
 </head>
+
 <body>
 
-<h1 th:text="'Hi, '+ ( ${myUser == null} ? 'guest' : (${myUser.getLastName()} + ' ' + ${myUser.getFirstName()}))"></h1>
+<!-- Static navbar -->
 
 
-<nav>
-    <span th:if="${myUser} ne null">
-        <a href="exercise-editor">Exercise editor |</a>
-        <a href="workout-constructor">Workout constructor</a> |
-        <a href="workout-log">Workout log</a> |
-        <a href="measurement-log">Measurement log</a> |
-         <a th:if="${myUser.getRole().toString().equals('ROLE_ADMIN')}" href="/user-log">User log </a> |
-         <a href="/personal-profile">Personal profile</a>
-    </span>
-</nav>
-<br>
+<div th:insert="${myUser ne null} ? ~{navbar :: #navbar} : ~{navbar :: #navbar2}"></div>
 
-<p><a href="/perform_logout">Logout</a></p>
-<img alt="logo" width="300" height="300" src="https://res.cloudinary.com/edmonddantes/image/upload/v1610954122/WorkoutLOG_1_ltabrp.png">
+<!-- +++++ Welcome Section +++++ -->
+<div id="ww">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 centered">
+                <h3 th:text="'Hi, '+ ( ${myUser == null} ? 'Dear guest. Welcome to WorkoutLog.' : (${myUser.getLastName()} + ' ' + ${myUser.getFirstName()}))"></h3>
+                <p th:if="${myUser eq null}">Please login and we will start composing the first workout.</p>
+                <p th:if="${myUser eq null}"><a href="/login">Login</a></p>
+                <p th:if="${myUser ne null}"><a href="workout-constructor">Start training</a></p>
+                <p th:if="${myUser ne null}"><a href="/perform_logout">Logout</a></p>
+
+            </div>
+            <!-- /col-lg-8 -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /ww -->
+
+
+<!-- +++++ Footer Section +++++ -->
+
+<div th:insert="~{footer::#footer}"></div>
+<div th:insert="~{footer::#copyrights}"></div>
+
+<!-- JavaScript Libraries -->
+
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
+
 </body>
 </html>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Controller
@@ -37,6 +38,7 @@ public class ExerciseEditorController {
     @GetMapping
     public String getExerciseEditorPage(Model model) {
         User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
+        exerciseService.findAll().stream().filter(exercise -> exercise.getName() == null).forEach(exercise -> exerciseService.delete(exercise.getId()));
         model.addAttribute("exercises", currentUser.getExercises().stream().filter(exercise -> exercise.getNumberOfSets()==0).map(exerciseMapper::toDTO).collect(Collectors.toList()));
         return "exercise-editor";
     }

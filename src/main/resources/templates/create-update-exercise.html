@@ -1,8 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
 <head>
-    <meta charset="UTF-8">
-    <title th:if="${exercise.name eq null}?'Create exercise':'Update exercise'">Create/Update exercise</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <title th:if="${exercise.name eq null}?'Create exercise':'Update exercise'"></title>
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
     <script>
         function validateForm() {
             let name = document.forms["form"]["name"].value;
@@ -16,38 +37,107 @@
         }
     </script>
 </head>
+
 <body>
-<form name="form" th:action="@{/exercise-editor/create-update}" onsubmit="return validateForm()" th:object="${exercise}"
-      method="post">
-    <input type="hidden" th:field="*{id}">
-    <input type="hidden" th:field="*{userID}"/>
-    <input type="hidden" th:field="*{workouts}"/>
-    <p><label for="name">Exercise name: </label>
-        <input type="text" id="name" pattern="[a-zA-Z]+" th:field="*{name}"></p>
-    <p><label for="muscleGroup">Muscle group: </label>
-        <select id="muscleGroup" name="muscleGroup" th:field="*{muscleGroup}">
-            <option value="" selected="selected">...</option>
-            <option th:each="muscleGroupOpt : ${T(by.zadziarnouski.workoutlog.model.MuscleGroup).values()}"
-                    th:value="${muscleGroupOpt}" th:text="${muscleGroupOpt.displayValue}"></option>
-        </select></p>
-    <p><label for="exerciseType">Exercise type: </label>
-        <select id="exerciseType" name="exerciseType" th:field="*{exerciseType}">
-            <option value="" selected="selected">...</option>
-            <option th:each="exerciseTypeOpt : ${T(by.zadziarnouski.workoutlog.model.ExerciseType).values()}"
-                    th:value="${exerciseTypeOpt}" th:text="${exerciseTypeOpt.displayValue}"></option>
-        </select></p>
-    <p><label for="necessaryEquipment">Necessary equipment: </label>
-        <select id="necessaryEquipment" name="necessaryEquipment" th:field="*{necessaryEquipment}">
-            <option value="" selected="selected">...</option>
-            <option th:each="necessaryEquipmentOpt : ${T(by.zadziarnouski.workoutlog.model.NecessaryEquipment).values()}"
-                    th:value="${necessaryEquipmentOpt}" th:text="${necessaryEquipmentOpt.displayValue}"></option>
-        </select></p>
-    <p><label for="description">Description: </label>
-        <textarea id="description" th:field="*{description}" rows="3"></textarea></p>
-    <p>
-        <button type="submit" th:text="${exercise.name eq null}?'Create':'Update'">Create/Update</button>
-    </p>
-    <p><a href="/exercise-editor">Back</a></p>
-</form>
+
+<!-- Static navbar -->
+
+<div th:insert="~{navbar::#navbar}"></div>
+
+<!-- +++++ Contact Section +++++ -->
+
+<div class="container pt">
+    <div class="row mt">
+        <div class="col-lg-6 col-lg-offset-3 centered">
+            <h3 th:text="${exercise.name eq null} ? 'Create new exercise' : 'Update exercise'"></h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row mt">
+        <div class="col-lg-8 col-lg-offset-2">
+
+            <form class="contact-form php-mail-form" name="form" th:action="@{/exercise-editor/create-update}"
+                  onsubmit="return validateForm()" th:object="${exercise}"
+                  method="post">
+                <input type="hidden" th:field="*{id}">
+
+                <input type="hidden" th:field="*{userID}"/>
+
+                <input type="hidden" th:field="*{workouts}"/>
+
+                <div class="form-group">
+                    <input type="text" pattern="[a-zA-Z]+" class="form-control" id="name" placeholder="Exercise name"
+                           th:field="*{name}">
+                    <div class="validate"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="muscleGroup">Muscle group: </label>
+                    <select id="muscleGroup" name="muscleGroup" th:field="*{muscleGroup}">
+                        <option value="" selected="selected">...</option>
+                        <option th:each="muscleGroupOpt : ${T(by.zadziarnouski.workoutlog.model.MuscleGroup).values()}"
+                                th:value="${muscleGroupOpt}" th:text="${muscleGroupOpt.displayValue}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="exerciseType">Exercise type: </label>
+                    <select id="exerciseType" name="exerciseType" th:field="*{exerciseType}">
+                        <option value="" selected="selected">...</option>
+                        <option th:each="exerciseTypeOpt : ${T(by.zadziarnouski.workoutlog.model.ExerciseType).values()}"
+                                th:value="${exerciseTypeOpt}" th:text="${exerciseTypeOpt.displayValue}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="necessaryEquipment">Necessary equipment: </label>
+                    <select id="necessaryEquipment" name="necessaryEquipment" th:field="*{necessaryEquipment}">
+                        <option value="" selected="selected">...</option>
+                        <option th:each="necessaryEquipmentOpt : ${T(by.zadziarnouski.workoutlog.model.NecessaryEquipment).values()}"
+                                th:value="${necessaryEquipmentOpt}"
+                                th:text="${necessaryEquipmentOpt.displayValue}"></option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                        <textarea class="form-control" id="description" placeholder="Description..." rows="5"
+                                  th:field="*{description}"></textarea>
+                    <div class="validate"></div>
+                </div>
+
+                <div class="loading"></div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+
+                <div class="form-send">
+                    <button type="submit" th:text="${exercise.name eq null}?'Create':'Update'"
+                            class="btn btn-large">Create/Update
+                    </button>
+                </div>
+                <p><a href="/exercise-editor">Back</a></p>
+
+            </form>
+
+        </div>
+    </div>
+    <!-- /row -->
+</div>
+<!-- /container -->
+
+<!-- +++++ Footer Section +++++ -->
+
+<div th:insert="~{footer::#footer}"></div>
+<div th:insert="~{footer::#copyrights}"></div>
+
+<!-- JavaScript Libraries -->
+
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
+
 </body>
 </html>

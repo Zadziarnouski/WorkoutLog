@@ -46,14 +46,8 @@ public class WorkoutConstructorController {
 
     @GetMapping
     public String getWorkoutConstructorPage() {
+        workoutService.findAll().stream().filter(workout -> workout.getTitle() == null).forEach(workout -> workoutService.delete(workout.getId()));
         currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
-
-        if (!currentUser.getWorkout().isEmpty()) {
-            Workout emptyWorkout = currentUser.getWorkout().stream().filter(workout -> workout.getTitle() == null).findFirst().get();
-            currentUser.getWorkout().remove(emptyWorkout);
-            userService.saveOrUpdate(currentUser);
-
-        }
         return "workout-constructor";
     }
 
@@ -62,6 +56,8 @@ public class WorkoutConstructorController {
         currentUser.getWorkout().add(new Workout());
         currentUser = userService.saveOrUpdate(currentUser);
         currentWorkout = currentUser.getWorkout().get(currentUser.getWorkout().size() - 1);
+
+
         model.addAttribute("workout", workoutMapper.toDTO(currentWorkout));
         return "create-update-workout";
     }
@@ -76,7 +72,6 @@ public class WorkoutConstructorController {
     @PostMapping("/add-or-update-exercise-in-workout")
     public String addOrUpdateExerciseInWorkout(@ModelAttribute ExerciseDTO exerciseDTO, Model model) {
         currentWorkout.setUser(currentUser);
-
         if (Objects.isNull(exerciseDTO.getName())) {
             Exercise newExercise = convectorForNewExercise(exerciseDTO);
             Exercise createdExercise = exerciseService.saveOrUpdate(newExercise);

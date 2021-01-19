@@ -34,6 +34,7 @@ public class WorkoutLogController {
 
     @GetMapping
     public String getWorkoutLogPage(Model model) {
+        workoutService.findAll().stream().filter(workout -> workout.getTitle()==null).forEach(workout -> workoutService.delete(workout.getId()));
         User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
         model.addAttribute("workouts", currentUser.getWorkout().stream().map(workoutMapper::toDTO).collect(Collectors.toList()));
         return "workout-log";

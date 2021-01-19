@@ -1,38 +1,94 @@
-
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
-    <title>Exercise editor</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <title>Exercise</title>
+
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
 </head>
+
 <body>
-<h1>Exercise editor</h1>
+
+<!-- Static navbar -->
+
+<div th:insert="~{navbar::#navbar}"></div>
+
+<!-- +++++ Welcome Section +++++ -->
+<div id="ww">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 centered">
+
+                <table th:if="${!exercises.isEmpty()}">
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Muscle group</th>
+                        <th>Type of exercise</th>
+                        <th>Necessary equipment</th>
+                        <th>Description</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="exercise, stat : ${exercises}">
+                        <td th:text="${stat.index+1}"></td>
+                        <td th:text="${exercise.name}"></td>
+                        <td th:text="${exercise.muscleGroup.displayValue}"></td>
+                        <td th:text="${exercise.exerciseType.displayValue}"></td>
+                        <td th:text="${exercise.necessaryEquipment.displayValue}"></td>
+                        <td th:text="${exercise.description}"></td>
+                        <td><a href="/main/"  th:href="@{/exercise-editor/update/{id}(id=${exercise.id})}">Update</a></td>
+                        <td><a href="/exercise-editor" th:href="@{/exercise-editor/delete/{id}(id=${exercise.id})}">Delete</a></td>
+                    </tr>
+                </table>
+
+                <p><a href="/exercise-editor/create">Create new</a></p>
+                <p><a href="/">Back</a></p>
+
+            </div>
+            <!-- /col-lg-8 -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /ww -->
 
 
-<table th:if="${!exercises.isEmpty()}">
-    <tr>
-        <th>No.</th>
-        <th>Name</th>
-        <th>Muscle group</th>
-        <th>Type of exercise</th>
-        <th>Necessary equipment</th>
-        <th>Description</th>
-        <th></th>
-        <th></th>
-    </tr>
-    <tr th:each="exercise, stat : ${exercises}">
-        <td th:text="${stat.index+1}"></td>
-        <td th:text="${exercise.name}"></td>
-        <td th:text="${exercise.muscleGroup.displayValue}"></td>
-        <td th:text="${exercise.exerciseType.displayValue}"></td>
-        <td th:text="${exercise.necessaryEquipment.displayValue}"></td>
-        <td th:text="${exercise.description}"></td>
-        <td><a href="/main/"  th:href="@{/exercise-editor/update/{id}(id=${exercise.id})}">Update</a></td>
-        <td><a href="/exercise-editor" th:href="@{/exercise-editor/delete/{id}(id=${exercise.id})}">Delete</a></td>
-    </tr>
-</table>
+<!-- +++++ Footer Section +++++ -->
 
-<p><a href="/exercise-editor/create">Create new</a></p>
-<p><a href="/">Back</a></p>
+<div th:insert="~{footer::#footer}"></div>
+<div th:insert="~{footer::#copyrights}"></div>
+
+
+<!-- JavaScript Libraries -->
+
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
+
 </body>
 </html>

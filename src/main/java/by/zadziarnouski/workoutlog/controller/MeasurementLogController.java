@@ -37,6 +37,7 @@ public class MeasurementLogController {
     @GetMapping
     public String getMeasurementLogPage(Model model) {
         User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
+        measurementService.findAll().stream().filter(measurement -> measurement.getWeight()==0).forEach(measurement -> measurementService.delete(measurement.getId()));
         model.addAttribute("measurements", currentUser.getMeasurements().stream().map(measurementMapper::toDTO).collect(Collectors.toList()));
         return "measurement-log";
     }

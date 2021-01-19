@@ -1,8 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
     <title th:if="${user.username==null}?'Create user':'Update user'">Create/Update user</title>
+
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
     <script>
         function validateForm() {
             let username = document.forms["form"]["username"].value;
@@ -18,21 +40,71 @@
         }
     </script>
 </head>
+
 <body>
-<form name="form" onsubmit="return validateForm()" th:action="@{/user-log/create-update}" th:object="${user}"
-      method="post">
-    <p><input type="hidden" th:field="*{id}"></p>
-    <p><label for="username">Username: </label>
-        <input type="text" pattern="[a-zA-Z]+" id="username" th:field="*{username}"></p>
-    <p><input type="hidden" th:field="*{role}"></p>
-    <p><label for="firstname">Firstname: </label>
-        <input type="text" pattern="[a-zA-Z]+" id="firstname" th:field="*{firstName}"></p>
-    <p><label for="lastname">Lastname: </label>
-        <input type="text" pattern="[a-zA-Z]+" id="lastname" th:field="*{lastName}"></p>
-    <p>
-        <button type="submit" th:text="${user.username==null}?'Create':'Update'">Create/Update</button>
-    </p>
-    <p><a href="/user-log">Back</a></p>
-</form>
+
+<!-- Static navbar -->
+
+<div th:insert="~{navbar::#navbar}"></div>
+
+<!-- +++++ Contact Section +++++ -->
+
+<div class="container pt">
+    <div class="row mt">
+        <div class="col-lg-6 col-lg-offset-3 centered">
+            <h3 th:if="${user.username==null}?'Create user':'Update user'"></h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row mt">
+        <div class="col-lg-8 col-lg-offset-2">
+
+
+            <form name="form" class="contact-form php-mail-form" onsubmit="return validateForm()"
+                  th:action="@{/user-log/create-update}" th:object="${user}"
+                  method="post">
+
+                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{role}">
+                <input type="hidden" th:field="*{password}">
+
+                <div class="form-group">
+                    <label for="username">Username: </label>
+                    <input type="text" pattern="[a-zA-Z]+" id="username" th:field="*{username}">
+                </div>
+
+                <div class="form-group">
+                    <label for="firstname">Firstname: </label>
+                    <input type="text" pattern="[a-zA-Z]+" id="firstname" th:field="*{firstName}">
+                </div>
+                <div class="form-group">
+                <label for="lastname">Lastname: </label>
+                    <input type="text" pattern="[a-zA-Z]+" id="lastname" th:field="*{lastName}">
+                </div>
+                <div class="form-send">
+                    <button type="submit" class="btn btn-large" th:text="${user.username==null}?'Create':'Update'">Create/Update</button>
+                </div>
+                <p><a href="/user-log">Back</a></p>
+            </form>
+
+            </div>
+
+
+        </div>
+    </div>
+    <!-- /row -->
+</div>
+<!-- /container -->
+
+<!-- JavaScript Libraries -->
+
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
+
 </body>
 </html>

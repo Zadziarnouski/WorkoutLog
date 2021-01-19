@@ -1,24 +1,95 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
     <title>Personal profile</title>
+    <!-- Favicons -->
+    <link th:href="@{/img/favicon.png}" rel="icon">
+    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link th:href="@{/lib/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link th:href="@{/lib/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script th:src="@{/lib/jquery/jquery.min.js}"></script>
+    <script>
+        function validateForm() {
+            let name = document.forms["form"]["name"].value;
+            let muscleGroup = document.forms["form"]["muscleGroup"].value;
+            let exerciseType = document.forms["form"]["exerciseType"].value;
+            let necessaryEquipment = document.forms["form"]["necessaryEquipment"].value;
+            if (name === "" || muscleGroup === "" || exerciseType === "" || necessaryEquipment === "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+        }
+    </script>
 </head>
+
 <body>
-<h2>Personal Profile</h2>
-<div th:object="${user}">
-<p><strong>Username:</strong> <span th:text="*{username}"></span></p>
-<!--<p><strong>Password:</strong> <span th:text="*{password}"></span></p>-->
-<p><strong>First name:</strong> <span th:text="*{firstName}"></span></p>
-<p><strong>Last name:</strong> <span th:text="*{lastName}"></span></p>
-<p><strong>Gender:</strong> <span th:text="*{gender}"></span></p>
-<!--<p><strong>Birthday:</strong> <span th:text="${#temporals.format(user.birthday,'yyyy-MM-dd')}"></span></p>-->
-<p><strong>Birthday:</strong> <span th:text="*{birthday}"></span></p>
-<p><strong>Height:</strong> <span th:text="*{height}"></span></p>
-<p><strong>Weight:</strong> <span th:text="*{weight}"></span></p>
+
+<!-- Static navbar -->
+
+<div th:insert="~{navbar::#navbar}"></div>
+
+<!-- +++++ Contact Section +++++ -->
+
+<div class="container pt">
+    <div class="row mt">
+        <div class="col-lg-6 col-lg-offset-3 centered">
+            <h3>Personal profile</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row mt">
+        <div class="col-lg-8 col-lg-offset-2">
+
+            <div th:object="${user}">
+                <p><strong>Username:</strong> <span th:text="*{username}"></span></p>
+                <!--<p><strong>Password:</strong> <span th:text="*{password}"></span></p>-->
+                <p><strong>First name:</strong> <span th:text="*{firstName}"></span></p>
+                <p><strong>Last name:</strong> <span th:text="*{lastName}"></span></p>
+                <p><strong>Gender:</strong> <span th:text="*{gender}"></span></p>
+                <!--<p><strong>Birthday:</strong> <span th:text="${#temporals.format(user.birthday,'yyyy-MM-dd')}"></span></p>-->
+                <p><strong>Birthday:</strong> <span th:text="*{birthday}"></span></p>
+                <p><strong>Height:</strong> <span th:text="*{height}"></span></p>
+                <p><strong>Weight:</strong> <span th:text="*{weight}"></span></p>
+            </div>
+            <p><a href="/personal-profile/get-update-form">Update profile</a>
+            <p><a href="/">Back</a></p>
+
+        </div>
+    </div>
+    <!-- /row -->
 </div>
-<p><a href="/personal-profile/get-update-form">Update profile</a>
-<p><a href="/">Back</a></p>
+<!-- /container -->
+
+<!-- +++++ Footer Section +++++ -->
+
+<div th:insert="~{footer::#footer}"></div>
+<div th:insert="~{footer::#copyrights}"></div>
+
+<!-- JavaScript Libraries -->
+
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/lib/php-mail-form/validate.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+
+<!-- Template Main Javascript File -->
+
+<script th:src="@{/js/main.js}"></script>
 
 </body>
 </html>

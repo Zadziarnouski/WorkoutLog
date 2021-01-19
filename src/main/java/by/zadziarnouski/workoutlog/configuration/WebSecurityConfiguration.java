@@ -34,12 +34,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userDetailsService(myUserDetailsService).passwordEncoder(encoder);
     }
 
+//    authorizeRequests().antMatchers("/resources/**").permitAll().anyRequest().permitAll()
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/user-log/**").hasRole("ADMIN")
-                .antMatchers("/login*", "/registration*").permitAll()
+                .antMatchers("/login*", "/registration*", "/css/**", "/js/**", "/lib/**", "/jquery/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").loginProcessingUrl("/perform_login")
