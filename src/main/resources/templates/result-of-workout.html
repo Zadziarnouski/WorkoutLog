@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="utf-8">
@@ -65,7 +65,7 @@
                         <td th:each=" set : ${exercise.set}" th:text="${set}"></td>
                     </tr>
                 </table>
-
+                <p><strong>Duration: </strong><span id="duration" th:text="*{duration.substring(0,8)}"></span></p>
                 <p><strong>Rating:</strong> <span th:text="*{rating}"></span></p>
                 <p><strong>Comments:</strong> <span th:text="*{comments}"></span></p>
             </div>
@@ -87,13 +87,13 @@
 
 <!-- JavaScript Libraries -->
 
-<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/lib/php-mail-form/validate.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
+<!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
+<!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
+<!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
 
-<!-- Template Main Javascript File -->
+<!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
 
-<script th:src="@{/js/main.js}"></script>
+<!--<script th:src="@{/js/main.js}"></script>-->
 
 </body>
 </html>

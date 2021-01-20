@@ -58,7 +58,7 @@
 <div class="container pt">
     <div class="row mt">
         <div class="col-lg-6 col-lg-offset-3 centered">
-            <h3>Create new exercise</h3>
+            <h3>Update personal profile</h3>
             <hr>
         </div>
     </div>
@@ -101,8 +101,8 @@
                 </div>
 
                 <div class="form-group">
-                <label for="birthday">Birthday:(yyyy-MM-dd)</label>
-                    <input type="text" pattern="[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}" th:value="*{birthday}" id="birthday">
+                <label for="birthday">Birthday:(mm-DD-yyyy)</label>
+                    <input type="date" pattern="[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}" th:field="*{birthday}" id="birthday">
                 </div>
 
                 <div class="form-group">
@@ -135,13 +135,13 @@
 
 <!-- JavaScript Libraries -->
 
-<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/lib/php-mail-form/validate.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
+<!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
+<!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
+<!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
 
-<!-- Template Main Javascript File -->
+<!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
 
-<script th:src="@{/js/main.js}"></script>
+<!--<script th:src="@{/js/main.js}"></script>-->
 
 </body>
 </html>

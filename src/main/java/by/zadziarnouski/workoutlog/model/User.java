@@ -25,7 +25,7 @@ public class User {
     private String username;
 
     @NotBlank(message = "Password is mandatory")
-    private String password;     //добавить валидацию
+    private String password;
 
     @EnumNamePattern(regexp = "ROLE_USER|ROLE_ADMIN")
     private Role role;
@@ -40,24 +40,19 @@ public class User {
     private Gender gender;
 
     @OneToMany(mappedBy = "user",
-            cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
+            cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Exercise> exercises;
 
     @OneToMany(mappedBy = "user",
-            cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    //Есть другие варианты решить проблему двух коллекций EAGER в одной сущности?
+            cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Measurement> measurements;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Workout> workout;
 
     @Past
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;
 
     private float height;

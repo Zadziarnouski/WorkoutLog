@@ -5,6 +5,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,4 +37,6 @@ public class Workout {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    private LocalTime duration;
 }

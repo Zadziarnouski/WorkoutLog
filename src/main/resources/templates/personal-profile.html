@@ -62,8 +62,7 @@
                 <p><strong>First name:</strong> <span th:text="*{firstName}"></span></p>
                 <p><strong>Last name:</strong> <span th:text="*{lastName}"></span></p>
                 <p><strong>Gender:</strong> <span th:text="*{gender}"></span></p>
-                <!--<p><strong>Birthday:</strong> <span th:text="${#temporals.format(user.birthday,'yyyy-MM-dd')}"></span></p>-->
-                <p><strong>Birthday:</strong> <span th:text="*{birthday}"></span></p>
+                <p><strong>Birthday(yyyy-MM-dd):</strong> <span th:text="*{birthday}"></span></p>
                 <p><strong>Height:</strong> <span th:text="*{height}"></span></p>
                 <p><strong>Weight:</strong> <span th:text="*{weight}"></span></p>
             </div>
@@ -83,13 +82,13 @@
 
 <!-- JavaScript Libraries -->
 
-<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/lib/php-mail-form/validate.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
+<!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
+<!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
+<!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
 
-<!-- Template Main Javascript File -->
+<!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
 
-<script th:src="@{/js/main.js}"></script>
+<!--<script th:src="@{/js/main.js}"></script>-->
 
 </body>
 </html>

@@ -30,7 +30,6 @@
         /***Event Listener on Button**/
         $(document).ready(function () {
             let timeOfRest = [[${restTimeBetweenSets}]]
-            // countdownTimer(timeOfRest)
             countdownTimer(timeOfRest)
 
         })
@@ -43,7 +42,8 @@
                 return (n < 10 ? '0' : '') + n;
             }
 
-            let interval = minutes;  //5 minutes = 300 sec
+            // let interval = 60 * minutes;  //5 minutes = 300 sec
+            let interval = 5;  //5 minutes = 300 sec
             let counter = setInterval(function () {
                 let hours = Math.floor((interval % (60 * 60 * 24)) / (60 * 60));
                 let minutes = Math.floor((interval % (60 * 60)) / (60));
@@ -52,6 +52,8 @@
                 interval--;
 
                 document.getElementById("timer").innerHTML = minTwoDigits(hours) + " : " + minTwoDigits(minutes) + " : " + minTwoDigits(seconds);
+
+
 
                 if (interval === 0) {
                     clearInterval(counter);
@@ -99,15 +101,18 @@
 <div th:insert="~{footer::#footer}"></div>
 <div th:insert="~{footer::#copyrights}"></div>
 
-<!-- JavaScript Libraries -->
 
-<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/lib/php-mail-form/validate.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
 
-<!-- Template Main Javascript File -->
 
-<script th:src="@{/js/main.js}"></script>
+    <!-- JavaScript Libraries -->
+
+    <!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
+    <!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
+    <!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
+
+    <!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
+
+    <!--<script th:src="@{/js/main.js}"></script>-->
 
 </body>
 </html>

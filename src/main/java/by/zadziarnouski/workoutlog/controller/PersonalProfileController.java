@@ -1,5 +1,7 @@
 package by.zadziarnouski.workoutlog.controller;
 
+import by.zadziarnouski.workoutlog.dto.UserDTO;
+import by.zadziarnouski.workoutlog.mapper.UserMapper;
 import by.zadziarnouski.workoutlog.model.Role;
 import by.zadziarnouski.workoutlog.model.User;
 import by.zadziarnouski.workoutlog.service.UserService;
@@ -18,30 +20,33 @@ import java.util.Objects;
 @RequestMapping(path = "/personal-profile")
 public class PersonalProfileController {
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @Autowired
-    public PersonalProfileController(UserService userService) {
+    public PersonalProfileController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     @GetMapping
     public String getPersonalProfilePage(Model model) {
         User user = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
-        model.addAttribute("user", user);
+        model.addAttribute("user", userMapper.toDTO(user));
         return "personal-profile";
     }
 
 
     @PostMapping("/update")
-    public String UpdateProfile(@ModelAttribute User user, Model model) {
-        User updated = userService.saveOrUpdate(user);
+    public String UpdateProfile(@ModelAttribute UserDTO userDTO, Model model) {
+        System.out.println(userDTO);
+        User updated = userService.saveOrUpdate(userMapper.toEntity(userDTO));
         return "redirect:/personal-profile";
     }
 
     @GetMapping("/get-update-form")
     public String getUpdateForm(Model model) {
         User user = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
-        model.addAttribute("user", user);
+        model.addAttribute("user",userMapper.toDTO(user));
         return "update-personal-profile";
     }
 

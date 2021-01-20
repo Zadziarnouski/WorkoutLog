@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <title th:if="${measurement.id==null}?'Add measurement':'Update measurement'"></title>
+    <title th:text="${measurement.weight==0.0}?'Add measurement':'Update measurement'"></title>
 
     <!-- Favicons -->
     <link th:href="@{/img/favicon.png}" rel="icon">
@@ -58,7 +58,7 @@
 <div class="container pt">
     <div class="row mt">
         <div class="col-lg-6 col-lg-offset-3 centered">
-            <h3>Create new exercise</h3>
+            <h3 th:text="${measurement.weight==0.0}?'Add measurement':'Update measurement'"></h3>
             <hr>
         </div>
     </div>
@@ -147,13 +147,13 @@
 
 <!-- JavaScript Libraries -->
 
-<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/lib/php-mail-form/validate.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
+<!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
+<!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
+<!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
 
-<!-- Template Main Javascript File -->
+<!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
 
-<script th:src="@{/js/main.js}"></script>
+<!--<script th:src="@{/js/main.js}"></script>-->
 
 </body>
 </html>

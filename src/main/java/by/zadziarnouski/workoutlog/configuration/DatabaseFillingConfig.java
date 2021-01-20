@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Configuration
 public class DatabaseFillingConfig {
@@ -40,7 +41,7 @@ public class DatabaseFillingConfig {
         admin.setHeight(181f);
         admin.setGender(Gender.MALE);
         admin.setWeight(73f);
-        admin.setBirthday(LocalDate.parse("1994-08-03"));
+        admin.setBirthday(LocalDate.parse("03-08-1994", DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 
         User save1 = userService.saveOrUpdate(admin);
 

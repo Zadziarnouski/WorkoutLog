@@ -80,6 +80,8 @@
                 </p>
                 <p><a href="/workout-constructor">Back</a></p>
 
+                <p th:if="${workout.exercises.size()>0}">We recommend doing a 5-10 minute warm-up before starting a workout</p>
+
 
             </div>
             <!-- /col-lg-8 -->
@@ -99,13 +101,13 @@
 
 <!-- JavaScript Libraries -->
 
-<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/lib/php-mail-form/validate.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
+<!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
+<!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
+<!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
 
-<!-- Template Main Javascript File -->
+<!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
 
-<script th:src="@{/js/main.js}"></script>
+<!--<script th:src="@{/js/main.js}"></script>-->
 
 </body>
 </html>

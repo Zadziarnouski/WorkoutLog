@@ -13,4 +13,5 @@ public class WorkoutDTO {
     private String comments;
     private int restBetweenExercise;
     private int rating;
+    private String duration;
 }

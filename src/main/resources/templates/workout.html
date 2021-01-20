@@ -37,7 +37,8 @@
 
         /***Event Listener on Button**/
         $(document).ready(function () {
-
+            let sound = document.getElementById("audio");
+            sound.play();
         })
 
         function startTimerAfterSetResult() {
@@ -86,7 +87,7 @@
 <div class="container pt">
     <div class="row mt">
         <div class="col-lg-6 col-lg-offset-3 centered">
-            <h3>Create new exercise</h3>
+            <h3>Workout</h3>
             <hr>
         </div>
     </div>
@@ -95,8 +96,14 @@
 
             <div th:object="${workout}">
 
-                <table >
-                    <tr th:each="exercise : *{exercises}">
+                <table>
+                    <tr>
+                        <th>No</th>
+                        <th>Exercises</th>
+                        <th>Set</th>
+                    </tr>
+                    <tr th:each="exercise, stat : *{exercises}">
+                        <td th:text="${stat.index + 1}"></td>
                         <td th:text="${exercise.name}"></td>
                         <td th:each=" set : ${exercise.set}" th:text="${set}"></td>
                     </tr>
@@ -130,15 +137,17 @@
 <div th:insert="~{footer::#footer}"></div>
 <div th:insert="~{footer::#copyrights}"></div>
 
+<audio hidden="hidden" id="audio" th:src="@{/audio/sound.mp3}"></audio>
+f
 <!-- JavaScript Libraries -->
 
-<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/lib/php-mail-form/validate.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
+<!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
+<!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
+<!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
 
-<!-- Template Main Javascript File -->
+<!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
 
-<script th:src="@{/js/main.js}"></script>
+<!--<script th:src="@{/js/main.js}"></script>-->
 
 </body>
 </html>

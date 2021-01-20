@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -107,8 +108,6 @@ public class WorkoutConstructorController {
         for (int i = 0; i < currentWorkout.getExercises().size(); i++) {
             if (currentWorkout.getExercises().get(i).getId().equals(id)) {
                 model.addAttribute("newExercise", exerciseMapper.toDTO(currentWorkout.getExercises().get(i)));
-//                currentWorkout.getExercises().remove(i);
-                workoutService.saveOrUpdate(currentWorkout);
             }
         }
 
@@ -117,37 +116,20 @@ public class WorkoutConstructorController {
 
     @GetMapping("/start-training/{id}")
     public String StartTraining(@PathVariable Long id, Model model) {
-
         int numberOfSets = currentWorkout.getExercises().get(0).getNumberOfSets();
+        currentWorkout.setDuration(LocalTime.now());
         currentWorkout.getExercises().get(0).setSet(new ArrayList<>(numberOfSets));
         currentWorkout.getExercises().get(0).setNumberOfSets(numberOfSets + 1);
-//        workoutService.saveOrUpdate(currentWorkout);
         model.addAttribute("workout", workoutMapper.toDTO(currentWorkout));
         model.addAttribute("resultOfSet", 0);
         model.addAttribute("restTimeBetweenSets", currentWorkout.getExercises().get(0).getRestTimeBetweenSets());
 
-
-//        for (Exercise ex : workout.getExercises()) {
-//            int i = ex.getNumberOfSets();
-//            if (ex.getNumberOfSets() > 0) {
-//                model.addAttribute("set", 0);
-//                ex.setNumberOfSets(i - 1);
-//                workoutService.saveOrUpdate(newWorkout);
-//                return "workout";
-//            }
-//        }
         return "workout";
     }
 
 
     @PostMapping("/save-result-of-set")
     public String saveResultOfSet(@RequestParam int set, Model model) {
-
-//        if (Objects.isNull(currentWorkout)) {
-//            List<Workout> workouts = workoutService.findAll();
-//            currentWorkout = workouts.get(workouts.size() - 1);
-//        }
-
 
         for (int i = 0; i < currentWorkout.getExercises().size(); i++) {
             int numberOfSets = currentWorkout.getExercises().get(i).getNumberOfSets();
@@ -181,15 +163,18 @@ public class WorkoutConstructorController {
 
     @GetMapping("/get-save-workout-form")
     public String getSaveWorkoutForm(Model model) {
-        LocalDate now = LocalDate.now();
-        currentWorkout.setTitle(now.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        LocalTime finish = LocalTime.now();
+        currentWorkout.setDuration(finish
+                .minusHours(currentWorkout.getDuration().getHour())
+                .minusMinutes(currentWorkout.getDuration().getMinute())
+                .minusSeconds(currentWorkout.getDuration().getSecond()));
+        currentWorkout.setTitle(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         model.addAttribute("workout", workoutMapper.toDTO(currentWorkout));
         return "update-workout-before-saving";
     }
 
     @PostMapping("/save-workout")
     public String getResultWorkoutPage(@ModelAttribute WorkoutDTO workoutDTO, Model model) {
-
         currentWorkout.setTitle(workoutDTO.getTitle());
         currentWorkout.setRating(workoutDTO.getRating());
         currentWorkout.setComments(workoutDTO.getComments());

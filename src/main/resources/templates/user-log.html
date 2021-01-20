@@ -49,7 +49,7 @@
                     <th>Username</th>
                     <th>Firstname</th>
                     <th>Lastname</th>
-                    <th></th>
+<!--                    <th></th>-->
                     <th></th>
                 </tr>
                 <tr th:each="user, stat : ${users}">
@@ -57,7 +57,7 @@
                     <td th:text="${user.username}"></td>
                     <td th:text="${user.firstName}"></td>
                     <td th:text="${user.lastName}"></td>
-                    <td><a href="/user-log"  th:href="@{/user-log/update/{id}(id=${user.id})}">Update</a></td>
+<!--                    <td><a href="/user-log"  th:href="@{/user-log/update/{id}(id=${user.id})}">Update</a></td>-->
                     <td><a href="/user-log" th:href="@{/user-log/delete/{id}(id=${user.id})}">Delete</a></td>
                 </tr>
             </table>
@@ -75,13 +75,13 @@
 
 <!-- JavaScript Libraries -->
 
-<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/lib/php-mail-form/validate.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
+<!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
+<!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
+<!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
 
-<!-- Template Main Javascript File -->
+<!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
 
-<script th:src="@{/js/main.js}"></script>
+<!--<script th:src="@{/js/main.js}"></script>-->
 
 </body>
 </html>

@@ -64,6 +64,10 @@
                     <label for="title">Title: </label>
                     <input type="text" pattern="[a-zA-z0-9-]+" id="title" th:field="*{title}">
                 </div>
+                <div class="form-group">
+                    <label for="duration">Duration: </label>
+                    <strong id="duration" th:text="*{duration.substring(0,8)}"></strong>
+                </div>
 
                 <div class="form-group">
                     <label>Rating:</label>
@@ -92,7 +96,6 @@
             </form>
 
 
-
         </div>
     </div>
     <!-- /row -->
@@ -106,13 +109,13 @@
 
 <!-- JavaScript Libraries -->
 
-<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/lib/php-mail-form/validate.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
+<!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
+<!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
+<!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
 
-<!-- Template Main Javascript File -->
+<!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
 
-<script th:src="@{/js/main.js}"></script>
+<!--<script th:src="@{/js/main.js}"></script>-->
 
 </body>
 </html>

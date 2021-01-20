@@ -2,21 +2,21 @@ package by.zadziarnouski.workoutlog.mapper;
 
 import by.zadziarnouski.workoutlog.dto.ExerciseDTO;
 import by.zadziarnouski.workoutlog.dto.MeasurementDTO;
-import by.zadziarnouski.workoutlog.dto.WorkoutDTO;
 import by.zadziarnouski.workoutlog.model.Exercise;
 import by.zadziarnouski.workoutlog.model.Measurement;
 import by.zadziarnouski.workoutlog.model.User;
-import by.zadziarnouski.workoutlog.model.Workout;
-import by.zadziarnouski.workoutlog.service.ExerciseService;
 import by.zadziarnouski.workoutlog.service.UserService;
-import org.modelmapper.Converter;
-import org.modelmapper.ModelMapper;
+import org.modelmapper.*;
 import org.modelmapper.convention.MatchingStrategies;
+
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
@@ -36,6 +36,8 @@ public class ModelMapperProviderImpl implements ModelMapperProvider {
         return modelMapper;
     }
 
+
+
     @PostConstruct
     private ModelMapper createModelMapper() {
         modelMapper = new ModelMapper();
@@ -45,8 +47,18 @@ public class ModelMapperProviderImpl implements ModelMapperProvider {
                 .setSkipNullEnabled(true)
                 .setFieldAccessLevel(PRIVATE);
 
+        modelMapper.createTypeMap(String.class, LocalDate.class);
+        modelMapper.addConverter(toStringDate);
+        modelMapper.getTypeMap(String.class, LocalDate.class).setProvider(localDateProvider);
+
+        modelMapper.createTypeMap(String.class, LocalTime.class);
+        modelMapper.addConverter(toStringTime);
+        modelMapper.getTypeMap(String.class, LocalTime.class).setProvider(localTimeProvider);
+
+
         modelMapper.typeMap(Measurement.class, MeasurementDTO.class)
                 .addMappings(mapper -> mapper.map(measurement -> measurement.getUser().getId(), MeasurementDTO::setUserID));
+
         modelMapper.typeMap(MeasurementDTO.class, Measurement.class)
                 .addMappings(mapper -> mapper.using(longUserConverter()).map(MeasurementDTO::getUserID, Measurement::setUser));
 
@@ -57,13 +69,46 @@ public class ModelMapperProviderImpl implements ModelMapperProvider {
 
         modelMapper.typeMap(ExerciseDTO.class, Exercise.class)
                 .addMappings(mapper -> mapper.using(longUserConverter()).map(ExerciseDTO::getUserID, Exercise::setUser));
+
         return modelMapper;
     }
-
 
     private Converter<Long, User> longUserConverter() {
         return context -> userService.findById(context.getSource());
     }
+
+    Provider<LocalDate> localDateProvider = new AbstractProvider<LocalDate>() {
+        @Override
+        public LocalDate get() {
+            return LocalDate.now();
+        }
+    };
+
+    Provider<LocalTime> localTimeProvider = new AbstractProvider<LocalTime>() {
+        @Override
+        public LocalTime get() {
+            return LocalTime.now();
+        }
+    };
+
+    Converter<String, LocalTime> toStringTime = new AbstractConverter<String, LocalTime>() {
+        @Override
+        protected LocalTime convert(String source) {
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm:ss");
+            return LocalTime.parse(source, format);
+        }
+    };
+
+    Converter<String, LocalDate> toStringDate = new AbstractConverter<String, LocalDate>() {
+        @Override
+        protected LocalDate convert(String source) {
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            return LocalDate.parse(source, format);
+        }
+    };
+
+
+
 
 
 }
