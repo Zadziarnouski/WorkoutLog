@@ -37,7 +37,7 @@
 
         /***Event Listener on Button**/
         $(document).ready(function () {
-            let sound = document.getElementById("audio");
+            sound = document.getElementById("audio");
             sound.play();
         })
 
@@ -137,8 +137,10 @@
 <div th:insert="~{footer::#footer}"></div>
 <div th:insert="~{footer::#copyrights}"></div>
 
-<audio hidden="hidden" id="audio" th:src="@{/audio/sound.mp3}"></audio>
-f
+
+<audio th:if="${finish eq null}" hidden="hidden" id="audio" th:src="@{/audio/sound.mp3}"></audio>
+<audio th:if="${finish ne null}" hidden="hidden" id="audio" th:src="@{/audio/sound2.mp3}"></audio>
+
 <!-- JavaScript Libraries -->
 
 <!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->

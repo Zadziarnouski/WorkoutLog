@@ -37,6 +37,9 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 centered">
 
+<!--                <p><a href="/measurement-log">All</a></p>-->
+<!--                <p><a href="/measurement-log/today">Today</a></p>-->
+<!--                <p><a href="/measurement-log/last7days">Last 7 days</a></p>-->
 
                 <table th:if="${!measurements.isEmpty()}">
                     <tr>
@@ -52,6 +55,7 @@
                         <th>Buttocks</th>
                         <th>Thighs</th>
                         <th>Calves</th>
+                        <th>Link on photo</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -68,8 +72,11 @@
                         <td th:text="${measurement.buttocks}"></td>
                         <td th:text="${measurement.thighs}"></td>
                         <td th:text="${measurement.calves}"></td>
-                        <td><a href="/main/" th:href="@{/measurement-log/update/{id}(id=${measurement.id})}">Update</a></td>
-                        <td><a href="/main/" th:href="@{/measurement-log/delete/{id}(id=${measurement.id})}">Delete</a></td>
+                        <td><a th:if="${measurement.photo ne null}" th:href="@{{photo}(photo = ${measurement.photo}) }">click</a></td>
+                        <td><a th:href="@{/measurement-log/update/{id}(id=${measurement.id})}">Update</a>
+                        </td>
+                        <td><a th:href="@{/measurement-log/delete/{id}(id=${measurement.id})}">Delete</a>
+                        </td>
                     </tr>
                 </table>
 

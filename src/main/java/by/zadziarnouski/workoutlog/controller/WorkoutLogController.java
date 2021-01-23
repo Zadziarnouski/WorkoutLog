@@ -4,6 +4,7 @@ import by.zadziarnouski.workoutlog.mapper.WorkoutMapper;
 import by.zadziarnouski.workoutlog.model.User;
 import by.zadziarnouski.workoutlog.service.UserService;
 import by.zadziarnouski.workoutlog.service.WorkoutService;
+import com.cloudinary.Cloudinary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,7 @@ public class WorkoutLogController {
     public final WorkoutService workoutService;
     public final WorkoutMapper workoutMapper;
     public final UserService userService;
+
 
     @Autowired
     public WorkoutLogController(WorkoutService workoutService, WorkoutMapper workoutMapper, UserService userService) {
@@ -59,5 +61,6 @@ public class WorkoutLogController {
         }
         return null;
     }
+
 
 }

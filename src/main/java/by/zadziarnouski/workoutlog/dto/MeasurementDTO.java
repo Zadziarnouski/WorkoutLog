@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 public class MeasurementDTO {
     private Long id;
     private LocalDateTime fixationTime;
+    private String photo;
     private float weight;
     private float height;
     private float neck;

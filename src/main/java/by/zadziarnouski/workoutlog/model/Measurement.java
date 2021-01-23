@@ -21,6 +21,8 @@ public class Measurement {
     @PastOrPresent
     public LocalDateTime fixationTime = LocalDateTime.now();
 
+    private String photo;    // Как правильно назвать поле urlToPhotoOnCloudinary?
+
     private float weight;
 
     private float height;

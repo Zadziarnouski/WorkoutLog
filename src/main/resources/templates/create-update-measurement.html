@@ -12,6 +12,7 @@
     <link th:href="@{/img/favicon.png}" rel="icon">
     <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
 
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
 
@@ -25,7 +26,6 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <script th:src="@{/lib/jquery/jquery.min.js}"></script>
-
 
     <script>
         function validateForm() {
@@ -44,6 +44,111 @@
                 return false;
             }
         }
+
+
+        $(document).ready(function () {
+
+            $("#button").click(function (event) {
+                event.preventDefault();
+                let form = $('#upload')[0]
+                let data = new FormData(form)
+                $("#button").prop("disabled", true);
+
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: 'http://localhost:8080/measurement-log/upload',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    timeout: false,
+                    cache: false,
+                    success: function (data) {
+
+                        $("#result").text('Photo uploaded successfully!');
+
+                        let result = ""
+                        result+='<input type="hidden" id="photo" name="photo" value="'
+                        result+=data
+                        result+='">'
+
+
+
+                            // <input type="hidden" id="id" name="id" value="9">
+
+                        document.getElementById("linkOnPhoto").innerHTML = result
+
+                    },
+                    error: function (e) {
+
+                        $("#result").text(e.responseText);
+                        console.log("ERROR : ", e);
+                        $("#button").prop("disabled", false);
+
+                    }
+                });
+            })
+        });
+
+        // function uploadPhoto(){
+        //     $("#form2").submit(function (event) {
+        //         event.preventDefault();
+        //         //grab all form data
+        //         let formData = $(this).serialize();
+        //
+        //         $.ajax({
+        //             url: 'http://localhost:8080/measurement-log/upload',
+        //             type: 'POST',
+        //             data: formData ,
+        //             async: false,
+        //             cache: false,
+        //             contentType: false,
+        //             processData: false,
+        //             success: function (returndata) {
+        //                 alert(returndata);
+        //             },
+        //             error: function () {
+        //                 alert("error in ajax form submission");
+        //             }
+        //         });
+        //
+        //         return false;
+        //     });
+
+        // /***Ajax query****/
+        // function getWorkout() {
+        //     $.ajax({
+        //         url: "http://localhost:8080/measurement-log/upload",
+        //         dataType: "json", // Для использования JSON формата получаемых данных
+        //         method: "POST", //
+        //         success: function (data) {
+        //             let result = ""
+        //             let numberOfSets
+        //             for (let i = 0; i < data.exercises.length; i++) {
+        //                 numberOfSets = data.exercises[i].numberOfSets
+        //                 if (numberOfSets > 0) {
+        //                     result += '<p>' + data.exercises[i].name
+        //                     for (let j = 0; j < data.exercises[i].set.length; j++) {
+        //                         result += '<strong>' + data.exercises.exercises[i].set[j] + '</strong>'
+        //                     }
+        //                     result += '<input type="number" id="exercise" th:field="*{' + data.exercises[i].set[data.exercises[i].set.length] + '}"/>'
+        //
+        //                     result += '<button type="button" th:onclick="getNumberOfReps()">Enter</button></p>'
+        //                 }
+        //                 numberOfSets--
+        //             }
+        //
+        //             document.getElementById("form").innerHTML = result
+        //
+        //         },
+        //         error: function (jqXHR, textStatus, errorThrown) {
+        //             console.log(errorThrown);
+        //         }
+        //     });
+        // }
+
+        <!--}-->
+
     </script>
 </head>
 
@@ -65,6 +170,18 @@
     <div class="row mt">
         <div class="col-lg-8 col-lg-offset-2">
 
+
+            <form th:if="${measurement.weight==0.0}" th:action="@{/measurement-log/upload}" id="upload" enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                    <label for="photo">Photo: </label>
+                    <input type="file" id="photo" name="photo">
+                    <button id="button" type="submit">Upload</button>
+                    <div id="result" class="form-group">
+                    </div>
+
+                </div>
+            </form>
+
             <form class="contact-form php-mail-form" name="form" onsubmit="return validateForm() "
                   th:action="@{/measurement-log/create-update}" th:object="${measurement}"
                   method="post">
@@ -72,13 +189,15 @@
                 <input type="hidden" th:field="*{id}">
                 <input type="hidden" th:field="*{userID}"/>
 
+                <div id="linkOnPhoto"></div>
+
                 <div class="form-group">
-                    <label for="weight">Weight:        </label>
+                    <label for="weight">Weight: </label>
                     <input type="number" min="35" max="120" step="1" id="weight" th:field="*{weight}">
                 </div>
 
                 <div class="form-group">
-                    <label for="height">Height:     <span>     </span>              </label>
+                    <label for="height">Height: <span>     </span> </label>
                     <input type="number" min="120" max="230" step="1" id="height" th:field="*{height}">
                 </div>
 
