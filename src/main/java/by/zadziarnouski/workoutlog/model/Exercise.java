@@ -45,7 +45,9 @@ public class Exercise  {
     private User user;
 
     @ToString.Exclude
-    @ManyToMany(mappedBy = "exercises",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "exercises"
+            ,fetch = FetchType.EAGER
+            ,cascade = CascadeType.ALL)
     private List<Workout> workouts = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)

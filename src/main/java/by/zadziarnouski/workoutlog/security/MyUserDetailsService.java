@@ -1,4 +1,4 @@
-package by.zadziarnouski.workoutlog.configuration;
+package by.zadziarnouski.workoutlog.security;
 
 import by.zadziarnouski.workoutlog.model.User;
 import by.zadziarnouski.workoutlog.repository.UserRepository;
@@ -16,7 +16,7 @@ public class MyUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Autowired
-    public MyUserDetailsService( UserRepository userRepository) {
+    public MyUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -26,10 +26,12 @@ public class MyUserDetailsService implements UserDetailsService {
         if (Objects.isNull(byUsername)) {
             throw new UsernameNotFoundException("UsernameNotFoundException");
         }
+
         return org.springframework.security.core.userdetails.User
                 .withUsername(byUsername.getUsername())
                 .password(byUsername.getPassword())
                 .authorities(byUsername.getRole().toString())
                 .build();
     }
+
 }

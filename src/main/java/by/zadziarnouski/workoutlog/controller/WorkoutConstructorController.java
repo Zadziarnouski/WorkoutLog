@@ -9,14 +9,11 @@ import by.zadziarnouski.workoutlog.service.ExerciseService;
 import by.zadziarnouski.workoutlog.service.UserService;
 import by.zadziarnouski.workoutlog.service.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -32,9 +29,6 @@ public class WorkoutConstructorController {
     private final UserService userService;
     private final WorkoutMapper workoutMapper;
     private final ExerciseMapper exerciseMapper;
-    User currentUser;
-    Workout currentWorkout;
-
 
     @Autowired
     public WorkoutConstructorController(WorkoutService workoutService, ExerciseService exerciseService, UserService userService, WorkoutMapper workoutMapper, ExerciseMapper exerciseMapper) {
@@ -48,159 +42,145 @@ public class WorkoutConstructorController {
     @GetMapping
     public String getWorkoutConstructorPage() {
         workoutService.findAll().stream().filter(workout -> workout.getTitle() == null).forEach(workout -> workoutService.delete(workout.getId()));
-        currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
         return "workout-constructor";
     }
 
     @GetMapping("/create-new-workout")
-    public String getCreateWorkoutPage(Model model) {
-        currentUser.getWorkout().add(new Workout());
-        currentUser = userService.saveOrUpdate(currentUser);
-        currentWorkout = currentUser.getWorkout().get(currentUser.getWorkout().size() - 1);
-
-
-        model.addAttribute("workout", workoutMapper.toDTO(currentWorkout));
+    public String getCreateWorkoutPage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        user.getWorkout().add(new Workout());
+        user = userService.saveOrUpdate(user);
+        Workout workout = user.getWorkout().get(user.getWorkout().size() - 1);
+        session.setAttribute("workout", workout);
+        model.addAttribute("workout", workoutMapper.toDTO(workout));
         return "create-update-workout";
     }
 
     @GetMapping("/getFormForAddOrUpdateExercise")
-    public String addExerciseInWorkout(Model model) {
-        model.addAttribute("exercises", exerciseService.findAll().stream().filter(exercise -> exercise.getUser().getId().equals(currentUser.getId())).filter(exercise -> exercise.getNumberOfSets() == 0).map(exerciseMapper::toDTO).collect(Collectors.toList()));
+    public String addExerciseInWorkout(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("exercises", exerciseService.findAll().stream()
+                .filter(exercise -> exercise.getUser().getId().equals(user.getId()))
+                .filter(exercise -> exercise.getNumberOfSets() == 0)
+                .map(exerciseMapper::toDTO).collect(Collectors.toList()));
         model.addAttribute("newExercise", exerciseMapper.toDTO(new Exercise()));
         return "create-update-exercise-in-workout";
     }
 
     @PostMapping("/add-or-update-exercise-in-workout")
-    public String addOrUpdateExerciseInWorkout(@ModelAttribute ExerciseDTO exerciseDTO, Model model) {
-        currentWorkout.setUser(currentUser);
+    public String addOrUpdateExerciseInWorkout(@ModelAttribute ExerciseDTO exerciseDTO, HttpSession session, Model model) {
+        Workout workout = (Workout) session.getAttribute("workout");
+        User user = (User) session.getAttribute("user");
+
         if (Objects.isNull(exerciseDTO.getName())) {
             Exercise newExercise = convectorForNewExercise(exerciseDTO);
+            newExercise.setUser(user);
             Exercise createdExercise = exerciseService.saveOrUpdate(newExercise);
-            currentWorkout.getExercises().add(createdExercise);
-
+            workout.getExercises().add(createdExercise);
         } else {
-            exerciseService.saveOrUpdate(exerciseMapper.toEntity(exerciseDTO));
-            for (int i = 0; i < currentWorkout.getExercises().size(); i++) {
-                if (currentWorkout.getExercises().get(0).getId().equals(exerciseDTO.getId())) {
-                    currentWorkout.getExercises().get(i).setNumberOfSets(exerciseDTO.getNumberOfSets());
-                    currentWorkout.getExercises().get(i).setRestTimeBetweenSets(exerciseDTO.getRestTimeBetweenSets());
-                }
-            }
+            Optional<Exercise> first = workout.getExercises().stream()
+                    .filter(exercise -> exercise.getId().equals(exerciseDTO.getId())).findFirst();
+            first.ifPresent(exercise -> exercise.setNumberOfSets(exerciseDTO.getNumberOfSets()));
+            first.ifPresent(exercise -> exercise.setRestTimeBetweenSets(exerciseDTO.getRestTimeBetweenSets()));
         }
-        model.addAttribute("workout", workoutMapper.toDTO(currentWorkout));
+        model.addAttribute("workout", workoutMapper.toDTO(workout));
         return "create-update-workout";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteExerciseFromWorkout(@PathVariable Long id, Model model) {
-        for (int i = 0; i < currentWorkout.getExercises().size(); i++) {
-            if (currentWorkout.getExercises().get(i).getId().equals(id)) {
-                currentWorkout.getExercises().remove(i);
-                exerciseService.delete(id);
-            }
-        }
-        model.addAttribute("workout", workoutMapper.toDTO(currentWorkout));
+    public String deleteExerciseFromWorkout(@PathVariable Long id, HttpSession session, Model model) {
+        Workout workout = (Workout) session.getAttribute("workout");
+        workout.getExercises().removeIf(exercise -> exercise.getId().equals(id));
+        exerciseService.delete(id);
+        model.addAttribute("workout", workoutMapper.toDTO(workout));
         return "create-update-workout";
     }
 
     @GetMapping("/update/{id}")
-    public String getUpdatePageForExerciseInWorkout(@PathVariable Long id, Model model) {
-        for (int i = 0; i < currentWorkout.getExercises().size(); i++) {
-            if (currentWorkout.getExercises().get(i).getId().equals(id)) {
-                model.addAttribute("newExercise", exerciseMapper.toDTO(currentWorkout.getExercises().get(i)));
-            }
-        }
-
+    public String getUpdatePageForExerciseInWorkout(@PathVariable Long id, HttpSession session, Model model) {
+        Workout workout = (Workout) session.getAttribute("workout");
+        Optional<ExerciseDTO> exerciseDTO = workout.getExercises().stream()
+                .filter(exercise -> exercise.getId().equals(id))
+                .map(exerciseMapper::toDTO)
+                .findFirst();
+        exerciseDTO.ifPresent(exercise -> model.addAttribute("newExercise", exercise));
         return "create-update-exercise-in-workout";
     }
 
-    @GetMapping("/start-training/{id}")
-    public String StartTraining(@PathVariable Long id, Model model) {
-        int numberOfSets = currentWorkout.getExercises().get(0).getNumberOfSets();
-        currentWorkout.setDuration(LocalTime.now());
-        currentWorkout.getExercises().get(0).setSet(new ArrayList<>(numberOfSets));
-        currentWorkout.getExercises().get(0).setNumberOfSets(numberOfSets + 1);
-        model.addAttribute("workout", workoutMapper.toDTO(currentWorkout));
+    @GetMapping("/start-training")
+    public String StartTraining(HttpSession session, Model model) {
+        Workout workout = (Workout) session.getAttribute("workout");
+        int numberOfSets = workout.getExercises().get(0).getNumberOfSets();
+        workout.setDuration(LocalTime.now());
+        workout.getExercises().get(0).setSet(new ArrayList<>(numberOfSets));
+        workout.getExercises().get(0).setNumberOfSets(numberOfSets + 1);
+        model.addAttribute("workout", workoutMapper.toDTO(workout));
         model.addAttribute("resultOfSet", 0);
-        model.addAttribute("restTimeBetweenSets", currentWorkout.getExercises().get(0).getRestTimeBetweenSets());
-
+        model.addAttribute("restTimeBetweenSets", workout.getExercises().get(0).getRestTimeBetweenSets());
         return "workout";
     }
 
 
     @PostMapping("/save-result-of-set")
-    public String saveResultOfSet(@RequestParam int set, Model model) {
-
-        for (int i = 0; i < currentWorkout.getExercises().size(); i++) {
-            int numberOfSets = currentWorkout.getExercises().get(i).getNumberOfSets();
-            if (currentWorkout.getExercises().get(i).getSet().size() == 0) {
-                currentWorkout.getExercises().get(i).setSet(new ArrayList<>(currentWorkout.getExercises().get(i).getNumberOfSets()));
+    public String saveResultOfSet(@RequestParam int set, HttpSession session, Model model) {
+        Workout workout = (Workout) session.getAttribute("workout");
+        for (int i = 0; i < workout.getExercises().size(); i++) {
+            int numberOfSets = workout.getExercises().get(i).getNumberOfSets();
+            if (workout.getExercises().get(i).getSet().size() == 0) {
+                workout.getExercises().get(i).setSet(new ArrayList<>(workout.getExercises().get(i).getNumberOfSets()));
             }
             if (numberOfSets > 0) {
                 model.addAttribute("resultOfSet", 0);
-                model.addAttribute("workout", workoutMapper.toDTO(currentWorkout));
-                model.addAttribute("restTimeBetweenSets", currentWorkout.getExercises().get(i).getRestTimeBetweenSets());
-
+                model.addAttribute("workout", workoutMapper.toDTO(workout));
+                model.addAttribute("restTimeBetweenSets", workout.getExercises().get(i).getRestTimeBetweenSets());
                 if (set == 0) {
-                    if (i == (currentWorkout.getExercises().size() - 1) && numberOfSets == 1) {
+                    if (i == (workout.getExercises().size() - 1) && numberOfSets == 1) {
                         model.addAttribute("finish", "");
                     }
                     return "workout";
                 }
-                if (i == (currentWorkout.getExercises().size() - 1) && numberOfSets == 1) {
+                if (i == (workout.getExercises().size() - 1) && numberOfSets == 1) {
                     model.addAttribute("finish", "");
                 }
-                currentWorkout.getExercises().get(i).getSet().add(set);
-                currentWorkout.getExercises().get(i).setNumberOfSets(numberOfSets - 1);
-
+                workout.getExercises().get(i).getSet().add(set);
+                workout.getExercises().get(i).setNumberOfSets(numberOfSets - 1);
                 break;
             }
         }
         return "countdown-timer";
-
     }
 
 
     @GetMapping("/get-save-workout-form")
-    public String getSaveWorkoutForm(Model model) {
+    public String getSaveWorkoutForm(HttpSession session, Model model) {
+        Workout workout = (Workout) session.getAttribute("workout");
         LocalTime finish = LocalTime.now();
-        currentWorkout.setDuration(finish
-                .minusHours(currentWorkout.getDuration().getHour())
-                .minusMinutes(currentWorkout.getDuration().getMinute())
-                .minusSeconds(currentWorkout.getDuration().getSecond()));
-        currentWorkout.setTitle(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-        model.addAttribute("workout", workoutMapper.toDTO(currentWorkout));
+        workout.setDuration(finish
+                .minusHours(workout.getDuration().getHour())
+                .minusMinutes(workout.getDuration().getMinute())
+                .minusSeconds(workout.getDuration().getSecond()));
+        workout.setTitle(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        model.addAttribute("workout", workoutMapper.toDTO(workout));
         return "update-workout-before-saving";
     }
 
     @PostMapping("/save-workout")
-    public String getResultWorkoutPage(@ModelAttribute WorkoutDTO workoutDTO, Model model) {
-        currentWorkout.setTitle(workoutDTO.getTitle());
-        currentWorkout.setRating(workoutDTO.getRating());
-        currentWorkout.setComments(workoutDTO.getComments());
-        model.addAttribute("workout", workoutMapper.toDTO(currentWorkout));
-        currentWorkout.getExercises().stream().map(exerciseService::saveOrUpdate);
-        workoutService.saveOrUpdate(currentWorkout);
+    public String getResultWorkoutPage(@ModelAttribute WorkoutDTO workoutDTO, HttpSession session, Model model) {
+        Workout workout = (Workout) session.getAttribute("workout");
+        User user = (User) session.getAttribute("user");
+        workout.setUser(user);
+        workout.setTitle(workoutDTO.getTitle());
+        workout.setRating(workoutDTO.getRating());
+        workout.setComments(workoutDTO.getComments());
+        model.addAttribute("workout", workoutMapper.toDTO(workout));
+        workout.getExercises().forEach(exerciseService::saveOrUpdate);
+        workoutService.saveOrUpdate(workout);
         return "result-of-workout";
     }
 
-
-//    @CrossOrigin(origins = "*", allowedHeaders = "*")
-//    @GetMapping("/workout-start")
-//    @ResponseBody
-//    public ResponseEntity<?> getCurrentWorkout(){
-//
-//        WorkoutDTO workoutDTO = workoutMapper.toDTO(newWorkout);
-//        return ResponseEntity.ok(workoutDTO);
-//    }
-
-
     private Exercise convectorForNewExercise(ExerciseDTO exerciseDTO) {
-        User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
-
         Exercise newExercise = new Exercise();
         Exercise byId = exerciseService.findById(exerciseDTO.getId());
-        newExercise.setUser(currentUser);
         newExercise.setName(byId.getName());
         newExercise.setExerciseType(byId.getExerciseType());
         newExercise.setNecessaryEquipment(byId.getNecessaryEquipment());
@@ -211,14 +191,6 @@ public class WorkoutConstructorController {
         newExercise.setForAWhile(exerciseDTO.isForAWhile());
         return newExercise;
 
-    }
-
-    private UserDetails getPrincipal() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //вынести в отдельный метод и из него брать логин искать юзера и перед созданием нового изменения сетить этого юзера
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-            return (UserDetails) auth.getPrincipal();
-        }
-        return null;
     }
 
 }

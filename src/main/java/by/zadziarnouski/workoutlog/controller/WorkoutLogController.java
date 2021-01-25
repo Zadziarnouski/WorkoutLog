@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -35,15 +36,15 @@ public class WorkoutLogController {
     }
 
     @GetMapping
-    public String getWorkoutLogPage(Model model) {
-        workoutService.findAll().stream().filter(workout -> workout.getTitle()==null).forEach(workout -> workoutService.delete(workout.getId()));
-        User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
-        model.addAttribute("workouts", currentUser.getWorkout().stream().map(workoutMapper::toDTO).collect(Collectors.toList()));
+    public String getWorkoutLogPage(HttpSession session, Model model) {
+        User currentUser = (User) session.getAttribute("user");
+        workoutService.findAll().stream().filter(workout -> workout.getTitle() == null).forEach(workout -> workoutService.delete(workout.getId()));
+        model.addAttribute("workouts", workoutService.findAll().stream().filter(workout -> workout.getUser().getId().equals(currentUser.getId())).map(workoutMapper::toDTO).collect(Collectors.toList()));
         return "workout-log";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteWorkut(@PathVariable Long id, Model model) {
+    public String deleteWorkut(@PathVariable Long id) {
         workoutService.delete(id);
         return "redirect:/workout-log";
     }
@@ -53,14 +54,4 @@ public class WorkoutLogController {
         model.addAttribute("workout", workoutMapper.toDTO(workoutService.findById(id)));
         return "update-workout-before-saving";
     }
-
-    private UserDetails getPrincipal() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //вынести в отдельный метод и из него брать логин искать юзера и перед созданием нового изменения сетить этого юзера
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-            return (UserDetails) auth.getPrincipal();
-        }
-        return null;
-    }
-
-
 }

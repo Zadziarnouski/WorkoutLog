@@ -77,21 +77,21 @@ public class ModelMapperProviderImpl implements ModelMapperProvider {
         return context -> userService.findById(context.getSource());
     }
 
-    Provider<LocalDate> localDateProvider = new AbstractProvider<LocalDate>() {
+    Provider<LocalDate> localDateProvider = new AbstractProvider<>() {
         @Override
         public LocalDate get() {
             return LocalDate.now();
         }
     };
 
-    Provider<LocalTime> localTimeProvider = new AbstractProvider<LocalTime>() {
+    Provider<LocalTime> localTimeProvider = new AbstractProvider<>() {
         @Override
         public LocalTime get() {
             return LocalTime.now();
         }
     };
 
-    Converter<String, LocalTime> toStringTime = new AbstractConverter<String, LocalTime>() {
+    Converter<String, LocalTime> toStringTime = new AbstractConverter<>() {
         @Override
         protected LocalTime convert(String source) {
             DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm:ss");
@@ -99,10 +99,10 @@ public class ModelMapperProviderImpl implements ModelMapperProvider {
         }
     };
 
-    Converter<String, LocalDate> toStringDate = new AbstractConverter<String, LocalDate>() {
+    Converter<String, LocalDate> toStringDate = new AbstractConverter<>() {
         @Override
         protected LocalDate convert(String source) {
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             return LocalDate.parse(source, format);
         }
     };

@@ -20,7 +20,7 @@
                     <li><a th:href="@{/exercise-editor}">Exercises</a></li>
                     <li><a th:href="@{/workout-log}">Workout log</a></li>
                     <li><a th:href="@{/measurement-log}">Measurement log</a></li>
-                    <li th:if="${myUser ne null}"><a th:if="${myUser.getRole().toString().equals('ROLE_ADMIN')}" th:href="@{user-log}">User log</a></li>
+                    <li th:if="${user ne null}"><a th:if="${user.getRole().toString().equals('ROLE_ADMIN')}" th:href="@{user-log}">User log</a></li>
                     <li><a th:href="@{/personal-profile}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                              viewBox="0 0 16 16">

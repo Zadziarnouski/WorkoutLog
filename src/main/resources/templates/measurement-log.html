@@ -72,7 +72,7 @@
                         <td th:text="${measurement.buttocks}"></td>
                         <td th:text="${measurement.thighs}"></td>
                         <td th:text="${measurement.calves}"></td>
-                        <td><a th:if="${measurement.photo ne null}" th:href="@{{photo}(photo = ${measurement.photo}) }">click</a></td>
+                        <td><a th:if="${measurement.photo ne null}" th:href="@{{photo}(photo = ${measurement.photo})}" target="_blank">click</a></td>
                         <td><a th:href="@{/measurement-log/update/{id}(id=${measurement.id})}">Update</a>
                         </td>
                         <td><a th:href="@{/measurement-log/delete/{id}(id=${measurement.id})}">Delete</a>

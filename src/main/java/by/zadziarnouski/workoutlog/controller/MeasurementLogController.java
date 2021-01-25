@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Objects;
@@ -30,29 +31,29 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "/measurement-log")
 public class MeasurementLogController {
     private final MeasurementService measurementService;
-    private final UserService userService;
     private final MeasurementMapper measurementMapper;
     private final Cloudinary cloudinary;
-    private Measurement newMeasurement;
-
 
     @Autowired
-    public MeasurementLogController(MeasurementService measurementService, UserService userService, MeasurementMapper measurementMapper, Cloudinary cloudinary) {
+    public MeasurementLogController(MeasurementService measurementService, MeasurementMapper measurementMapper, Cloudinary cloudinary) {
         this.measurementService = measurementService;
-        this.userService = userService;
         this.measurementMapper = measurementMapper;
         this.cloudinary = cloudinary;
     }
 
     @GetMapping
-    public String getMeasurementLogPage(Model model) {
-        User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
-        model.addAttribute("measurements", currentUser.getMeasurements().stream().map(measurementMapper::toDTO).collect(Collectors.toList()));
+
+    public String getMeasurementLogPage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("measurements", measurementService.findAll().stream()     //Вынести метод в репозиторий( List<User> findAllOfCurrentUser(User currentUser))
+                .map(measurementMapper::toDTO)
+                .filter(measurementDTO -> measurementDTO.getUserID().equals(user.getId()))
+                .collect(Collectors.toList()));
         return "measurement-log";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteMeasurement(@PathVariable Long id, Model model) throws IOException {
+    public String deleteMeasurement(@PathVariable Long id) throws IOException {
         if (Objects.nonNull(measurementService.findById(id).getPhoto())) {
             cloudinary.uploader().destroy(String.valueOf(id), Collections.emptyMap());
         }
@@ -67,76 +68,30 @@ public class MeasurementLogController {
     }
 
     @GetMapping("/create")
-    public String getCreatePageForMeasurement(Model model) {
-        newMeasurement = measurementService.saveOrUpdate(new Measurement());
+    public String getCreatePageForMeasurement(HttpSession session, Model model) {
+        Measurement newMeasurement = measurementService.saveOrUpdate(new Measurement());
+        session.setAttribute("measurement", newMeasurement);
         model.addAttribute("measurement", measurementMapper.toDTO(newMeasurement));
         return "create-update-measurement";
     }
 
     @PostMapping("/create-update")
-    public String createUpdateMeasurement(@ModelAttribute MeasurementDTO measurementDTO, Model model) {
-        User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
-        measurementDTO.setUserID(currentUser.getId());
+    public String createUpdateMeasurement(@ModelAttribute MeasurementDTO measurementDTO, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        measurementDTO.setUserID(user.getId());
         Measurement measurement = measurementService.saveOrUpdate(measurementMapper.toEntity(measurementDTO));
+        session.setAttribute("measurement", measurement);
         model.addAttribute("measurement", measurementMapper.toDTO(measurement));
         return "result-create-or-update-measurement";
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
-    public String uploadPhoto(@RequestBody MultipartFile photo, RedirectAttributes redirectAttributes) throws IOException {
-
-        int nameOfPhoto =newMeasurement.getId().intValue();
-
+    public String uploadPhoto(@RequestBody MultipartFile photo, RedirectAttributes redirectAttributes, HttpSession session) throws IOException {
+        Measurement measurement = (Measurement) session.getAttribute("measurement");
+        int nameOfPhoto = measurement.getId().intValue();
         cloudinary.uploader().upload(photo.getBytes(), ObjectUtils.asMap("public_id", String.valueOf(nameOfPhoto)));
-        String generate = cloudinary.url().generate(String.valueOf(nameOfPhoto));
-        return generate;
+        return cloudinary.url().generate(String.valueOf(nameOfPhoto));
     }
-
-//    @GetMapping("/{parameter}")
-//    public String getMeasurementsTakenToday(@PathVariable String parameter, Model model) {
-//        User currentUser = userService.findByUsername(Objects.requireNonNull(getPrincipal()).getUsername());
-//        if (parameter.equals("today")) {
-//            model.addAttribute("measurements", currentUser.getMeasurements().stream()
-//                    .filter(measurement -> isToday(measurement.getFixationTime()))
-//                    .sorted(Comparator.comparingLong(Measurement::getId))
-//                    .map(measurementMapper::toDTO)
-//                    .collect(Collectors.toList()));
-//        } else if (parameter.equals("last7days")){
-//            model.addAttribute("measurements", currentUser.getMeasurements().stream()
-//                    .filter(measurement -> isLast7Days(measurement.getFixationTime()))
-//                    .sorted(Comparator.comparingLong(Measurement::getId))
-//                    .map(measurementMapper::toDTO)
-//                    .collect(Collectors.toList()));
-//        }
-//        return "measurement-log";
-//    }
-
-    private UserDetails getPrincipal() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication(); //вынести в отдельный метод и из него брать логин искать юзера и перед созданием нового изменения сетить этого юзера
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-            return (UserDetails) auth.getPrincipal();
-        }
-        return null;
-    }
-
-
-//    private boolean isToday(LocalDateTime localDateTime) {
-//        LocalDateTime now = LocalDateTime.now();
-//        if (localDateTime.getYear() == now.getYear() && localDateTime.getDayOfYear() == now.getDayOfYear()) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    private boolean isLast7Days(LocalDateTime localDateTime) {
-//        LocalDateTime now = LocalDateTime.now();
-//        LocalDateTime minus7Days = now.minusDays(7);
-//        if (localDateTime.isAfter(minus7Days)) {
-//            return true;
-//        }
-//        return false;
-//    }
-
 
 }

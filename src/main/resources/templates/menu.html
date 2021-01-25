@@ -30,18 +30,18 @@
 <!-- Static navbar -->
 
 
-<div th:insert="${myUser ne null} ? ~{navbar :: #navbar} : ~{navbar :: #navbar2}"></div>
+<div th:insert="${user ne null} ? ~{navbar :: #navbar} : ~{navbar :: #navbar2}"></div>
 
 <!-- +++++ Welcome Section +++++ -->
 <div id="ww">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 centered">
-                <h3 th:text="'Hi, '+ ( ${myUser == null} ? 'Dear guest. Welcome to WorkoutLog.' : (${myUser.getLastName()} + ' ' + ${myUser.getFirstName()}))"></h3>
-                <p th:if="${myUser eq null}">Please login and we will start composing the first workout.</p>
-                <p th:if="${myUser eq null}"><a href="/login">Login</a></p>
-                <p th:if="${myUser ne null}"><a href="workout-constructor">Start training</a></p>
-                <p th:if="${myUser ne null}"><a href="/perform_logout">Logout</a></p>
+                <h3 th:text="'Hi, '+ ( ${user == null} ? 'Dear guest. Welcome to WorkoutLog.' : (${user.getLastName()} + ' ' + ${user.getFirstName()}))"></h3>
+                <p th:if="${user eq null}">Please login and we will start composing the first workout.</p>
+                <p th:if="${user eq null}"><a href="/login">Login</a></p>
+                <p th:if="${user ne null}"><a href="workout-constructor">Start training</a></p>
+                <p th:if="${user ne null}"><a href="/perform_logout">Logout</a></p>
 
             </div>
             <!-- /col-lg-8 -->

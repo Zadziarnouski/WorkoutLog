@@ -12,9 +12,12 @@ public interface UserService {
 
     List<User> findAll();
 
+    List<User> findAllWithTheUserRole();
+
     User findById(long id);
 
     User findByUsername(String username);
 
     void delete(long id);
+
 }
