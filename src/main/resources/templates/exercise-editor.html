@@ -24,6 +24,16 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <script th:src="@{/lib/jquery/jquery.min.js}"></script>
+<!--    <script type="text/javascript">-->
+<!--        $(document).ready(function() {-->
+<!--            $("#locales").change(function () {-->
+<!--                let selectedOption = $('#locales').val();-->
+<!--                if (selectedOption != ''){-->
+<!--                    window.location.replace('?lang=' + selectedOption);-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
 </head>
 
 <body>
@@ -41,11 +51,11 @@
                 <table th:if="${!exercises.isEmpty()}">
                     <tr>
                         <th>No.</th>
-                        <th>Name</th>
-                        <th>Muscle group</th>
-                        <th>Type of exercise</th>
-                        <th>Necessary equipment</th>
-                        <th>Description</th>
+                        <th th:text="#{exercise.name}">Name</th>
+                        <th th:text="#{exercise.musclegroup}" >Muscle group</th>
+                        <th th:text="#{exercise.typeofexercise}">Type of exercise</th>
+                        <th th:text="#{exercise.necessaryequipment}" >Necessary equipment</th>
+                        <th th:text="#{exercise.description}" >Description</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -56,13 +66,13 @@
                         <td th:text="${exercise.exerciseType.displayValue}"></td>
                         <td th:text="${exercise.necessaryEquipment.displayValue}"></td>
                         <td th:text="${exercise.description}"></td>
-                        <td><a href="/main/"  th:href="@{/exercise-editor/update/{id}(id=${exercise.id})}">Update</a></td>
-                        <td><a href="/exercise-editor" th:href="@{/exercise-editor/delete/{id}(id=${exercise.id})}">Delete</a></td>
+                        <td><a href="/main/"  th:href="@{/exercise-editor/update/{id}(id=${exercise.id})}" th:text="#{exercise.update}">Update</a></td>
+                        <td><a href="/exercise-editor" th:href="@{/exercise-editor/delete/{id}(id=${exercise.id})}" th:text="#{exercise.delete}">Delete</a></td>
                     </tr>
                 </table>
 
-                <p><a href="/exercise-editor/create">Create new</a></p>
-                <p><a href="/">Back</a></p>
+                <p><a href="/exercise-editor/create" th:text="#{exercise.createnew}" >Create new</a></p>
+                <p><a href="/" th:text="#{exercise.back}" >Back</a></p>
 
             </div>
             <!-- /col-lg-8 -->
@@ -88,7 +98,7 @@
 
 <!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
 
-<!--<script th:src="@{/js/main.js}"></script>-->
+<script th:src="@{/js/main.js}"></script>
 
 </body>
 </html>

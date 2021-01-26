@@ -40,20 +40,20 @@
 
                 <div class="row mt">
                     <div class="col-lg-6 col-lg-offset-3 centered">
-                        <h3>Create workout</h3>
+                        <h3 th:text="#{workout.createworkout}">Create workout</h3>
                         <hr>
                     </div>
                 </div>
-                <p th:if="${workout.exercises.isEmpty()}">This workout does not contain any added exercises yet.</p>
+                <p th:if="${workout.exercises.isEmpty()}" th:text="#{workout.meassage}">This workout does not contain any added exercises yet.</p>
                 <div th:if="${workout ne null}" th:object="${workout}">
                     <div th:if="${!workout.exercises.isEmpty()}">
                         <table>
                             <tr>
-                                <th>Position</th>
-                                <th>Name</th>
-                                <th>Number of sets</th>
-                                <th>Rest time between sets</th>
-                                <th>Type of exercise</th>
+                                <th th:text="#{workout.position}">Position</th>
+                                <th th:text="#{workout.title}">Title</th>
+                                <th th:text="#{workout.numberofsets}">Number of sets</th>
+                                <th th:text="#{workout.Resttimebetweensets}">Rest time between sets</th>
+                                <th th:text="#{exercise.typeofexercise}">Type of exercise</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -74,13 +74,13 @@
                     </div>
 
                 </div>
-                <p><a href="/workout-constructor/getFormForAddOrUpdateExercise">Add exercise</a></p>
+                <p><a href="/workout-constructor/getFormForAddOrUpdateExercise" th:text="#{workout.addexercise}">Add exercise</a></p>
                 <p th:if="${workout.exercises.size()>0}"><a
-                        th:href="@{/workout-constructor/start-training}">Start training</a>
+                        th:href="@{/workout-constructor/start-training}" th:text="#{menu.starttraining}">Start training</a>
                 </p>
-                <p><a href="/workout-constructor">Back</a></p>
+                <p><a href="/workout-constructor" th:text="#{workout.back}">Back</a></p>
 
-                <p th:if="${workout.exercises.size()>0}">We recommend doing a 5-10 minute warm-up before starting a workout</p>
+                <p th:if="${workout.exercises.size()>0}" th:text="#{workout.meassage3}">We recommend doing a 5-10 minute warm-up before starting a workout</p>
 
 
             </div>

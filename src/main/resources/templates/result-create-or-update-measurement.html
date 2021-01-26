@@ -49,7 +49,7 @@
 <div class="container pt">
     <div class="row mt">
         <div class="col-lg-6 col-lg-offset-3 centered">
-            <h3>Result</h3>
+            <h3 th:text="#{measurement.result}" >Result</h3>
             <hr>
         </div>
     </div>
@@ -57,23 +57,23 @@
         <div class="col-lg-8 col-lg-offset-2">
 
             <div th:object="${measurement}">
-                <p><strong>Photo:</strong></p>
-                <p><img  th:src="${measurement.photo}" height="300" width="300"></p>
-                <p><strong>Fixation time:</strong> <span
+                <p><strong th:text="#{measurement.photo}">Photo:</strong></p>
+                <p th:if="${measurement.photo ne null}"><img  th:src="${measurement.photo}" height="300" width="300"></p>
+                <p><strong th:text="#{measurement.fixationtime}">Fixation time:</strong> <span
                         th:text="${#temporals.format(measurement.getFixationTime(), 'HH:mm, dd-MM-yyyy')}"></span></p>
-                <p><strong>Weight, kg:</strong> <span th:text="*{weight}"></span></p>
-                <p><strong>Height, cm:</strong> <span th:text="*{height}"></span></p>
-                <p><strong>Neck, cm:</strong> <span th:text="*{neck}"></span></p>
-                <p><strong>Arms, cm:</strong> <span th:text="*{arms}"></span></p>
-                <p><strong>Forearms, cm:</strong> <span th:text="*{forearms}"></span></p>
-                <p><strong>Chest, cm:</strong> <span th:text="*{chest}"></span></p>
-                <p><strong>Waist, cm:</strong> <span th:text="*{waist}"></span></p>
-                <p><strong>Buttocks, cm:</strong> <span th:text="*{buttocks}"></span></p>
-                <p><strong>Thighs, cm:</strong> <span th:text="*{thighs}"></span></p>
-                <p><strong>Calves, cm:</strong> <span th:text="*{calves}"></span></p>
+                <p><strong th:text="#{measurement.weight} + ', kg'">Weight, kg:</strong> <span th:text="*{weight}"></span></p>
+                <p><strong th:text="#{measurement.height} + ', cm'">Height, cm:</strong> <span th:text="*{height}"></span></p>
+                <p><strong th:text="#{measurement.neck} + ', cm'">Neck, cm:</strong> <span th:text="*{neck}"></span></p>
+                <p><strong th:text="#{measurement.arms} + ', cm'">Arms, cm:</strong> <span th:text="*{arms}"></span></p>
+                <p><strong th:text="#{measurement.forearms} + ', cm'">Forearms, cm:</strong> <span th:text="*{forearms}"></span></p>
+                <p><strong th:text="#{measurement.chest} + ', cm'">Chest, cm:</strong> <span th:text="*{chest}"></span></p>
+                <p><strong th:text="#{measurement.waist} + ', cm'">Waist, cm:</strong> <span th:text="*{waist}"></span></p>
+                <p><strong th:text="#{measurement.buttocks} + ', cm'">Buttocks, cm:</strong> <span th:text="*{buttocks}"></span></p>
+                <p><strong th:text="#{measurement.thighs} + ', cm'">Thighs, cm:</strong> <span th:text="*{thighs}"></span></p>
+                <p><strong th:text="#{measurement.calves} + ', cm'">Calves, cm:</strong> <span th:text="*{calves}"></span></p>
             </div>
-            <p><a th:href="@{/measurement-log/update/{id}(id=${measurement.id})}">Back</a></p>
-            <p><a href="/measurement-log">Confirm</a>
+            <p><a th:href="@{/measurement-log/update/{id}(id=${measurement.id})}" th:text="#{measurement.back}">Back</a></p>
+            <p><a href="/measurement-log" th:text="#{measurement.confirm}">Confirm</a>
 
 
         </div>

@@ -50,21 +50,21 @@
 <div class="container pt">
     <div class="row mt">
         <div class="col-lg-6 col-lg-offset-3 centered">
-            <h3>Result</h3>
+            <h3 th:text="#{exercise.result}" >Result</h3>
             <hr>
         </div>
     </div>
     <div class="row mt">
         <div class="col-lg-8 col-lg-offset-2">
             <div th:object="${exercise}">
-                <p><strong>Exercise name:</strong> <span th:text="*{name}"></span></p>
-                <p><strong>Muscle group:</strong> <span th:text="*{muscleGroup.displayValue}"></span></p>
-                <p><strong>Exercise type:</strong> <span th:text="*{exerciseType.displayValue}"></span></p>
-                <p><strong>Necessary equipment:</strong> <span th:text="*{necessaryEquipment.displayValue}"></span></p>
-                <p><strong>Description:</strong> <span th:text="*{description}"></span></p>
+                <p><strong th:text="#{exercise.name}" >Exercise name:</strong> <span th:text="*{name}"></span></p>
+                <p><strong th:text="#{exercise.musclegroup}" >Muscle group:</strong> <span th:text="*{muscleGroup.displayValue}"></span></p>
+                <p><strong th:text="#{exercise.typeofexercise}" >Exercise type:</strong> <span th:text="*{exerciseType.displayValue}"></span></p>
+                <p><strong th:text="#{exercise.necessaryequipment}" >Necessary equipment:</strong> <span th:text="*{necessaryEquipment.displayValue}"></span></p>
+                <p><strong th:text="#{exercise.description}" >Description:</strong> <span th:text="*{description}"></span></p>
             </div>
-            <p><a th:href="@{/exercise-editor/update/{id}(id=${exercise.id})}">Back</a></p>
-            <p><a href="/exercise-editor">Confirm</a>
+            <p><a th:href="@{/exercise-editor/update/{id}(id=${exercise.id})}" th:text="#{exercise.back}" >Back</a></p>
+            <p><a href="/exercise-editor" th:text="#{exercise.confirm}" >Confirm</a>
 
         </div>
     </div>

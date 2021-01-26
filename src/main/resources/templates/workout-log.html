@@ -40,11 +40,11 @@
                 <table th:if="${!workouts.isEmpty()}">
                     <tr>
                         <th>No.</th>
-                        <th>Title</th>
-                        <th>Exercises</th>
-                        <th>Duration</th>
-                        <th>Rating</th>
-                        <th>Comments</th>
+                        <th th:text="#{workout.title}">Title</th>
+                        <th th:text="#{workout.exercises}">Exercises</th>
+                        <th th:text="#{workout.duration}">Duration</th>
+                        <th th:text="#{workout.rating}">Rating</th>
+                        <th th:text="#{workout.comments}">Comments</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -62,12 +62,12 @@
                         <td th:text="${workout.duration.substring(0,8)}"></td>
                         <td th:text="${workout.rating}"></td>
                         <td th:text="${workout.comments}"></td>
-                        <td><a th:href="@{/workout-log/update/{id}(id=${workout.id})}">Update</a></td>
-                        <td><a th:href="@{/workout-log/delete/{id}(id=${workout.id})}">Delete</a></td>
+                        <td><a th:href="@{/workout-log/update/{id}(id=${workout.id})}" th:text="#{workout.update}">Update</a></td>
+                        <td><a th:href="@{/workout-log/delete/{id}(id=${workout.id})}" th:text="#{workout.delete}">Delete</a></td>
                     </tr>
                 </table>
 
-                <p><a href="/">Back</a></p>
+                <p><a href="/" th:text="#{workout.back}">Back</a></p>
 
             </div>
             <!-- /col-lg-8 -->

@@ -87,7 +87,7 @@
 <div class="container pt">
     <div class="row mt">
         <div class="col-lg-6 col-lg-offset-3 centered">
-            <h3>Workout</h3>
+            <h3 th:text="#{workout.workout}">Workout</h3>
             <hr>
         </div>
     </div>
@@ -99,8 +99,8 @@
                 <table>
                     <tr>
                         <th>No</th>
-                        <th>Exercises</th>
-                        <th>Set</th>
+                        <th th:text="#{workout.exercise}">Exercises</th>
+                        <th th:text="#{workout.set}">Set</th>
                     </tr>
                     <tr th:each="exercise, stat : *{exercises}">
                         <td th:text="${stat.index + 1}"></td>
@@ -111,16 +111,16 @@
 
             </div>
             <p th:if="${finish ne null}">
-                <a href="/workout-constructor/get-save-workout-form">Go to save workout</a>
+                <a href="/workout-constructor/get-save-workout-form" th:text="#{workout.gotosaveworkout}">Go to save workout</a>
             </p>
 
 
             <form class="contact-form php-mail-form" id="form" onsubmit="validateForm()"
                   th:action="@{/workout-constructor/save-result-of-set}" method="post">
 
-                <p th:if="${finish eq null}"><label for="resultOfSet">Result:</label>
+                <p th:if="${finish eq null}"><label for="resultOfSet" th:text="#{workout.result}">Result:</label>
                     <input type="number" id="resultOfSet" min="1" step="1" th:value="${resultOfSet}" name="set">
-                    <button onclick="startTimerAfterSetResult()">Save result of set</button>
+                    <button onclick="startTimerAfterSetResult()" th:text="#{workout.saveresultofset}">Save result of set</button>
                 </p>
             </form>
 

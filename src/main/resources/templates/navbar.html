@@ -17,10 +17,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/exercise-editor}">Exercises</a></li>
-                    <li><a th:href="@{/workout-log}">Workout log</a></li>
-                    <li><a th:href="@{/measurement-log}">Measurement log</a></li>
-                    <li th:if="${user ne null}"><a th:if="${user.getRole().toString().equals('ROLE_ADMIN')}" th:href="@{user-log}">User log</a></li>
+                    <li><a th:href="@{/exercise-editor}" th:text="#{navbar.exercises}">Exercises</a></li>
+                    <li><a th:href="@{/workout-log}" th:text="#{navbar.workoutlog}">Workout log</a></li>
+                    <li><a th:href="@{/measurement-log}" th:text="#{navbar.measurementlog}">Measurement log</a></li>
+                    <li th:if="${user ne null}"><a th:if="${user.getRole().toString().equals('ROLE_ADMIN')}" th:href="@{user-log}" th:text="#{navbar.userlog}">User log</a></li>
                     <li><a th:href="@{/personal-profile}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                              viewBox="0 0 16 16">
@@ -51,11 +51,68 @@
                 <a class="navbar-brand" th:href="@{/}">WorkoutLog</a>
             </div>
             <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a th:href="@{/(lang=en)}" th:text="#{navbar.en}">EN</a></li>
+                        <li><a th:href="@{/(lang=ru)}" th:text="#{navbar.ru}" >RU</a></li>
+                    </ul>
             </div>
             <!--/.nav-collapse -->
         </div>
     </div>
 </div>
+
+
+<div id="navbar3">
+    <div class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">WorkoutLog</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/exercise-editor}" th:text="#{navbar.exercises}" >Exercises</a></li>
+                    <li><a th:href="@{/workout-log}" th:text="#{navbar.workoutlog}" >Workout log</a></li>
+                    <li><a th:href="@{/measurement-log}" th:text="#{navbar.measurementlog}" >Measurement log</a></li>
+                    <li th:if="${user ne null}"><a th:if="${user.getRole().toString().equals('ROLE_ADMIN')}" th:href="@{user-log}" th:text="#{navbar.userlog}" >User log</a></li>
+                    <li><a th:href="@{/personal-profile}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                             viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd"
+                                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                    </a></li>
+                    <li><a th:href="@{/(lang=en)}" th:text="#{navbar.en}">EN</a></li>
+                    <li><a th:href="@{/(lang=ru)}" th:text="#{navbar.ru}" >RU</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+
+<div id="navbar4">
+    <div class="navbar navbar-inverse navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}">WorkoutLog</a>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

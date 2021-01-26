@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <body>
 
 <!-- +++++ Footer Section +++++ -->
@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-2">
-                <h4>My Links</h4>
+                <h4 th:text="#{footer.mylinks}" >My Links</h4>
                 <p>
 
                     <a href="#">GitHub</a><br/>
@@ -21,8 +21,8 @@
             <!-- /col-lg-6 -->
 
             <div class="col-lg-10">
-                <h4>About WorkoutLog</h4>
-                <p>This web application was developed as a final project in the Java course at TeachMeSkills.</p>
+                <h4 th:text="#{footer.aboutworkoutlog}">About WorkoutLog</h4>
+                <p th:text="#{footer.aboutwltext}" >This web application was developed as a final project of the Java course in TeachMeSkills.</p>
             </div>
             <!-- /col-lg-6 -->
         </div>
@@ -31,7 +31,7 @@
 
 <div id="copyrights">
     <div class="container">
-        <p>
+        <p th:utext="#{footer.copyrights}" >
             &copy; Copyrights <strong>Zadziarnouski Taras</strong>. All Rights Reserved
         </p>
         <div class="credits">

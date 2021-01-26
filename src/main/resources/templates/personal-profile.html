@@ -49,7 +49,7 @@
 <div class="container pt">
     <div class="row mt">
         <div class="col-lg-6 col-lg-offset-3 centered">
-            <h3>Personal profile</h3>
+            <h3 th:text="#{personalprofile.personalprofile}">Personal profile</h3>
             <hr>
         </div>
     </div>
@@ -57,17 +57,17 @@
         <div class="col-lg-8 col-lg-offset-2">
 
             <div th:object="${user}">
-                <p><strong>Username:</strong> <span th:text="*{username}"></span></p>
+                <p><strong th:text="#{registration.username}">Username:</strong> <span th:text="*{username}"></span></p>
                 <!--<p><strong>Password:</strong> <span th:text="*{password}"></span></p>-->
-                <p><strong>First name:</strong> <span th:text="*{firstName}"></span></p>
-                <p><strong>Last name:</strong> <span th:text="*{lastName}"></span></p>
-                <p><strong>Gender:</strong> <span th:text="*{gender}"></span></p>
-                <p><strong>Birthday(yyyy-MM-dd):</strong> <span th:text="*{birthday}"></span></p>
-                <p><strong>Height:</strong> <span th:text="*{height}"></span></p>
-                <p><strong>Weight:</strong> <span th:text="*{weight}"></span></p>
+                <p><strong th:text="#{registration.firstname}">First name:</strong> <span th:text="*{firstName}"></span></p>
+                <p><strong th:text="#{registration.lastname}">Last name:</strong> <span th:text="*{lastName}"></span></p>
+                <p><strong th:text="#{registration.gender}">Gender:</strong> <span th:text="*{gender}"></span></p>
+                <p><strong th:text="#{registration.birthday} + '(yyyy-MM-dd)'">Birthday(yyyy-MM-dd):</strong> <span th:text="*{birthday}"></span></p>
+                <p><strong th:text="#{registration.height}">Height:</strong> <span th:text="*{height}"></span></p>
+                <p><strong th:text="#{registration.weight}">Weight:</strong> <span th:text="*{weight}"></span></p>
             </div>
-            <p><a href="/personal-profile/get-update-form">Update profile</a>
-            <p><a href="/">Back</a></p>
+            <p><a href="/personal-profile/get-update-form" th:text="#{personalprofile.updateprofile}">Update profile</a>
+            <p><a href="/" th:text="#{registration.back}">Back</a></p>
 
         </div>
     </div>

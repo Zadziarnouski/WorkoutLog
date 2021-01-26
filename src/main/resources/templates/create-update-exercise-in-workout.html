@@ -49,7 +49,7 @@
 <div class="container pt">
     <div class="row mt">
         <div class="col-lg-6 col-lg-offset-3 centered">
-            <h3 th:text="(${newExercise.id ne null} ? 'Update exercise' : 'Add exercise' ) + ' in workout'"></h3>
+            <h3 th:text="(${newExercise.id ne null} ? #{exercise.updateexercise} : #{workout.addexercise}) + ' ' + #{workout.inworkout}"></h3>
             <hr>
         </div>
     </div>
@@ -61,7 +61,7 @@
                   onsubmit="return validateForm()" th:object="${newExercise}"
                   method="post">
 
-                <p><label for="name">Exercise: </label>
+                <p><label for="name" th:text="#{workout.exercise}">Exercise: </label>
                     <select th:if="*{getNumberOfSets()==0}" th:field="*{id}" id="name">
                         <option th:each="exercise : ${exercises}" th:value="${exercise.id}"
                                 th:text="${exercise.name}"></option>
@@ -78,14 +78,14 @@
                 <input th:if="*{id ne null}" type="hidden" th:field="*{userID}">
                 <input th:if="*{id ne null}" type="hidden" th:field="*{workouts}">
 
-                <p><label for="numberOfSet">Number of sets: </label>
+                <p><label for="numberOfSet" th:text="#{workout.numberofsets}">Number of sets: </label>
                     <input id="numberOfSet" min="1" step="1" type="number" th:field="*{numberOfSets}"></p>
-                <p><label for="restTimeBetweenSets">Rest time between sets: </label>
+                <p><label for="restTimeBetweenSets" th:text="#{workout.Resttimebetweensets}">Rest time between sets: </label>
                     <input id="restTimeBetweenSets" min="1" step="1" type="number"
                            th:field="*{restTimeBetweenSets}"></p>
-                <p><label for="type">Type exercise: </label>
+                <p><label for="type"th:text="#{exercise.typeofexercise}">Type of exercise: </label>
                     <input id="type" type="hidden" th:field="*{forAWhile}">
-                    <strong>For repetitions*</strong></p>
+                    <strong th:text="#{workout.forrepetitions} + '*'" >For repetitions*</strong></p>
 <!--                    <input id="type" th:field="*{forAWhile}" th:value="'true'" th:text="'For a while'">   новая функция, выбор типа упражнения-->
                     <!--                    <select id="type" th:field="*{forAWhile}">-->
                     <!--                        <option th:value="'true'">For a while</option>-->
@@ -98,14 +98,14 @@
                 <!--                <div class="sent-message">Your message has been sent. Thank you!</div>-->
 
                 <div class="form-send">
-                    <button type="submit" th:text="${newExercise.name eq null}?'Add exercise':'Update exercise'"
-                            class="btn btn-large">Add/Update
+                    <button type="submit" th:text="${newExercise.name eq null}?#{workout.addexercise}:#{exercise.updateexercise}"
+                            class="btn btn-large" >Add/Update
                     </button>
                 </div>
             </form>
-            <p><a th:href="@{/workout-constructor/create-new-workout}">Back</a></p>
+            <p><a th:href="@{/workout-constructor/create-new-workout}" th:text="#{workout.back}">Back</a></p>
 
-            <p>* - soon with updates there will be an opportunity "for a while"</p>
+            <p th:text="#{workout.meassage2}">* - soon with updates there will be an opportunity "for a while"</p>
 
         </div>
     </div>

@@ -44,18 +44,18 @@
                 <table th:if="${!measurements.isEmpty()}">
                     <tr>
                         <th>No.</th>
-                        <th>Fixation time</th>
-                        <th>Weight</th>
-                        <th>Height</th>
-                        <th>Neck</th>
-                        <th>Arms</th>
-                        <th>Forearms</th>
-                        <th>Chest</th>
-                        <th>Waist</th>
-                        <th>Buttocks</th>
-                        <th>Thighs</th>
-                        <th>Calves</th>
-                        <th>Link on photo</th>
+                        <th th:text="#{measurement.fixationtime}">Fixation time</th>
+                        <th th:text="#{registration.weight}" >Weight</th>
+                        <th th:text="#{measurement.height}">Height</th>
+                        <th th:text="#{measurement.neck}" >Neck</th>
+                        <th th:text="#{measurement.arms}">Arms</th>
+                        <th th:text="#{measurement.forearms}">Forearms</th>
+                        <th th:text="#{measurement.chest}">Chest</th>
+                        <th th:text="#{measurement.waist}">Waist</th>
+                        <th th:text="#{measurement.buttocks}">Buttocks</th>
+                        <th th:text="#{measurement.thighs}">Thighs</th>
+                        <th th:text="#{measurement.calves}">Calves</th>
+                        <th th:text="#{measurement.linktophoto}">Link on photo</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -73,15 +73,15 @@
                         <td th:text="${measurement.thighs}"></td>
                         <td th:text="${measurement.calves}"></td>
                         <td><a th:if="${measurement.photo ne null}" th:href="@{{photo}(photo = ${measurement.photo})}" target="_blank">click</a></td>
-                        <td><a th:href="@{/measurement-log/update/{id}(id=${measurement.id})}">Update</a>
+                        <td><a th:href="@{/measurement-log/update/{id}(id=${measurement.id})}" th:text="#{measurement.update}">Update</a>
                         </td>
-                        <td><a th:href="@{/measurement-log/delete/{id}(id=${measurement.id})}">Delete</a>
+                        <td><a th:href="@{/measurement-log/delete/{id}(id=${measurement.id})}" th:text="#{measurement.delete}">Delete</a>
                         </td>
                     </tr>
                 </table>
 
-                <p><a href="/measurement-log/create">Add new</a></p>
-                <p><a href="/">Back</a></p>
+                <p><a href="/measurement-log/create" th:text="#{measurement.addnew}">Add new</a></p>
+                <p><a href="/"  th:text="#{measurement.back}" >Back</a></p>
 
 
             </div>

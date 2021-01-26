@@ -49,15 +49,15 @@
 <div class="container pt">
     <div class="row mt">
         <div class="col-lg-6 col-lg-offset-3 centered">
-            <h3>Result</h3>
+            <h3 th:text="#{workout.result}">Result</h3>
             <hr>
         </div>
     </div>
     <div class="row mt">
         <div class="col-lg-8 col-lg-offset-2">
             <div th:object="${workout}">
-                <p><strong>Title:</strong> <span th:text="*{title}"></span></p>
-                <p><strong>Exercises:</strong></p>
+                <p><strong th:text="#{workout.title}" >Title:</strong> <span th:text="*{title}"></span></p>
+                <p><strong th:text="#{workout.exercise}">Exercises:</strong></p>
 
                 <table>
                     <tr th:each="exercise : *{exercises}">
@@ -65,14 +65,14 @@
                         <td th:each=" set : ${exercise.set}" th:text="${set}"></td>
                     </tr>
                 </table>
-                <p><strong>Duration: </strong><span id="duration" th:text="*{duration.substring(0,8)}"></span></p>
-                <p><strong>Rating:</strong> <span th:text="*{rating}"></span></p>
-                <p><strong>Comments:</strong> <span th:text="*{comments}"></span></p>
+                <p><strong th:text="#{workout.duration}">Duration: </strong><span id="duration" th:text="*{duration.substring(0,8)}"></span></p>
+                <p><strong th:text="#{workout.rating}">Rating:</strong> <span th:text="*{rating}"></span></p>
+                <p><strong th:text="#{workout.comments}">Comments:</strong> <span th:text="*{comments}"></span></p>
             </div>
 
 
-            <p><a th:href="@{/workout-constructor/get-save-workout-form}">Back</a></p>
-            <p><a href="/workout-log">Confirm</a>
+            <p><a th:href="@{/workout-constructor/get-save-workout-form}" th:text="#{workout.back}">Back</a></p>
+            <p><a href="/workout-log" th:text="#{workout.confirm}">Confirm</a>
 
         </div>
     </div>

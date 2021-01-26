@@ -45,56 +45,58 @@
 
 <!-- Static navbar -->
 
-<div th:insert="~{navbar::#navbar2}"></div>
+<div th:insert="~{navbar::#navbar4}"></div>
 
 <!-- +++++ Contact Section +++++ -->
+<div id="ww">
+    <div class="container pt">
+        <div class="row mt">
+            <div class="col-lg-8 col-lg-offset-2">
 
-<div class="container pt">
-    <div class="row mt">
-        <div class="col-lg-8 col-lg-offset-2">
+                <form name="form" class="contact-form php-mail-form" onsubmit="return validateForm()"
+                      th:action="@{/perform_login}" method="post">
 
-            <form name="form" class="contact-form php-mail-form" onsubmit="return validateForm()"
-                  th:action="@{/perform_login}" method="post">
+                    <div th:if="${param.error}">
+                        Invalid username and password.
+                    </div>
 
-                <div th:if="${param.error}">
-                    Invalid username and password.
-                </div>
+                    <div th:if="${param.logout}">
+                        You have been logged out.
+                    </div>
 
-                <div th:if="${param.logout}">
-                    You have been logged out.
-                </div>
-
-                <div th:if="${registerCompleted ne null}">
-                    Registration successfully completed. You can now log into your account.
-                </div>
+                    <div th:if="${registerCompleted ne null}">
+                        Registration successfully completed. You can now log into your account.
+                    </div>
 
 
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username"/>
-                </div>
+                    <div class="form-group">
+                        <label for="username" th:text="#{login.username}">Username</label>
+                        <input type="text" id="username" name="username"/>
+                    </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password"/>
-                </div>
+                    <div class="form-group">
+                        <label for="password" th:text="#{login.password}">Password</label>
+                        <input type="password" id="password" name="password"/>
+                    </div>
 
-                <div class="form-send">
-                    <button class="btn btn-large" type="submit">Log in</button>
-                </div>
-            </form>
-            <a href="/registration" class="btn btn-large">Registration</a>
+                    <div class="form-send">
+                        <button class="btn btn-large" type="submit" th:text="#{login.login}">Log in</button>
+                    </div>
+                </form>
+                <a href="/registration" class="btn btn-large" th:text="#{login.registartion}">Registration</a>
 
+            </div>
         </div>
+        <!-- /row -->
     </div>
-    <!-- /row -->
+    <!-- /container -->
 </div>
-<!-- /container -->
 
 <!-- +++++ Footer Section +++++ -->
 
 <div th:insert="~{footer::#footer}"></div>
 
+<div th:insert="~{footer::#copyrights}"></div>
 <!-- JavaScript Libraries -->
 
 </body>

@@ -49,7 +49,7 @@
 <div class="container pt">
     <div class="row mt">
         <div class="col-lg-6 col-lg-offset-3 centered">
-            <h3 th:text="${exercise.name eq null} ? 'Create new exercise' : 'Update exercise'"></h3>
+            <h3 th:text="${exercise.name eq null} ? #{exercise.createnewexercise} : #{exercise.updateexercise}"></h3>
             <hr>
         </div>
     </div>
@@ -66,13 +66,13 @@
                 <input type="hidden" th:field="*{workouts}"/>
 
                 <div class="form-group">
-                    <input type="text" pattern="[a-zA-Z]+" class="form-control" id="name" placeholder="Exercise name"
+                    <input type="text" pattern="[a-zA-Z]+" class="form-control" id="name" th:placeholder="#{exercise.exercisename}"
                            th:field="*{name}">
                     <div class="validate"></div>
                 </div>
 
                 <div class="form-group">
-                    <label for="muscleGroup">Muscle group: </label>
+                    <label for="muscleGroup" th:text="#{exercise.musclegroup}" >Muscle group: </label>
                     <select id="muscleGroup" name="muscleGroup" th:field="*{muscleGroup}">
                         <option value="" selected="selected">...</option>
                         <option th:each="muscleGroupOpt : ${T(by.zadziarnouski.workoutlog.model.MuscleGroup).values()}"
@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="exerciseType">Exercise type: </label>
+                    <label for="exerciseType" th:text="#{exercise.typeofexercise}" >Exercise type: </label>
                     <select id="exerciseType" name="exerciseType" th:field="*{exerciseType}">
                         <option value="" selected="selected">...</option>
                         <option th:each="exerciseTypeOpt : ${T(by.zadziarnouski.workoutlog.model.ExerciseType).values()}"
@@ -89,7 +89,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="necessaryEquipment">Necessary equipment: </label>
+                    <label for="necessaryEquipment" th:text="#{exercise.necessaryequipment}">Necessary equipment: </label>
                     <select id="necessaryEquipment" name="necessaryEquipment" th:field="*{necessaryEquipment}">
                         <option value="" selected="selected">...</option>
                         <option th:each="necessaryEquipmentOpt : ${T(by.zadziarnouski.workoutlog.model.NecessaryEquipment).values()}"
@@ -100,7 +100,7 @@
 
 
                 <div class="form-group">
-                        <textarea class="form-control" id="description" placeholder="Description..." rows="5"
+                        <textarea class="form-control" id="description" th:placeholder="#{exercise.description} +'...'" rows="5"
                                   th:field="*{description}"></textarea>
                     <div class="validate"></div>
                 </div>
@@ -110,11 +110,11 @@
                 <div class="sent-message">Your message has been sent. Thank you!</div>
 
                 <div class="form-send">
-                    <button type="submit" th:text="${exercise.name eq null}?'Create':'Update'"
+                    <button type="submit" th:text="${exercise.name eq null}? #{exercise.create}: #{exercise.update}"
                             class="btn btn-large">Create/Update
                     </button>
                 </div>
-                <p><a href="/exercise-editor">Back</a></p>
+                <p><a href="/exercise-editor" th:text="#{exercise.back}" >Back</a></p>
 
             </form>
 

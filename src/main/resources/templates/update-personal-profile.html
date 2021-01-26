@@ -58,7 +58,7 @@
 <div class="container pt">
     <div class="row mt">
         <div class="col-lg-6 col-lg-offset-3 centered">
-            <h3>Update personal profile</h3>
+            <h3 th:text="#{personalprofile.updatepersonalprofile}">Update personal profile</h3>
             <hr>
         </div>
     </div>
@@ -73,53 +73,53 @@
                 <input type="hidden" th:field="*{role}">
 
                 <div class="form-group">
-                <label for="username">Username: </label>
+                <label for="username" th:text="#{registration.username}" >Username: </label>
                     <input type="text" id="username" pattern="[a-zA-Z]+" th:field="*{username}">
                 </div>
 
                 <div class="form-group">
-                <label for="password">Password: </label>
+                <label for="password" th:text="#{registration.password}">Password: </label>
                     <input type="password" id="password" pattern="[a-zA-Z0-9]{5,10}" th:field="*{password}">
                 </div>
 
                 <div class="form-group">
-                <label for="firstname">Firstname: </label>
+                <label for="firstname" th:text="#{registration.firstname}">Firstname: </label>
                     <input type="text" id="firstname" pattern="[a-zA-Z]+"  th:field="*{firstName}">
                 </div>
 
                 <div class="form-group">
-                <label for="lastname">Lastname: </label>
+                <label for="lastname" th:text="#{registration.lastname}">Lastname: </label>
                     <input type="text" id="lastname" pattern="[a-zA-Z]+" th:field="*{lastName}">
                 </div>
 
                 <div class="form-group">
-                <label>Gender: </label>
+                <label th:text="#{registration.gender}">Gender: </label>
                     <input type="radio" id="male" name="gender" th:field="*{gender}"
-                           th:value="${T(by.zadziarnouski.workoutlog.model.Gender).MALE}"><label for="male">Male</label>
+                           th:value="${T(by.zadziarnouski.workoutlog.model.Gender).MALE}"><label for="male" th:text="#{registration.male}">Male</label>
                     <input type="radio" id="female" name="gender" th:field="*{gender}"
-                           th:value="${T(by.zadziarnouski.workoutlog.model.Gender).FEMALE}"><label for="female">Female</label>
+                           th:value="${T(by.zadziarnouski.workoutlog.model.Gender).FEMALE}"><label for="female" th:text="#{registration.female}">Female</label>
                 </div>
 
                 <div class="form-group">
-                <label for="birthday">Birthday:(mm-DD-yyyy)</label>
+                <label for="birthday" th:text="#{registration.birthday} + ':(mm-DD-yyyy)'">Birthday:(mm-DD-yyyy)</label>
                     <input type="date" pattern="[1-2]{1}[0-9]{3}-[0-1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}" th:field="*{birthday}" id="birthday">
                 </div>
 
                 <div class="form-group">
-                <label for="height">Height:</label>
+                <label for="height" th:text="#{registration.height}">Height:</label>
                     <input type="number" min="120" max="230" step="1"  th:field="*{height}" id="height">
                 </div>
 
                 <div class="form-group">
-                <label for="weight">Weight:</label>
+                <label for="weight" th:text="#{registration.weight}">Weight:</label>
                     <input type="number" min="35" max="120" step="1" th:field="*{weight}" id="weight">
                 </div>
 
 
                 <div class="form-send">
-                    <button type="submit"  class="btn btn-large">Update profile</button>
+                    <button type="submit"  class="btn btn-large" th:text="#{personalprofile.updateprofile}">Update profile</button>
                 </div>
-                <p><a href="/personal-profile">Back</a></p>
+                <p><a href="/personal-profile" th:text="#{registration.back}">Back</a></p>
             </form>
 
         </div>
