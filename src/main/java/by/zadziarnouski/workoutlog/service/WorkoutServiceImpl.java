@@ -2,6 +2,8 @@ package by.zadziarnouski.workoutlog.service;
 
 import by.zadziarnouski.workoutlog.model.Workout;
 import by.zadziarnouski.workoutlog.repository.WorkoutRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class WorkoutServiceImpl implements WorkoutService {
-
+    private static final Logger logger = LoggerFactory.getLogger(WorkoutServiceImpl.class);
     private final WorkoutRepository workoutRepository;
 
     @Autowired
@@ -20,6 +22,7 @@ public class WorkoutServiceImpl implements WorkoutService {
 
     @Override
     public Workout saveOrUpdate(Workout workout) {
+        logger.trace("Workout with id=" + workout.getId() + " has been saved or updated");
         return workoutRepository.save(workout);
     }
 
@@ -39,6 +42,7 @@ public class WorkoutServiceImpl implements WorkoutService {
         if (byId.isPresent()) {
             return byId.get();
         } else {
+            logger.trace("Workout with such id=" + id + " does not exist");
             throw new IllegalArgumentException("Workout with such id=" + id + " does not exist");
         }
     }
@@ -46,5 +50,6 @@ public class WorkoutServiceImpl implements WorkoutService {
     @Override
     public void delete(long id) {
         workoutRepository.deleteById(id);
+        logger.trace("Workout with ID=" + id + " has been deleted");
     }
 }

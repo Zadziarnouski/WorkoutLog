@@ -8,6 +8,8 @@ import by.zadziarnouski.workoutlog.model.*;
 import by.zadziarnouski.workoutlog.service.ExerciseService;
 import by.zadziarnouski.workoutlog.service.UserService;
 import by.zadziarnouski.workoutlog.service.WorkoutService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,7 @@ public class WorkoutConstructorController {
     private final UserService userService;
     private final WorkoutMapper workoutMapper;
     private final ExerciseMapper exerciseMapper;
+    private static final Logger logger = LoggerFactory.getLogger(WorkoutConstructorController.class);
 
     @Autowired
     public WorkoutConstructorController(WorkoutService workoutService, ExerciseService exerciseService, UserService userService, WorkoutMapper workoutMapper, ExerciseMapper exerciseMapper) {
@@ -56,7 +59,7 @@ public class WorkoutConstructorController {
         return "create-update-workout";
     }
 
-    @GetMapping("/getFormForAddOrUpdateExercise")
+    @GetMapping("/get-form-for-add-or-update-exercise")
     public String addExerciseInWorkout(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         model.addAttribute("exercises", exerciseService.findAll().stream()
@@ -117,6 +120,7 @@ public class WorkoutConstructorController {
         model.addAttribute("workout", workoutMapper.toDTO(workout));
         model.addAttribute("resultOfSet", 0);
         model.addAttribute("restTimeBetweenSets", workout.getExercises().get(0).getRestTimeBetweenSets());
+        logger.info("User start training.");
         return "workout";
     }
 
@@ -175,6 +179,7 @@ public class WorkoutConstructorController {
         model.addAttribute("workout", workoutMapper.toDTO(workout));
         workout.getExercises().forEach(exerciseService::saveOrUpdate);
         workoutService.saveOrUpdate(workout);
+        logger.info("User with ID=" + user.getId() + " has finished training");
         return "result-of-workout";
     }
 

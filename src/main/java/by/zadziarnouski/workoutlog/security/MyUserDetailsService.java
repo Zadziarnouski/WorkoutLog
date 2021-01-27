@@ -2,7 +2,8 @@ package by.zadziarnouski.workoutlog.security;
 
 import by.zadziarnouski.workoutlog.model.User;
 import by.zadziarnouski.workoutlog.repository.UserRepository;
-import by.zadziarnouski.workoutlog.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,6 +14,7 @@ import java.util.Objects;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
+    private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
     private final UserRepository userRepository;
 
     @Autowired
@@ -22,11 +24,11 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User byUsername = userRepository.findByUsername(username);   //можно написать через Optional<User>
+        User byUsername = userRepository.findByUsername(username);
         if (Objects.isNull(byUsername)) {
-            throw new UsernameNotFoundException("UsernameNotFoundException");
+            logger.warn("User with such USERNAME=" + username + "does not exist");
+            throw new UsernameNotFoundException("User with such USERNAME=" + username + "does not exist");
         }
-
         return org.springframework.security.core.userdetails.User
                 .withUsername(byUsername.getUsername())
                 .password(byUsername.getPassword())

@@ -9,6 +9,8 @@ import by.zadziarnouski.workoutlog.service.MeasurementService;
 import by.zadziarnouski.workoutlog.service.UserService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -33,6 +35,7 @@ public class MeasurementLogController {
     private final MeasurementService measurementService;
     private final MeasurementMapper measurementMapper;
     private final Cloudinary cloudinary;
+    private static final Logger logger = LoggerFactory.getLogger(MeasurementLogController.class);
 
     @Autowired
     public MeasurementLogController(MeasurementService measurementService, MeasurementMapper measurementMapper, Cloudinary cloudinary) {
@@ -91,6 +94,7 @@ public class MeasurementLogController {
         Measurement measurement = (Measurement) session.getAttribute("measurement");
         int nameOfPhoto = measurement.getId().intValue();
         cloudinary.uploader().upload(photo.getBytes(), ObjectUtils.asMap("public_id", String.valueOf(nameOfPhoto)));
+        logger.info("Photo with NAME=" + nameOfPhoto + " has been uploaded to the Cloudinary server");
         return cloudinary.url().generate(String.valueOf(nameOfPhoto));
     }
 

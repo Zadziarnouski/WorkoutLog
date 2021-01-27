@@ -48,7 +48,7 @@ public class ExerciseEditorController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteExercise(@PathVariable Long id, Model model) {
+    public String deleteExercise(@PathVariable Long id) {
         exerciseService.delete(id);
         return "redirect:/exercise-editor";
     }

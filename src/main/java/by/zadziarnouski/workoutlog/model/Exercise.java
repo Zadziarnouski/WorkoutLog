@@ -19,7 +19,6 @@ public class Exercise  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
 //    @NotBlank(message = "Name is mandatory")
     private String name;
 
