@@ -48,10 +48,12 @@ public class MeasurementLogController {
 
     public String getMeasurementLogPage(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-        model.addAttribute("measurements", measurementService.findAll().stream()     //Вынести метод в репозиторий( List<User> findAllOfCurrentUser(User currentUser))
-                .map(measurementMapper::toDTO)
-                .filter(measurementDTO -> measurementDTO.getUserID().equals(user.getId()))
-                .collect(Collectors.toList()));
+        if(!measurementService.findAll().isEmpty()){
+            model.addAttribute("measurements", measurementService.findAll().stream()     //Вынести метод в репозиторий( List<User> findAllOfCurrentUser(User currentUser))
+                    .map(measurementMapper::toDTO)
+                    .filter(measurementDTO -> measurementDTO.getUserID().equals(user.getId()))
+                    .collect(Collectors.toList()));
+        }
         return "measurement-log";
     }
 

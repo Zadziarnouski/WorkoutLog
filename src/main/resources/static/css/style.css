@@ -1,5 +1,5 @@
 body {
-  background-color: #ffffff;
+  background-color: #f2f2f2;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 14px;
@@ -135,6 +135,7 @@ hr {
 .pt {
   padding-top: 50px;
   padding-bottom: 50px;
+  height: 80vh;
 }
 
 /* +++++ WRAP SECTIONS +++++ */
@@ -372,4 +373,12 @@ bt {
 
 .credits {
   color: #999;
+}
+
+#timer {
+  text-align: center;
+}
+
+#heightdiv {
+  height: 50vh;
 }

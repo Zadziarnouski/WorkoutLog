@@ -8,7 +8,6 @@
     <title>Menu</title>
     <!-- Favicons -->
     <link th:href="@{/img/favicon.png}" rel="icon">
-    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
@@ -23,6 +22,47 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <script th:src="@{/lib/jquery/jquery.min.js}"></script>
+    <script>
+
+
+        $(document).ready(function () {
+
+            $("#weatherClr").click(function (event) {
+                document.getElementById("weather").innerHTML = ""
+            });
+            $("#weatherBtn").click(function (event) {
+
+                let city = $("#city").val();
+
+                if (city === "") {
+                    alert("Please enter the city.")
+                } else {
+                    $("#weatherBtn").prop("disabled", true);
+                    $.ajax({
+                        type: "GET",
+                        dataType: "text",
+                        url: 'http://localhost:8080/weather/?city=' + city,
+                        processData: false,
+                        contentType: false,
+                        timeout: false,
+                        cache: false,
+                        success: function (data) {
+                            $("#weatherBtn").prop("disabled", false);
+                            document.getElementById("weather").innerHTML = data
+                        },
+                        error: function (e) {
+                            $("#result").text(e.responseText);
+                            console.log("ERROR : ", e);
+                            $("#weatherBtn").prop("disabled", false);
+
+                        }
+                    });
+                }
+            })
+        });
+
+
+    </script>
 </head>
 
 <body>
@@ -33,23 +73,38 @@
 <div th:insert="${user ne null} ? ~{navbar :: #navbar3} : ~{navbar :: #navbar2}"></div>
 
 <!-- +++++ Welcome Section +++++ -->
-<div id="ww">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 centered">
-                <h3 th:text="#{menu.welcome} +' ' + ( ${user == null} ? #{menu.dearguest} : (${user.getLastName()} + ' ' + ${user.getFirstName()}))"></h3>
-                <p th:if="${user eq null}" th:text="#{menu.pleaselogin}" >Please login and we will start composing the first workout.</p>
-                <p th:if="${user eq null}"><a href="/login" th:text="#{menu.login}" >Login</a></p>
-                <p th:if="${user ne null}"><a href="workout-constructor" th:text="#{menu.starttraining}" >Start training</a></p>
-                <p th:if="${user ne null}"><a href="/perform_logout"  th:text="#{menu.logout}" >Logout</a></p>
+<div id="heightdiv">
+    <div id="ww">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2 col-lg-offset-2 left">
+                    <div id="weather"></div>
+                    <form th:if="${user ne null}" th:action="@{/weather}" id="getWeather" method="get">
+                        <label for="city" th:text="#{menu.currentweather}">Current weather: </label>
+                        <input th:placeholder="#{menu.enterthecity}" type="text" id="city"
+                               onkeypress="return event.keyCode !== 13;" name="city">
+                        <input th:value="#{menu.search}" id="weatherBtn" type="button"/>
+                        <input th:value="#{menu.reset}" type="reset" id="weatherClr"/>
+                    </form>
+                </div>
+
+                <div class="col-lg-8 col-lg-offset-2 centered">
+                    <h3 th:text="#{menu.welcome} +' ' + ( ${user == null} ? #{menu.dearguest} : (${user.getLastName()} + ' ' + ${user.getFirstName()}))"></h3>
+                    <p th:if="${user eq null}" th:text="#{menu.pleaselogin}">Please login and we will start composing
+                        the first workout.</p>
+                    <p th:if="${user eq null}"><a href="/login" th:text="#{menu.login}">Login</a></p>
+                    <p th:if="${user ne null}"><a href="workout-constructor" th:text="#{menu.starttraining}">Start
+                        training</a></p>
+                    <p th:if="${user ne null}"><a href="/perform_logout" th:text="#{menu.logout}">Logout</a></p>
+                </div>
+                <!-- /col-lg-8 -->
             </div>
-            <!-- /col-lg-8 -->
+            <!-- /row -->
         </div>
-        <!-- /row -->
+        <!-- /container -->
     </div>
-    <!-- /container -->
+    <!-- /ww -->
 </div>
-<!-- /ww -->
 
 
 <!-- +++++ Footer Section +++++ -->
@@ -60,8 +115,6 @@
 <!-- JavaScript Libraries -->
 
 <script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{/lib/php-mail-form/validate.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
 
 <!-- Template Main Javascript File -->
 

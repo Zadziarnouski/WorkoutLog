@@ -10,8 +10,6 @@
 
     <!-- Favicons -->
     <link th:href="@{/img/favicon.png}" rel="icon">
-    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
-
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
@@ -45,7 +43,6 @@
             }
         }
 
-
         $(document).ready(function () {
 
             $("#button").click(function (event) {
@@ -53,7 +50,6 @@
                 let form = $('#upload')[0]
                 let data = new FormData(form)
                 $("#button").prop("disabled", true);
-
                 $.ajax({
                     type: "POST",
                     enctype: 'multipart/form-data',
@@ -64,90 +60,21 @@
                     timeout: false,
                     cache: false,
                     success: function (data) {
-
                         $("#result").text('Photo uploaded successfully!');
-
                         let result = ""
-                        result+='<input type="hidden" id="photo" name="photo" value="'
-                        result+=data
-                        result+='">'
-
-
-
-                            // <input type="hidden" id="id" name="id" value="9">
-
+                        result += '<input type="hidden" id="photo" name="photo" value="'
+                        result += data
+                        result += '">'
                         document.getElementById("linkOnPhoto").innerHTML = result
-
                     },
                     error: function (e) {
-
                         $("#result").text(e.responseText);
                         console.log("ERROR : ", e);
                         $("#button").prop("disabled", false);
-
                     }
                 });
             })
         });
-
-        // function uploadPhoto(){
-        //     $("#form2").submit(function (event) {
-        //         event.preventDefault();
-        //         //grab all form data
-        //         let formData = $(this).serialize();
-        //
-        //         $.ajax({
-        //             url: 'http://localhost:8080/measurement-log/upload',
-        //             type: 'POST',
-        //             data: formData ,
-        //             async: false,
-        //             cache: false,
-        //             contentType: false,
-        //             processData: false,
-        //             success: function (returndata) {
-        //                 alert(returndata);
-        //             },
-        //             error: function () {
-        //                 alert("error in ajax form submission");
-        //             }
-        //         });
-        //
-        //         return false;
-        //     });
-
-        // /***Ajax query****/
-        // function getWorkout() {
-        //     $.ajax({
-        //         url: "http://localhost:8080/measurement-log/upload",
-        //         dataType: "json", // Для использования JSON формата получаемых данных
-        //         method: "POST", //
-        //         success: function (data) {
-        //             let result = ""
-        //             let numberOfSets
-        //             for (let i = 0; i < data.exercises.length; i++) {
-        //                 numberOfSets = data.exercises[i].numberOfSets
-        //                 if (numberOfSets > 0) {
-        //                     result += '<p>' + data.exercises[i].name
-        //                     for (let j = 0; j < data.exercises[i].set.length; j++) {
-        //                         result += '<strong>' + data.exercises.exercises[i].set[j] + '</strong>'
-        //                     }
-        //                     result += '<input type="number" id="exercise" th:field="*{' + data.exercises[i].set[data.exercises[i].set.length] + '}"/>'
-        //
-        //                     result += '<button type="button" th:onclick="getNumberOfReps()">Enter</button></p>'
-        //                 }
-        //                 numberOfSets--
-        //             }
-        //
-        //             document.getElementById("form").innerHTML = result
-        //
-        //         },
-        //         error: function (jqXHR, textStatus, errorThrown) {
-        //             console.log(errorThrown);
-        //         }
-        //     });
-        // }
-
-        <!--}-->
 
     </script>
 </head>
@@ -171,7 +98,8 @@
         <div class="col-lg-8 col-lg-offset-2">
 
 
-            <form th:if="${measurement.weight==0.0}" th:action="@{/measurement-log/upload}" id="upload" enctype="multipart/form-data" method="post">
+            <form th:if="${measurement.weight==0.0}" th:action="@{/measurement-log/upload}" id="upload"
+                  enctype="multipart/form-data" method="post">
                 <div class="form-group">
                     <label for="photo" th:text="#{measurement.photo}">Photo: </label>
                     <input type="file" id="photo" name="photo">
@@ -266,9 +194,7 @@
 
 <!-- JavaScript Libraries -->
 
-<!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
-<!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
-<!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
 
 <!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
 

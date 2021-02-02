@@ -5,7 +5,6 @@ import by.zadziarnouski.workoutlog.validation.EnumNamePattern;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +12,12 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "exercises")
-public class Exercise  {
+public class Exercise {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotBlank(message = "Name is mandatory")
     private String name;
 
     @EnumNamePattern(regexp = "CHEST|BACK|ARMS|SHOULDERS|LEGS|ABS|CALVES")
@@ -45,8 +43,8 @@ public class Exercise  {
 
     @ToString.Exclude
     @ManyToMany(mappedBy = "exercises"
-            ,fetch = FetchType.EAGER
-            ,cascade = CascadeType.ALL)
+            , fetch = FetchType.EAGER
+            , cascade = CascadeType.ALL)
     private List<Workout> workouts = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.LAZY)

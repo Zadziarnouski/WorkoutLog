@@ -10,6 +10,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,11 @@ class UserServiceTest {
 
     @Test
     void findAll() {
-        when(userRepository.findAll()).thenReturn(List.of(new User(),new User(),new User()));
+        List<User> users = new ArrayList<User>();
+        users.add(new User());
+        users.add(new User());
+        users.add(new User());
+        when(userRepository.findAll()).thenReturn(users);
         List<User> findAll = userService.findAll();
         assertEquals(3,findAll.size());
     }

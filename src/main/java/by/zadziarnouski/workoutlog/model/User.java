@@ -3,9 +3,6 @@ package by.zadziarnouski.workoutlog.model;
 
 import by.zadziarnouski.workoutlog.validation.EnumNamePattern;
 import lombok.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -39,16 +36,19 @@ public class User {
     @EnumNamePattern(regexp = "MALE|FEMALE")
     private Gender gender;
 
-    @OneToMany(mappedBy = "user",
-            cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user"
+            ,cascade = CascadeType.ALL
+            ,fetch = FetchType.LAZY)
     private List<Exercise> exercises;
 
-    @OneToMany(mappedBy = "user",
-            cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user"
+            ,cascade = CascadeType.ALL
+            ,fetch = FetchType.LAZY)
     private List<Measurement> measurements;
 
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL
+            ,fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private List<Workout> workout;
 

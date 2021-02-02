@@ -41,7 +41,7 @@ public class PersonalProfileController {
     public String UpdateProfile(@ModelAttribute UserDTO userDTO, HttpSession session) {
         User user = userService.saveOrUpdate(userMapper.toEntity(userDTO));
         session.setAttribute("user", user);
-        logger.info("User with ID=" +userDTO.getId() + " updated their personal profile");
+        logger.info("User with ID=" + userDTO.getId() + " updated their personal profile");
         return "redirect:/personal-profile";
     }
 

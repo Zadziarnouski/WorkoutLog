@@ -10,8 +10,10 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -37,8 +39,12 @@ class ExerciseServiceTest {
 
     @Test
     void findAll() {
-        when(exerciseRepository.findAll()).thenReturn(List.of(new Exercise(), new Exercise(), new Exercise()));
+        List<Exercise> exercises = new ArrayList<Exercise>();
+        exercises.add(new Exercise());
+        exercises.add(new Exercise());
+        exercises.add(new Exercise());
         List<Exercise> findAll = exerciseService.findAll();
+        when(exerciseRepository.findAll()).thenReturn(exercises);
         assertEquals(3, findAll.size());
     }
 

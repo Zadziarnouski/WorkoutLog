@@ -154,7 +154,6 @@ public class WorkoutConstructorController {
         return "countdown-timer";
     }
 
-
     @GetMapping("/get-save-workout-form")
     public String getSaveWorkoutForm(HttpSession session, Model model) {
         Workout workout = (Workout) session.getAttribute("workout");

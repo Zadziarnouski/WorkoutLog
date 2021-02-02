@@ -9,7 +9,6 @@
     <title th:text="(${newExercise.id ne null} ? 'Update exercise' : 'Create exercise' ) + ' in workout'"></title>
     <!-- Favicons -->
     <link th:href="@{/img/favicon.png}" rel="icon">
-    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
@@ -86,17 +85,6 @@
                 <p><label for="type"th:text="#{exercise.typeofexercise}">Type of exercise: </label>
                     <input id="type" type="hidden" th:field="*{forAWhile}">
                     <strong th:text="#{workout.forrepetitions} + '*'" >For repetitions*</strong></p>
-<!--                    <input id="type" th:field="*{forAWhile}" th:value="'true'" th:text="'For a while'">   новая функция, выбор типа упражнения-->
-                    <!--                    <select id="type" th:field="*{forAWhile}">-->
-                    <!--                        <option th:value="'true'">For a while</option>-->
-                    <!--                        <option th:value="'false'">For repetitions</option>-->
-<!--                    </select></p>-->
-
-
-                <!--                <div class="loading"></div>-->
-                <!--                <div class="error-message"></div>-->
-                <!--                <div class="sent-message">Your message has been sent. Thank you!</div>-->
-
                 <div class="form-send">
                     <button type="submit" th:text="${newExercise.name eq null}?#{workout.addexercise}:#{exercise.updateexercise}"
                             class="btn btn-large" >Add/Update
@@ -120,9 +108,7 @@
 
 <!-- JavaScript Libraries -->
 
-<!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
-<!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
-<!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
 
 <!-- Template Main Javascript File -->
 

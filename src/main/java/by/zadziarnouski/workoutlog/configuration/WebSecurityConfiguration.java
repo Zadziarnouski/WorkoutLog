@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -35,29 +33,25 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userDetailsService(myUserDetailsService).passwordEncoder(encoder);
     }
 
-//    authorizeRequests().antMatchers("/resources/**").permitAll().anyRequest().permitAll()
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/user-log/**").hasRole("ADMIN")
-                .antMatchers(  "/","/main","/login*", "/registration*", "/css/**", "/js/**", "/lib/**", "/jquery/**", "/measurement-log/upload").permitAll()
+                .antMatchers("/", "/main", "/login*", "/registration*", "/css/**", "/js/**", "/lib/**", "/jquery/**", "/measurement-log/upload").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").loginProcessingUrl("/perform_login")
                 .defaultSuccessUrl("/menu", true)
                 .failureUrl("/login?error=true")
-//                .failureHandler(authenticationFailureHandler())
                 .and()
                 .logout().logoutUrl("/perform_logout").deleteCookies("JSESSIONID")
-//                .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
                 .cors().disable()
                 .csrf().disable()
                 .httpBasic();
     }
-
 
 }
 

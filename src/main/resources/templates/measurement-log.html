@@ -8,7 +8,6 @@
     <title>Measurement log</title>
     <!-- Favicons -->
     <link th:href="@{/img/favicon.png}" rel="icon">
-    <link th:href="@{/img/apple-touch-icon.png}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700" rel="stylesheet">
@@ -37,51 +36,53 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 centered">
 
-<!--                <p><a href="/measurement-log">All</a></p>-->
-<!--                <p><a href="/measurement-log/today">Today</a></p>-->
-<!--                <p><a href="/measurement-log/last7days">Last 7 days</a></p>-->
 
-                <table th:if="${!measurements.isEmpty()}">
-                    <tr>
-                        <th>No.</th>
-                        <th th:text="#{measurement.fixationtime}">Fixation time</th>
-                        <th th:text="#{registration.weight}" >Weight</th>
-                        <th th:text="#{measurement.height}">Height</th>
-                        <th th:text="#{measurement.neck}" >Neck</th>
-                        <th th:text="#{measurement.arms}">Arms</th>
-                        <th th:text="#{measurement.forearms}">Forearms</th>
-                        <th th:text="#{measurement.chest}">Chest</th>
-                        <th th:text="#{measurement.waist}">Waist</th>
-                        <th th:text="#{measurement.buttocks}">Buttocks</th>
-                        <th th:text="#{measurement.thighs}">Thighs</th>
-                        <th th:text="#{measurement.calves}">Calves</th>
-                        <th th:text="#{measurement.linktophoto}">Link on photo</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    <tr th:each="measurement,stat : ${measurements}">
-                        <td th:text="${stat.index+1}"></td>
-                        <td th:text="${#temporals.format(measurement.getFixationTime(), 'HH:mm, dd-MM-yyyy')}"></td>
-                        <td th:text="${measurement.weight}"></td>
-                        <td th:text="${measurement.height}"></td>
-                        <td th:text="${measurement.neck}"></td>
-                        <td th:text="${measurement.arms}"></td>
-                        <td th:text="${measurement.forearms}"></td>
-                        <td th:text="${measurement.chest}"></td>
-                        <td th:text="${measurement.waist}"></td>
-                        <td th:text="${measurement.buttocks}"></td>
-                        <td th:text="${measurement.thighs}"></td>
-                        <td th:text="${measurement.calves}"></td>
-                        <td><a th:if="${measurement.photo ne null}" th:href="@{{photo}(photo = ${measurement.photo})}" target="_blank">click</a></td>
-                        <td><a th:href="@{/measurement-log/update/{id}(id=${measurement.id})}" th:text="#{measurement.update}">Update</a>
-                        </td>
-                        <td><a th:href="@{/measurement-log/delete/{id}(id=${measurement.id})}" th:text="#{measurement.delete}">Delete</a>
-                        </td>
-                    </tr>
-                </table>
+                <div th:if="${measurements ne null}">
+                    <table th:if="${!measurements.isEmpty()}">
+                        <tr>
+                            <th>No.</th>
+                            <th th:text="#{measurement.fixationtime}">Fixation time</th>
+                            <th th:text="#{registration.weight}">Weight</th>
+                            <th th:text="#{measurement.height}">Height</th>
+                            <th th:text="#{measurement.neck}">Neck</th>
+                            <th th:text="#{measurement.arms}">Arms</th>
+                            <th th:text="#{measurement.forearms}">Forearms</th>
+                            <th th:text="#{measurement.chest}">Chest</th>
+                            <th th:text="#{measurement.waist}">Waist</th>
+                            <th th:text="#{measurement.buttocks}">Buttocks</th>
+                            <th th:text="#{measurement.thighs}">Thighs</th>
+                            <th th:text="#{measurement.calves}">Calves</th>
+                            <th th:text="#{measurement.linktophoto}">Link on photo</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr th:each="measurement,stat : ${measurements}">
+                            <td th:text="${stat.index+1}"></td>
+                            <td th:text="${#temporals.format(measurement.getFixationTime(), 'HH:mm, dd-MM-yyyy')}"></td>
+                            <td th:text="${measurement.weight}"></td>
+                            <td th:text="${measurement.height}"></td>
+                            <td th:text="${measurement.neck}"></td>
+                            <td th:text="${measurement.arms}"></td>
+                            <td th:text="${measurement.forearms}"></td>
+                            <td th:text="${measurement.chest}"></td>
+                            <td th:text="${measurement.waist}"></td>
+                            <td th:text="${measurement.buttocks}"></td>
+                            <td th:text="${measurement.thighs}"></td>
+                            <td th:text="${measurement.calves}"></td>
+                            <td><a th:if="${measurement.photo ne null}"
+                                   th:href="@{{photo}(photo = ${measurement.photo})}" target="_blank">click</a></td>
+                            <td><a th:href="@{/measurement-log/update/{id}(id=${measurement.id})}"
+                                   th:text="#{measurement.update}">Update</a>
+                            </td>
+                            <td><a th:href="@{/measurement-log/delete/{id}(id=${measurement.id})}"
+                                   th:text="#{measurement.delete}">Delete</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
                 <p><a href="/measurement-log/create" th:text="#{measurement.addnew}">Add new</a></p>
-                <p><a href="/"  th:text="#{measurement.back}" >Back</a></p>
+                <p><a href="/" th:text="#{measurement.back}">Back</a></p>
 
 
             </div>
@@ -101,11 +102,9 @@
 
 <!-- JavaScript Libraries -->
 
-<!--<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>-->
-<!--<script th:src="@{/lib/php-mail-form/validate.js}"></script>-->
-<!--<script th:src="@{/lib/easing/easing.min.js}"></script>-->
+<script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
 
-<!--&lt;!&ndash; Template Main Javascript File &ndash;&gt;-->
+<!-- Template Main Javascript File -->
 
 <!--<script th:src="@{/js/main.js}"></script>-->
 </body>
