@@ -66,4 +66,4 @@ Send me message to [Gmail](mailto:taras.zadziarnouski@gmail.com "Gmail")
 
 Add me to [LinkedIn](https://www.linkedin.com/in/taras-zadziarnouski-b6205a206/ "LinkedIn")
 
-Follow me to [Instagram](https://t.me/taraszadziarnouski "Instagram")
+Follow me to [Instagram](https://www.instagram.com/zadziarnouskitaras/ "Instagram")
