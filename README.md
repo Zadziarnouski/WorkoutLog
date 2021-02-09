@@ -43,7 +43,7 @@ spring.datasource.driver-class-name=org.postgresql.Driver
 ```
 
 ### Cloudinary configuration
-Register on [Cloudinary.com](https://cloudinary.com/ "Cloudinary.com") and add the credentials to /resources/cloudinary.properties. The default ones are :
+Register on [Cloudinary.com](https://cloudinary.com/ "Cloudinary.com") and add the credentials to ```/resources/cloudinary.properties```. The default ones are :
 
 ```Java
 cloud.name = XXXXXXXXXXX
@@ -52,7 +52,7 @@ api.key= XXXXXXXXXXXXX
 ```
 
 ### OpenWeatherMap configuration
-To get the API key you need to register [OpenWeatherMap.org](https://openweathermap.org/ "OpenWeatherMap.org"). After add the API key to /resources/owm.properties. The default ones are :
+To get the API key you need to register [OpenWeatherMap.org](https://openweathermap.org/ "OpenWeatherMap.org"). After add the API key to ```/resources/owm.properties```. The default ones are :
 
 ```Java
 api.key.owm = XXXXXXXXXXXXXXXX
