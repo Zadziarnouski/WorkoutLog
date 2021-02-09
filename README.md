@@ -52,7 +52,7 @@ api.key= XXXXXXXXXXXXX
 ```
 
 ### OpenWeatherMap configuration
-To get the API key you need to register. After add the API key to /resources/owm.properties. The default ones are :
+To get the API key you need to register [OpenWeatherMap.org](https://openweathermap.org/ "OpenWeatherMap.org") https://openweathermap.org/. After add the API key to /resources/owm.properties. The default ones are :
 
 ```Java
 api.key.owm = XXXXXXXXXXXXXXXX
@@ -66,4 +66,4 @@ Send me message to [Gmail](mailto:taras.zadziarnouski@gmail.com "Gmail")
 
 Add me to [LinkedIn](https://www.linkedin.com/in/taras-zadziarnouski-b6205a206/ "LinkedIn")
 
-Follow me to [Instagram](https://www.instagram.com/zadziarnouskitaras/ "Instagram")
+Follow me to [Instagram](https://t.me/taraszadziarnouski "Instagram")
