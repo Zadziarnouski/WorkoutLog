@@ -23,43 +23,12 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <script th:src="@{/lib/jquery/jquery.min.js}"></script>
-
     <script>
-
-        /***Event Listener on Button**/
         $(document).ready(function () {
             let timeOfRest = [[${restTimeBetweenSets}]]
             countdownTimer(timeOfRest)
 
         })
-
-        function countdownTimer(minutes) {
-
-            document.getElementById('form2').style.display = "none";
-
-            function minTwoDigits(n) {
-                return (n < 10 ? '0' : '') + n;
-            }
-
-            let interval = 60 * minutes; 
-            let counter = setInterval(function () {
-                let hours = Math.floor((interval % (60 * 60 * 24)) / (60 * 60));
-                let minutes = Math.floor((interval % (60 * 60)) / (60));
-                let seconds = Math.floor(interval % 60);
-
-                interval--;
-
-                document.getElementById("timer").innerHTML = minTwoDigits(hours) + " : " + minTwoDigits(minutes) + " : " + minTwoDigits(seconds);
-
-
-
-                if (interval === 0) {
-                    clearInterval(counter);
-                    $('#timer').hide()
-                    document.getElementById('form2').submit();
-                }
-            }, 1000)
-        }
     </script>
 </head>
 
@@ -95,18 +64,15 @@
 <!-- /container -->
 
 <!-- +++++ Footer Section +++++ -->
-
 <div th:insert="~{footer::#footer}"></div>
 <div th:insert="~{footer::#copyrights}"></div>
 
 
     <!-- JavaScript Libraries -->
-
     <script th:src="@{/lib/bootstrap/js/bootstrap.min.js}"></script>
 
     <!-- Template Main Javascript File -->
-
-    <!--<script th:src="@{/js/main.js}"></script>-->
+    <script th:src="@{/js/main.js}"></script>
 
 </body>
 </html>

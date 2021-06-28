@@ -23,21 +23,7 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <script th:src="@{/lib/jquery/jquery.min.js}"></script>
-    <script>
-        function validateForm() {
-            let username = document.forms["form"]["username"].value;
-            let password = document.forms["form"]["password"].value;
 
-            if (username === "") {
-                alert("Field Username must be filled out");
-                return false;
-            }
-            if (password === "") {
-                alert("Field Password must be filled out");
-                return false;
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -53,7 +39,7 @@
         <div class="row mt">
             <div class="col-lg-8 col-lg-offset-2">
 
-                <form name="form" class="contact-form php-mail-form" onsubmit="return validateForm()"
+                <form name="form" class="contact-form php-mail-form" onsubmit="return validateFormOfProfile()"
                       th:action="@{/perform_login}" method="post">
 
                     <div th:if="${param.error}">

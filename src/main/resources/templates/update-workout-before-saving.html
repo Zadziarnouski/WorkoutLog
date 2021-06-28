@@ -23,17 +23,6 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <script th:src="@{/lib/jquery/jquery.min.js}"></script>
-    <script>
-        function validateForm() {
-            let title = document.forms["form"]["title"].value;
-            let rating = document.forms["form"]["rating"].value;
-
-            if (title === "" || rating === "") {
-                alert("All fields must be filled out except for comments");
-                return false;
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -55,7 +44,7 @@
         <div class="col-lg-8 col-lg-offset-2">
 
 
-            <form class="contact-form php-mail-form" name="form" onsubmit="return validateForm()"
+            <form class="contact-form php-mail-form" name="form" onsubmit="return validateFormBeforeSaving()"
                   th:action="@{/workout-constructor/save-workout}" method="post" th:object="${workout}">
 
 

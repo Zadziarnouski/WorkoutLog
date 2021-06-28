@@ -26,23 +26,6 @@
     <script th:src="@{/lib/jquery/jquery.min.js}"></script>
 
     <script>
-        function validateForm() {
-            let weight = document.forms["form"]["weight"].value;
-            let height = document.forms["form"]["height"].value;
-            let arms = document.forms["form"]["arms"].value;
-            let forearms = document.forms["form"]["forearms"].value;
-            let chest = document.forms["form"]["chest"].value;
-            let waist = document.forms["form"]["waist"].value;
-            let buttocks = document.forms["form"]["buttocks"].value;
-            let thighs = document.forms["form"]["thighs"].value;
-            let calves = document.forms["form"]["calves"].value;
-
-            if (weight === "" || height === "" || arms === "" || forearms === "" || chest === "" || waist === "" || buttocks === "" || thighs === "" || calves === "") {
-                alert("All fields must be filled out");
-                return false;
-            }
-        }
-
         $(document).ready(function () {
 
             $("#button").click(function (event) {
@@ -75,7 +58,6 @@
                 });
             })
         });
-
     </script>
 </head>
 
@@ -110,7 +92,7 @@
                 </div>
             </form>
 
-            <form class="contact-form php-mail-form" name="form" onsubmit="return validateForm() "
+            <form class="contact-form php-mail-form" name="form" onsubmit="return validateFormOfMeasurement() "
                   th:action="@{/measurement-log/create-update}" th:object="${measurement}"
                   method="post">
 

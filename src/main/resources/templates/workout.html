@@ -24,53 +24,11 @@
     <script th:src="@{/lib/jquery/jquery.min.js}"></script>
     <script>
 
-
-        function validateForm() {
-            let resultOfSet = document.forms["form2"]["resultOfSet"].value;
-
-            if (resultOfSet === "") {
-                alert("Field Result of Set must be filled out");
-                return false;
-            }
-        }
-
         /***Event Listener on Button**/
         $(document).ready(function () {
            let sound = document.getElementById("audio");
             sound.play();
         })
-
-        function startTimerAfterSetResult() {
-            countdownTimer(1)
-        }
-
-        function countdownTimer(minutes) {
-
-            // document.getElementById('form1').style.display = "none";
-            document.getElementById('form2').style.display = "none";
-
-            function minTwoDigits(n) {
-                return (n < 10 ? '0' : '') + n;
-            }
-
-            // let interval = minutes * 60;  //5 minutes = 300 sec
-            let interval = 3;  //5 minutes = 300 sec
-            let counter = setInterval(function () {
-                let hours = Math.floor((interval % (60 * 60 * 24)) / (60 * 60));
-                let minutes = Math.floor((interval % (60 * 60)) / (60));
-                let seconds = Math.floor(interval % 60);
-
-                interval--;
-
-                document.getElementById("timer").innerHTML = minTwoDigits(hours) + " : " + minTwoDigits(minutes) + " : " + minTwoDigits(seconds);
-
-                if (interval === 0) {
-                    clearInterval(counter);
-                    $('#timer').hide()
-                    document.getElementById('form1').submit();
-                }
-            }, 1000)
-        }
 
     </script>
 </head>
@@ -114,7 +72,7 @@
             </p>
 
 
-            <form class="contact-form php-mail-form" id="form" onsubmit="validateForm()"
+            <form class="contact-form php-mail-form" id="form" onsubmit="validateFormOfWorkout()"
                   th:action="@{/workout-constructor/save-result-of-set}" method="post">
 
                 <p th:if="${finish eq null}"><label for="resultOfSet" th:text="#{workout.result}">Result:</label>

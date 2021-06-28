@@ -23,27 +23,6 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <script th:src="@{/lib/jquery/jquery.min.js}"></script>
-    <script>
-        function validateForm() {
-            let username = document.forms["form"]["username"].value;
-            let password = document.forms["form"]["password"].value;
-            let firstname = document.forms["form"]["firstname"].value;
-            let lastname = document.forms["form"]["lastname"].value;
-            let gender = document.forms["form"]["gender"].value;
-            let birthday = document.forms["form"]["birthday"].value;
-            let height = document.forms["form"]["height"].value;
-            let weight = document.forms["form"]["weight"].value;
-            if (username === "" || password === "" || firstname === "" || lastname === "" || gender === ""
-                || birthday === "" || height === "" || weight === "") {
-                alert("All fields must be filled out");
-                return false;
-            }
-            if (weight < 0 || height < 0) {
-                alert("Field Height and Weight must be positive");
-                return false;
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -66,7 +45,7 @@
 
 
             <form name="form" class="contact-form php-mail-form" th:action="@{/registration}"
-                  onsubmit="return validateForm()" method="post" th:object="${newUser}">
+                  onsubmit="return validateFormOfRegistration()" method="post" th:object="${newUser}">
 
                 <div class="form-group">
                     <label for="username" th:text="#{registration.username}">Username: </label>

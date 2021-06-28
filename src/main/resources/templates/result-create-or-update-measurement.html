@@ -22,18 +22,6 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <script th:src="@{/lib/jquery/jquery.min.js}"></script>
-    <script>
-        function validateForm() {
-            let name = document.forms["form"]["name"].value;
-            let muscleGroup = document.forms["form"]["muscleGroup"].value;
-            let exerciseType = document.forms["form"]["exerciseType"].value;
-            let necessaryEquipment = document.forms["form"]["necessaryEquipment"].value;
-            if (name === "" || muscleGroup === "" || exerciseType === "" || necessaryEquipment === "") {
-                alert("All fields must be filled out");
-                return false;
-            }
-        }
-    </script>
 </head>
 
 <body>

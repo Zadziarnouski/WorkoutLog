@@ -25,20 +25,6 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <script th:src="@{/lib/jquery/jquery.min.js}"></script>
-    <script>
-        function validateForm() {
-            let username = document.forms["form"]["username"].value;
-            let firstname = document.forms["form"]["firstname"].value;
-            let lastname = document.forms["form"]["lastname"].value;
-
-
-            if (username === "" || firstname === "" || lastname === "") {
-                alert("All fields must be filled out");
-                return false;
-            }
-
-        }
-    </script>
 </head>
 
 <body>
@@ -60,7 +46,7 @@
         <div class="col-lg-8 col-lg-offset-2">
 
 
-            <form name="form" class="contact-form php-mail-form" onsubmit="return validateForm()"
+            <form name="form" class="contact-form php-mail-form" onsubmit="return validateFormOfUser()"
                   th:action="@{/user-log/create-update}" th:object="${user}"
                   method="post">
 
